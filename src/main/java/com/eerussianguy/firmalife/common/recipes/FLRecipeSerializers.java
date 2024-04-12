@@ -20,6 +20,7 @@ public class FLRecipeSerializers
     public static final RegistryObject<MixingBowlRecipe.Serializer> MIXING_BOWL = register("mixing_bowl", MixingBowlRecipe.Serializer::new);
     public static final RegistryObject<OvenRecipe.Serializer> OVEN = register("oven", OvenRecipe.Serializer::new);
     public static final RegistryObject<StinkySoupRecipe.Serializer> STINKY_SOUP = register("stinky_soup", StinkySoupRecipe.Serializer::new);
+    public static final RegistryObject<BowlPotRecipe.Serializer> BOWL_POT = register("bowl_pot", BowlPotRecipe.Serializer::new);
     public static final RegistryObject<VatRecipe.Serializer> VAT = register("vat", VatRecipe.Serializer::new);
 
     private static <S extends RecipeSerializer<?>> RegistryObject<S> register(String name, Supplier<S> factory)

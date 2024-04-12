@@ -75,17 +75,20 @@ def generate(rm: ResourceManager):
     rm.crafting_shaped('crafting/cheesecloth', ['XX'], {'X': '#tfc:high_quality_cloth'}, '8 firmalife:cheesecloth').with_advancement('#tfc:high_quality_cloth')
     rm.crafting_shaped('crafting/climate_station', ['BXB', 'OYO', 'BXB'], {'Y': 'minecraft:blue_stained_glass', 'X': 'tfc:brass_mechanisms', 'O': '#forge:dusts/redstone', 'B': '#minecraft:planks'}, 'firmalife:climate_station').with_advancement('#tfc:brass_mechanisms')
     rm.crafting_shapeless('crafting/watering_can', (fluid_item_ingredient('1000 minecraft:water'), 'tfc:wooden_bucket', '#tfc:lumber'), 'firmalife:watering_can')
-    damage_shapeless(rm, 'crafting/shredded_cheese', ('#tfc:knives', '#firmalife:foods/cheeses'), '4 firmalife:food/shredded_cheese').with_advancement('#firmalife:foods/cheeses')
+    damage_shapeless(rm, 'crafting/shredded_cheese', ('#tfc:knives', not_rotten('#firmalife:foods/cheeses')), '4 firmalife:food/shredded_cheese').with_advancement('#firmalife:foods/cheeses')
     rm.crafting_shapeless('crafting/pickled_egg', ('minecraft:clay_ball', 'tfc:powder/wood_ash', 'tfc:powder/salt', 'tfc:food/boiled_egg'), 'firmalife:food/pickled_egg')
     rm.crafting_shaped('crafting/seed_ball', [' X ', 'XYX', ' X '], {'X': '#tfc:seeds', 'Y': 'tfc:compost'}, 'firmalife:seed_ball').with_advancement('tfc:compost')
-    rm.crafting_shapeless('crafting/raw_pumpkin_pie', ('firmalife:food/pumpkin_pie_dough', 'firmalife:pie_pan'), 'firmalife:food/raw_pumpkin_pie').with_advancement('firmalife:food/pumpkin_pie_dough')
+    rm.crafting_shapeless('crafting/raw_pumpkin_pie', (not_rotten('firmalife:food/pumpkin_pie_dough'), 'firmalife:pie_pan'), 'firmalife:food/raw_pumpkin_pie').with_advancement('firmalife:food/pumpkin_pie_dough')
     rm.crafting_shaped('crafting/treated_wood', ['XX', 'XX'], {'X': 'firmalife:treated_lumber'}, 'firmalife:treated_wood').with_advancement('firmalife:treated_lumber')
-    rm.crafting_shapeless('crafting/garlic_bread', ('firmalife:food/toast', 'firmalife:food/butter', 'tfc:food/garlic'), 'firmalife:food/garlic_bread').with_advancement('tfc:food/garlic')
-    damage_shapeless(rm, 'crafting/salsa', ('tfc:food/tomato', 'tfc:powder/salt', 'firmalife:plant/cilantro', '#tfc:knives'), '5 firmalife:food/salsa').with_advancement('tfc:food/tomato')
+    rm.crafting_shapeless('crafting/garlic_bread', (not_rotten('firmalife:food/toast'), not_rotten('firmalife:food/butter'), not_rotten('tfc:food/garlic')), 'firmalife:food/garlic_bread').with_advancement('tfc:food/garlic')
+    damage_shapeless(rm, 'crafting/salsa', (not_rotten('tfc:food/tomato'), 'tfc:powder/salt', 'firmalife:plant/cilantro', '#tfc:knives'), '5 firmalife:food/salsa').with_advancement('tfc:food/tomato')
+    damage_shapeless(rm, 'crafting/tortilla_chips', (not_rotten('firmalife:food/taco_shell'), 'tfc:powder/salt', '#tfc:hammers'), 'firmalife:food/tortilla_chips').with_advancement('firmalife:food/taco_shell')
+    rm.crafting_shapeless('crafting/nachos', (not_rotten('firmalife:food/tortilla_chips'), not_rotten('firmalife:food/salsa'), not_rotten('firmalife:food/shredded_cheese'), not_rotten('#tfc:foods/cooked_meats')), 'firmalife:food/nachos').with_advancement('firmalife:food/tortilla_chips')
+    advanced_shapeless(rm, 'crafting/tomato_pasta', ingredients=(not_rotten('firmalife:food/cooked_pasta'), not_rotten('firmalife:food/tomato_sauce')), result=item_stack_provider('firmalife:food/pasta_with_tomato_sauce', other_modifier='firmalife:copy_dynamic_food'), primary_ingredient=not_rotten('firmalife:food/cooked_pasta'))
     damage_shapeless(rm, 'crafting/pineapple_fiber', (not_rotten(has_trait('firmalife:food/pineapple', trait='firmalife:dried')), '#tfc:knives'), 'firmalife:pineapple_fiber').with_advancement('firmalife:food/pineapple')
     damage_shapeless(rm, 'crafting/pineapple_yarn', ('tfc:spindle', 'firmalife:pineapple_fiber'), '8 firmalife:pineapple_yarn').with_advancement('firmalife:pineapple_fiber')
-    rm.crafting_shapeless('crafting/toast_with_jam', ('firmalife:food/toast', '#tfc:foods/preserves'), 'firmalife:food/toast_with_jam').with_advancement('firmalife:food/toast')
-    rm.crafting_shapeless('crafting/toast_with_butter', ('firmalife:food/toast', 'firmalife:food/butter'), 'firmalife:food/toast_with_butter').with_advancement('firmalife:food/toast')
+    rm.crafting_shapeless('crafting/toast_with_jam', (not_rotten('firmalife:food/toast'), not_rotten('#tfc:foods/preserves')), 'firmalife:food/toast_with_jam').with_advancement('firmalife:food/toast')
+    rm.crafting_shapeless('crafting/toast_with_butter', (not_rotten('firmalife:food/toast'), not_rotten('firmalife:food/butter')), 'firmalife:food/toast_with_butter').with_advancement('firmalife:food/toast')
     damage_shapeless(rm, 'crafting/bacon', (not_rotten(has_trait('tfc:food/pork', trait='firmalife:smoked')), '#tfc:knives', 'tfc:powder/salt'), '4 firmalife:food/bacon').with_advancement('tfc:food/cooked_pork')
     rm.crafting_shapeless('crafting/tomato_sauce_mix', (not_rotten('tfc:food/tomato'), utils.ingredient('tfc:powder/salt'), not_rotten('tfc:food/garlic')), '5 firmalife:food/tomato_sauce_mix').with_advancement('tfc:food/tomato')
     rm.crafting_shaped('crafting/ashtray', ['ZZZ', 'XYX'], {'Z': 'tfc:powder/salt', 'X': 'firmalife:sealed_bricks', 'Y': '#forge:sheets/wrought_iron'}, 'firmalife:ashtray').with_advancement('#forge:sheets/wrought_iron')
@@ -187,6 +190,8 @@ def generate(rm: ResourceManager):
     simple_pot_recipe_5(rm, 'cured_maize', not_rotten('tfc:food/maize_grain'), '100 tfc:limewater', output_items='firmalife:food/cured_maize', duration=3000)
     simple_pot_recipe(rm, 'tomato_sauce', [not_rotten('tfc:food/tomato'), utils.ingredient('tfc:powder/salt'), not_rotten('tfc:food/garlic')], '100 minecraft:water', output_items=['firmalife:food/tomato_sauce', 'firmalife:food/tomato_sauce', 'firmalife:food/tomato_sauce', 'firmalife:food/tomato_sauce', 'firmalife:food/tomato_sauce'])
     simple_pot_recipe(rm, 'chocolate', [utils.ingredient('#tfc:sweetener'), not_rotten('#firmalife:foods/chocolate')], '1000 #tfc:milks', output_fluid='1000 firmalife:chocolate')
+    bowl_recipe_5(rm, 'cooked_pasta', not_rotten('firmalife:food/raw_egg_noodles'), '100 minecraft:water', output_items='firmalife:food/cooked_pasta', duration=2000)
+    bowl_recipe_5(rm, 'cooked_rice_noodles', not_rotten('firmalife:food/raw_rice_noodles'), '100 minecraft:water', output_items='firmalife:food/cooked_rice_noodles', duration=2000)
 
     soup_food = not_rotten(utils.ingredient('#tfc:foods/usable_in_soup'))
     for duration, count in ((1000, 3), (1150, 4), (1300, 5)):
@@ -234,6 +239,7 @@ def generate(rm: ResourceManager):
     oven_recipe(rm, 'sugar_cookie', not_rotten('firmalife:food/cookie_dough'), 400, result_item=item_stack_provider('firmalife:food/sugar_cookie'))
     oven_recipe(rm, 'chocolate_chip_cookie', not_rotten('firmalife:food/chocolate_chip_cookie_dough'), 400, result_item=item_stack_provider('firmalife:food/chocolate_chip_cookie'))
     oven_recipe(rm, 'hardtack', not_rotten('firmalife:food/hardtack_dough'), 400, result_item=item_stack_provider('firmalife:food/hardtack'))
+    oven_recipe(rm, 'lasagna', not_rotten('firmalife:food/raw_lasagna'), 400, result_item=item_stack_provider('firmalife:food/cooked_lasagna'))
 
     # Firmalife Recipes
     knapping_type(rm, 'pumpkin', '1 #firmalife:pumpkin_knapping', None, 'tfc:item.knapping.leather', False, False, False, 'tfc:pumpkin')
@@ -269,6 +275,8 @@ def generate(rm: ResourceManager):
     mixing_recipe(rm, 'cookie_dough', ingredients=[not_rotten('#firmalife:foods/raw_eggs'), utils.ingredient('firmalife:spice/vanilla'), not_rotten('firmalife:food/butter'), utils.ingredient('#tfc:sweetener'), not_rotten('#tfc:foods/flour')], output_item='4 firmalife:food/cookie_dough')
     mixing_recipe(rm, 'chocolate_chip_cookie_dough', ingredients=[not_rotten('#firmalife:foods/chocolate'), not_rotten('firmalife:food/cookie_dough'), not_rotten('firmalife:food/cookie_dough'), not_rotten('firmalife:food/cookie_dough'), not_rotten('firmalife:food/cookie_dough')], output_item='4 firmalife:food/chocolate_chip_cookie_dough')
     mixing_recipe(rm, 'hardtack_dough', ingredients=[not_rotten('#tfc:foods/flour'), utils.ingredient('tfc:powder/salt')], fluid='1000 minecraft:water', output_item='4 firmalife:food/hardtack_dough')
+    mixing_recipe(rm, 'egg_noodles', ingredients=[not_rotten('#firmalife:foods/egg_noodle_flour'), utils.ingredient('tfc:powder/salt'), utils.ingredient('minecraft:egg')], fluid='1000 #tfc:milks', output_item='firmalife:food/raw_egg_noodles')
+    mixing_recipe(rm, 'rice_noodles', ingredients=[not_rotten('tfc:food/rice_flour'), not_rotten('tfc:food/maize_flour'), utils.ingredient('tfc:powder/salt')], fluid='1000 #tfc:milks', output_item='2 firmalife:food/raw_rice_noodles')
 
     pie_mod = {
         'food': {
@@ -591,18 +599,22 @@ def welding_recipe(rm: ResourceManager, name_parts: utils.ResourceIdentifier, fi
         'result': item_stack_provider(result)
     })
 
-def simple_pot_recipe_5(rm: ResourceManager, name_parts: utils.ResourceIdentifier, ingredient: Json, fluid: str, output_fluid: str = None, output_items: Json = None, duration: int = 2000, temp: int = 300):
+def simple_pot_recipe_5(rm: ResourceManager, name_parts: utils.ResourceIdentifier, ingredient: Json, fluid: str, output_fluid: str = None, output_items: Json = None, duration: int = 2000, temp: int = 300, serializer: str = 'tfc:pot'):
     for i in range(1, 6):
-        simple_pot_recipe(rm, name_parts + '_' + str(i), [*[ingredient] * i], fluid, output_fluid, [*[output_items] * i], duration, temp)
+        simple_pot_recipe(rm, name_parts + '_' + str(i), [*[ingredient] * i], fluid, output_fluid, [*[output_items] * i], duration, temp, serializer)
 
-def simple_pot_recipe(rm: ResourceManager, name_parts: utils.ResourceIdentifier, ingredients: Json, fluid: str, output_fluid: str = None, output_items: Json = None, duration: int = 2000, temp: int = 300):
-    rm.recipe(('pot', name_parts), 'tfc:pot', {
+def bowl_recipe_5(rm: ResourceManager, name_parts: utils.ResourceIdentifier, ingredient: Json, fluid: str, output_fluid: str = None, output_items: str = None, duration: int = 2000, temp: int = 300):
+    for i in range(1, 6):
+        simple_pot_recipe(rm, name_parts + '_' + str(i), [*[ingredient] * i], fluid, output_fluid, '%s %s' % (i, output_items), duration, temp, 'firmalife:bowl_pot')
+
+def simple_pot_recipe(rm: ResourceManager, name_parts: utils.ResourceIdentifier, ingredients: Json, fluid: str, output_fluid: str = None, output_items: Json = None, duration: int = 2000, temp: int = 300, serializer: str = 'tfc:pot'):
+    rm.recipe(('pot', name_parts), serializer, {
         'ingredients': ingredients,
         'fluid_ingredient': fluid_stack_ingredient(fluid),
         'duration': duration,
         'temperature': temp,
         'fluid_output': fluid_stack(output_fluid) if output_fluid is not None else None,
-        'item_output': [utils.item_stack(item) for item in output_items] if output_items is not None else None
+        'item_output': utils.item_stack(output_items) if isinstance(output_items, str) else [utils.item_stack(item) for item in output_items] if output_items is not None else None
     })
 
 def oven_recipe(rm: ResourceManager, name_parts: utils.ResourceIdentifier, ingredient: utils.Json, temperature: float, result_item: Optional[Union[str, Json]], duration: int = 1000) -> RecipeContext:

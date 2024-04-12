@@ -80,7 +80,7 @@ class Vein(NamedTuple):
 
 ORE_VEINS: Dict[str, Vein] = {
     'normal_chromite': Vein.new('chromite', 24, 20, 40, 130, 0.25, ('igneous_extrusive', 'metamorphic'), grade=POOR, deposits=True, indicator=14),
-    'deep_chromite': Vein.new('chromite', 45, 40, -80, 20, 0.6, ('igneous_intrusive', 'metamorphic'), grade=RICH, indicator=0, deep_indicator=(1, 4)),
+    'deep_chromite': Vein.new('chromite', 45, 45, -80, 20, 0.6, ('igneous_intrusive', 'metamorphic'), grade=RICH, indicator=0, deep_indicator=(1, 4)),
 }
 
 def generate(rm: ResourceManager):

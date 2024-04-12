@@ -22,7 +22,7 @@ def generate(rm: ResourceManager):
     rm.item_tag('tfc:usable_on_tool_rack', 'firmalife:spoon', 'firmalife:peel')
     rm.item_tag('pumpkin_knapping', 'tfc:pumpkin')
     rm.item_tag('tfc:any_knapping', '#firmalife:pumpkin_knapping')
-    rm.item_tag('foods/heatable', 'firmalife:food/raw_pizza', 'firmalife:food/filled_pie', 'firmalife:food/raw_pumpkin_pie', 'firmalife:food/corn_tortilla', 'firmalife:food/masa', '#firmalife:foods/slices', 'firmalife:food/cocoa_beans', 'firmalife:food/bacon', 'firmalife:food/cookie_dough', 'firmalife:food/chocolate_chip_cookie_dough', 'firmalife:food/hardtack_dough')
+    rm.item_tag('foods/heatable', 'firmalife:food/raw_pizza', 'firmalife:food/filled_pie', 'firmalife:food/raw_pumpkin_pie', 'firmalife:food/corn_tortilla', 'firmalife:food/masa', '#firmalife:foods/slices', 'firmalife:food/cocoa_beans', 'firmalife:food/bacon', 'firmalife:food/cookie_dough', 'firmalife:food/chocolate_chip_cookie_dough', 'firmalife:food/hardtack_dough', 'firmalife:food/raw_lasagna')
     rm.item_tag('foods/dynamic', 'firmalife:food/raw_pizza', 'firmalife:food/filled_pie', 'firmalife:food/cooked_pizza', 'firmalife:food/cooked_pie', 'firmalife:food/burrito', 'firmalife:food/taco', 'firmalife:food/stinky_soup')
     rm.item_tag('foods/washable', 'firmalife:food/filled_pie', 'firmalife:food/cooked_pie', 'firmalife:food/raw_pumpkin_pie', 'minecraft:pumpkin_pie', 'firmalife:food/stinky_soup')
     rm.item_tag('pie_pans', 'firmalife:pie_pan')
@@ -36,6 +36,7 @@ def generate(rm: ResourceManager):
     rm.item_tag('foods/raw_eggs', 'minecraft:egg')
     rm.item_tag('foods/raw_fish', *['tfc:food/%s' % fish for fish in TFC_FISH_ITEMS])
     rm.item_tag('foods/cooked_fish', *['tfc:food/cooked_%s' % fish for fish in TFC_FISH_ITEMS])
+    rm.item_tag('foods/egg_noodle_flour', *['tfc:food/%s_flour' % g for g in TFC_GRAINS])
 
     block_and_item_tag(rm, 'tfc:wild_fruits', 'firmalife:plant/pineapple_bush', 'firmalife:plant/nightshade_bush', 'firmalife:plant/fig_sapling', 'firmalife:plant/cocoa_sapling')
 

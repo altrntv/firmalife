@@ -84,6 +84,15 @@ public enum FLFood
     FUTO_MAKI_ROLL,
     HARDTACK,
     HARDTACK_DOUGH,
+    RAW_LASAGNA,
+    COOKED_LASAGNA,
+    RAW_EGG_NOODLES,
+    COOKED_PASTA,
+    PASTA_WITH_TOMATO_SAUCE,
+    RAW_RICE_NOODLES,
+    COOKED_RICE_NOODLES,
+    TORTILLA_CHIPS,
+    NACHOS,
     ;
 
     private final boolean meat, fast;

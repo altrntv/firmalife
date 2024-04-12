@@ -9,6 +9,7 @@ import net.minecraft.world.level.material.Fluids;
 
 import net.dries007.tfc.common.blockentities.TFCBlockEntity;
 import net.dries007.tfc.common.blockentities.rotation.RotationSinkBlockEntity;
+import net.dries007.tfc.common.blocks.RiverWaterBlock;
 import net.dries007.tfc.common.blocks.rotation.CrankshaftBlock;
 import net.dries007.tfc.util.rotation.NetworkAction;
 import net.dries007.tfc.util.rotation.Node;
@@ -41,7 +42,12 @@ public class PumpingStationBlockEntity extends TFCBlockEntity implements Rotatio
     public boolean isPumping()
     {
         assert level != null;
-        return node.rotation() != null && node.rotation().speed() > 0f && level.getFluidState(worldPosition.below()).getType() == Fluids.WATER;
+        if (node.rotation() != null && node.rotation().speed() > 0f)
+        {
+            final BlockState state = level.getBlockState(worldPosition.below());
+            return state.getFluidState().getType() == Fluids.WATER || state.getBlock() instanceof RiverWaterBlock;
+        }
+        return false;
     }
 
     @Override

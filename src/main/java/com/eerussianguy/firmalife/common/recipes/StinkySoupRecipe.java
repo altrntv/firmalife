@@ -62,7 +62,7 @@ public class StinkySoupRecipe extends PotRecipe
                 // set the internal bowl to the one we clicked with
                 stack.getCapability(FoodCapability.CAPABILITY)
                     .filter(food -> food instanceof DynamicBowlHandler)
-                    .ifPresent(food -> ((DynamicBowlHandler) food).setBowl(clickedWith));
+                    .ifPresent(food -> ((DynamicBowlHandler) food).setBowl(clickedWith.copyWithCount(1)));
 
                 // take the player's bowl, give a soup
                 clickedWith.shrink(1);

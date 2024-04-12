@@ -566,7 +566,7 @@ def greenhouse_panel_roof(rm: ResourceManager, name: str, frame: str, glass: str
 
 def greenhouse_trapdoor(rm: ResourceManager, name: str, glass: str) -> 'BlockContext':
     rm.block('%s_greenhouse' % name).make_trapdoor(texture=glass)
-    block = rm.block('%s_greenhouse_trapdoor' % name).with_tag('minecraft:trapdoors').with_lang(lang('%s greenhouse trapdoor' % name))
+    block = rm.block('%s_greenhouse_trapdoor' % name).with_tag('minecraft:trapdoors').with_lang(lang('%s greenhouse trapdoor' % name)).with_block_loot('%s_greenhouse_trapdoor' % name)
     greenhouse_tags(block, name)
     return block
 

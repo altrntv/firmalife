@@ -114,6 +114,9 @@ def generate(rm: ResourceManager):
     food_item(rm, 'bacon', 'firmalife:food/bacon', Category.meat, 4, 0, 0, 2, protein=0.5)
     food_item(rm, 'cooked_bacon', 'firmalife:food/cooked_bacon', Category.cooked_meat, 4, 2, 0, 2, protein=0.75)
     food_item(rm, 'garlic_bread', 'firmalife:food/garlic_bread', Category.other, 4, 2, 0, 2, grain=1, veg=1, dairy=0.1)
+    food_item(rm, 'cooked_pasta', 'firmalife:food/cooked_pasta', Category.other, 4, 2, 1, 2, grain=1)
+    food_item(rm, 'tomato_pasta', 'firmalife:food/pasta_with_tomato_sauce', Category.other, 4, 2, 1, 2, grain=1, veg=1)
+    food_item(rm, 'lasagna', 'firmalife:food/cooked_lasagna', Category.other, 4, 3, 1, 2, grain=1, veg=1, protein=1)
     food_item(rm, 'flatbreads', '#firmalife:foods/flatbreads', Category.grain, 4, 0.75, 0, 1, grain=0.5)
     food_item(rm, 'cheeses', '#firmalife:foods/cheeses', Category.dairy, 4, 2, 0, 0.3, dairy=3)
     food_item(rm, 'shredded_cheese', 'firmalife:food/shredded_cheese', Category.dairy, 4, 2, 0, 0.3, dairy=0.75)
@@ -133,6 +136,9 @@ def generate(rm: ResourceManager):
     decayable(rm, 'pumpkin_pie_dough', 'firmalife:food/pumpkin_pie_dough', Category.other)
     decayable(rm, 'raw_pumpkin_pie', 'firmalife:food/raw_pumpkin_pie', Category.other)
     decayable(rm, 'cocoa_beans', 'firmalife:food/cocoa_beans', Category.other, decay=0.25)
+    decayable(rm, 'raw_egg_noodles', 'firmalife:food/raw_egg_noodles', Category.other, decay=0.25)
+    decayable(rm, 'raw_rice_noodles', 'firmalife:food/raw_rice_noodles', Category.other, decay=0.25)
+    decayable(rm, 'raw_lasagna', 'firmalife:food/raw_lasagna', Category.other, decay=3)
     food_item(rm, 'fig', 'firmalife:food/fig', Category.fruit, 4, 1, 5, 0.8, fruit=0.9)
     decayable(rm, 'roasted_cocoa_beans', 'firmalife:food/roasted_cocoa_beans', Category.other)
     decayable(rm, 'cocoa_powder', 'firmalife:food/cocoa_powder', Category.other, decay=0.25)
@@ -144,6 +150,8 @@ def generate(rm: ResourceManager):
     decayable(rm, 'masa', 'firmalife:food/masa', Category.other, decay=2.0)
     food_item(rm, 'corn_tortilla', 'firmalife:food/corn_tortilla', Category.grain, 4, 1, 0, 0.8, grain=0.6)
     food_item(rm, 'taco_shell', 'firmalife:food/taco_shell', Category.grain, 4, 1, 0, 0.8, grain=0.6)
+    food_item(rm, 'tortilla_chips', 'firmalife:food/tortilla_chips', Category.grain, 4, 1.2, 0, 0.8, grain=0.7)
+    food_item(rm, 'nachos', 'firmalife:food/nachos', Category.grain, 4, 1.2, 0, 0.8, grain=0.7, veg=0.7, dairy=0.5, protein=0.75)
     food_item(rm, 'tomato_sauce', 'firmalife:food/tomato_sauce', Category.vegetable, 1, 1, 1, 1, veg=0.75)
     food_item(rm, 'salsa', 'firmalife:food/salsa', Category.vegetable, 1, 1, 1, 0.8, veg=0.5)
     food_item(rm, 'pineapple', 'firmalife:food/pineapple', Category.fruit, 4, 1, 1, 0.85, fruit=0.75)
@@ -156,6 +164,9 @@ def generate(rm: ResourceManager):
     dynamic_food_item(rm, 'filled_pie', 'firmalife:food/filled_pie', 'dynamic_bowl')
     dynamic_food_item(rm, 'cooked_pie', 'firmalife:food/cooked_pie', 'dynamic_bowl')
     dynamic_food_item(rm, 'stinky_soup', 'firmalife:food/stinky_soup', 'dynamic_bowl')
+    dynamic_food_item(rm, 'cooked_pasta', 'firmalife:food/cooked_pasta', 'dynamic_bowl')
+    dynamic_food_item(rm, 'cooked_rice_noodles', 'firmalife:food/cooked_rice_noodles', 'dynamic_bowl')
+    dynamic_food_item(rm, 'tomato_pasta', 'firmalife:food/pasta_with_tomato_sauce', 'dynamic_bowl')
     dynamic_food_item(rm, 'raw_pizza', 'firmalife:food/raw_pizza', 'dynamic')
     dynamic_food_item(rm, 'cooked_pizza', 'firmalife:food/cooked_pizza', 'dynamic')
     dynamic_food_item(rm, 'burrito', 'firmalife:food/burrito', 'dynamic')
@@ -340,7 +351,7 @@ def climate_range(rm: ResourceManager, name_parts: utils.ResourceIdentifier, hyd
 
 def damage_type(rm: ResourceManager, name_parts: utils.ResourceIdentifier, message_id: str = None, exhaustion: float = 0.0, scaling: str = 'when_caused_by_living_non_player', effects: str = None, message_type: str = None):
     rm.data(('damage_type', name_parts), {
-        'message_id': message_id if message_id is not None else name_parts,
+        'message_id': message_id if message_id is not None else rm.domain + '.' + name_parts,
         'exhaustion': exhaustion,
         'scaling': scaling,
         'effects': effects,

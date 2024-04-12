@@ -3,10 +3,16 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "firmalife:food/toast"
+      "type": "tfc:not_rotten",
+      "ingredient": {
+        "item": "firmalife:food/toast"
+      }
     },
     {
-      "tag": "tfc:foods/preserves"
+      "type": "tfc:not_rotten",
+      "ingredient": {
+        "tag": "tfc:foods/preserves"
+      }
     }
   ],
   "result": {

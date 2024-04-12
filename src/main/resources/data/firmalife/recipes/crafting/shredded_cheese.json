@@ -8,7 +8,10 @@
         "tag": "tfc:knives"
       },
       {
-        "tag": "firmalife:foods/cheeses"
+        "type": "tfc:not_rotten",
+        "ingredient": {
+          "tag": "firmalife:foods/cheeses"
+        }
       }
     ],
     "result": {
