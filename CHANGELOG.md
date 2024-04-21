@@ -1,3 +1,4 @@
+This build fixes a crash bug in the previous build. The previous changelog is reprinted here for your reference.
 
 ### Changes
 

@@ -14,7 +14,7 @@ import net.dries007.tfc.common.blocks.devices.BarrelRackBlock;
 @Mixin(BarrelRackBlock.class)
 public class BarrelRackMixin
 {
-    @Inject(method = "canBeReplaced", at = @At("HEAD"), remap = false, cancellable = true)
+    @Inject(method = "canBeReplaced", at = @At("HEAD"), cancellable = true)
     private void inject$canBeReplaced(BlockState state, BlockPlaceContext context, CallbackInfoReturnable<Boolean> cir)
     {
         if (context.getItemInHand().getItem() instanceof BlockItem bi && bi.getBlock() instanceof CheeseWheelBlock)
