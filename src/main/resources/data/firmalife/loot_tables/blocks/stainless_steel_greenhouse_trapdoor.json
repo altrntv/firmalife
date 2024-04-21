@@ -8,7 +8,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "stainless_steel_greenhouse_trapdoor"
+          "name": "firmalife:stainless_steel_greenhouse_trapdoor"
         }
       ],
       "conditions": [

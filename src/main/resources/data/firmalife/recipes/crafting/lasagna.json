@@ -1,0 +1,29 @@
+{
+  "__comment__": "This file was automatically created by mcresources",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XQ",
+    "YZ",
+    "XQ"
+  ],
+  "key": {
+    "X": {
+      "type": "tfc:not_rotten",
+      "ingredient": {
+        "item": "firmalife:food/raw_egg_noodles"
+      }
+    },
+    "Y": {
+      "item": "firmalife:food/tomato_sauce"
+    },
+    "Z": {
+      "tag": "tfc:foods/cooked_meats"
+    },
+    "Q": {
+      "item": "firmalife:plant/oregano"
+    }
+  },
+  "result": {
+    "item": "firmalife:food/raw_lasagna"
+  }
+}

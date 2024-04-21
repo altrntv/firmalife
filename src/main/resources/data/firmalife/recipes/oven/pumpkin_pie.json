@@ -12,7 +12,11 @@
       "item": "minecraft:pumpkin_pie"
     },
     "modifiers": [
-      "firmalife:add_pie_pan"
+      "firmalife:copy_dynamic_food",
+      {
+        "type": "tfc:remove_trait",
+        "trait": "firmalife:raw"
+      }
     ]
   },
   "temperature": 400,

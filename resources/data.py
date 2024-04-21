@@ -114,8 +114,6 @@ def generate(rm: ResourceManager):
     food_item(rm, 'bacon', 'firmalife:food/bacon', Category.meat, 4, 0, 0, 2, protein=0.5)
     food_item(rm, 'cooked_bacon', 'firmalife:food/cooked_bacon', Category.cooked_meat, 4, 2, 0, 2, protein=0.75)
     food_item(rm, 'garlic_bread', 'firmalife:food/garlic_bread', Category.other, 4, 2, 0, 2, grain=1, veg=1, dairy=0.1)
-    food_item(rm, 'cooked_pasta', 'firmalife:food/cooked_pasta', Category.other, 4, 2, 1, 2, grain=1)
-    food_item(rm, 'tomato_pasta', 'firmalife:food/pasta_with_tomato_sauce', Category.other, 4, 2, 1, 2, grain=1, veg=1)
     food_item(rm, 'lasagna', 'firmalife:food/cooked_lasagna', Category.other, 4, 3, 1, 2, grain=1, veg=1, protein=1)
     food_item(rm, 'flatbreads', '#firmalife:foods/flatbreads', Category.grain, 4, 0.75, 0, 1, grain=0.5)
     food_item(rm, 'cheeses', '#firmalife:foods/cheeses', Category.dairy, 4, 2, 0, 0.3, dairy=3)
@@ -134,7 +132,6 @@ def generate(rm: ResourceManager):
     decayable(rm, 'pie_dough', 'firmalife:food/pie_dough', Category.other)
     decayable(rm, 'pizza_dough', 'firmalife:food/pizza_dough', Category.other)
     decayable(rm, 'pumpkin_pie_dough', 'firmalife:food/pumpkin_pie_dough', Category.other)
-    decayable(rm, 'raw_pumpkin_pie', 'firmalife:food/raw_pumpkin_pie', Category.other)
     decayable(rm, 'cocoa_beans', 'firmalife:food/cocoa_beans', Category.other, decay=0.25)
     decayable(rm, 'raw_egg_noodles', 'firmalife:food/raw_egg_noodles', Category.other, decay=0.25)
     decayable(rm, 'raw_rice_noodles', 'firmalife:food/raw_rice_noodles', Category.other, decay=0.25)
@@ -162,6 +159,7 @@ def generate(rm: ResourceManager):
     food_item(rm, 'strawberry_ice_cream', 'firmalife:food/strawberry_ice_cream', Category.other, 4, 1.5, 1, 5, dairy=0.5, fruit=0.5)
     food_item(rm, 'banana_split', 'firmalife:food/banana_split', Category.other, 4, 2, 1, 5, fruit=3.5, dairy=1.75, grain=0.25)
     dynamic_food_item(rm, 'filled_pie', 'firmalife:food/filled_pie', 'dynamic_bowl')
+    dynamic_food_item(rm, 'raw_pumpkin_pie', 'firmalife:food/raw_pumpkin_pie', 'dynamic_bowl')
     dynamic_food_item(rm, 'cooked_pie', 'firmalife:food/cooked_pie', 'dynamic_bowl')
     dynamic_food_item(rm, 'stinky_soup', 'firmalife:food/stinky_soup', 'dynamic_bowl')
     dynamic_food_item(rm, 'cooked_pasta', 'firmalife:food/cooked_pasta', 'dynamic_bowl')
@@ -173,6 +171,10 @@ def generate(rm: ResourceManager):
     dynamic_food_item(rm, 'taco', 'firmalife:food/taco', 'dynamic')
     dynamic_food_item(rm, 'maki_roll', 'firmalife:food/maki_roll', 'dynamic')
     dynamic_food_item(rm, 'futo_maki_roll', 'firmalife:food/futo_maki_roll', 'dynamic')
+
+    rm.domain = 'tfc' # DOMAIN SWITCH
+    dynamic_food_item(rm, 'pumpkin_pie', 'minecraft:pumpkin_pie', 'dynamic_bowl')
+    rm.domain = 'firmalife'
 
     item_size(rm, 'beehive_frame', 'firmalife:beehive_frame', Size.very_small, Weight.very_heavy)
     item_size(rm, 'cheese_wheels', '#firmalife:cheese_wheels', Size.very_large, Weight.very_heavy)

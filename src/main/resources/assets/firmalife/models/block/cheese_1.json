@@ -1,17 +1,22 @@
 {
-  "parent": "block/block",
-  "elements": [
-    {
-      "from": [ 8, 0, 8 ],
-      "to": [ 15, 8, 15 ],
-      "faces": {
-        "down":  { "texture": "#surface", "cullface": "down" },
-        "up":    { "texture": "#surface" },
-        "north": { "texture": "#inside" },
-        "south": { "uv": [1, 7, 15, 15], "texture": "#surface" },
-        "west":  { "texture": "#inside" },
-        "east":  { "uv": [1, 7, 15, 15], "texture": "#surface" }
-      }
-    }
-  ]
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"textures": {
+		"inside": "firmalife:block/cheese/chevre_wheel_inner_fresh",
+		"surface": "firmalife:block/cheese/chevre_wheel_surface_fresh"
+	},
+	"elements": [
+		{
+			"from": [8, 0, 8],
+			"to": [14, 7, 14],
+			"faces": {
+				"north": {"uv": [2, 9, 8, 16], "texture": "#inside"},
+				"east": {"uv": [2, 7, 8, 14], "texture": "#surface"},
+				"south": {"uv": [8, 7, 14, 14], "texture": "#surface"},
+				"west": {"uv": [8, 9, 14, 16], "texture": "#inside"},
+				"up": {"uv": [8, 8, 14, 14], "texture": "#surface"},
+				"down": {"uv": [8, 2, 14, 8], "texture": "#surface", "cullface": "down"}
+			}
+		}
+	]
 }

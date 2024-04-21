@@ -28,26 +28,18 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+
+import net.dries007.tfc.client.ClientHelpers;
 import net.dries007.tfc.common.blocks.TFCBlocks;
 import net.dries007.tfc.common.items.TFCItems;
 import net.dries007.tfc.common.recipes.KnappingRecipe;
+import net.dries007.tfc.common.recipes.PotRecipe;
+import net.dries007.tfc.common.recipes.TFCRecipeTypes;
 import net.dries007.tfc.util.Helpers;
 
 @JeiPlugin
 public class FLJEIPlugin implements IModPlugin
 {
-    private static <C extends Container, T extends Recipe<C>> List<T> getRecipes(net.minecraft.world.item.crafting.RecipeType<T> type)
-    {
-        ClientLevel level = Minecraft.getInstance().level;
-        assert level != null;
-        return level.getRecipeManager().getAllRecipesFor(type);
-    }
-
-    private static <C extends Container, T extends Recipe<C>> List<T> getRecipes(net.minecraft.world.item.crafting.RecipeType<T> type, Predicate<T> filter)
-    {
-        return getRecipes(type).stream().filter(filter).collect(Collectors.toList());
-    }
-
     private static void addCatalystTag(IRecipeCatalystRegistration r, TagKey<Item> tag, RecipeType<?> recipeType)
     {
         Helpers.getAllTagValues(tag, ForgeRegistries.ITEMS).forEach(item -> r.addRecipeCatalyst(new ItemStack(item), recipeType));
@@ -58,14 +50,14 @@ public class FLJEIPlugin implements IModPlugin
         return RecipeType.create(FirmaLife.MOD_ID, name, tClass);
     }
 
-    private static final ResourceLocation PUMPKIN_TEXTURE = Helpers.identifier("textures/gui/knapping/pumpkin.png");
-
     public static final RecipeType<DryingRecipe> DRYING = type("drying", DryingRecipe.class);
     public static final RecipeType<SmokingRecipe> SMOKING = type("smoking", SmokingRecipe.class);
     public static final RecipeType<MixingBowlRecipe> MIXING_BOWL = type("mixing_bowl", MixingBowlRecipe.class);
     public static final RecipeType<KnappingRecipe> PUMPKIN_KNAPPING = type("pumpkin_knapping", KnappingRecipe.class);
     public static final RecipeType<OvenRecipe> OVEN = type("oven", OvenRecipe.class);
     public static final RecipeType<VatRecipe> VAT = type("vat", VatRecipe.class);
+    public static final RecipeType<PotRecipe> BOWL_POT = type("bowl_pot", PotRecipe.class);
+    public static final RecipeType<PotRecipe> STINKY_SOUP = type("stinky_soup", PotRecipe.class);
 
     @Override
     public ResourceLocation getPluginUid()
@@ -82,16 +74,19 @@ public class FLJEIPlugin implements IModPlugin
         r.addRecipeCategories(new MixingCategory(MIXING_BOWL, gui));
         r.addRecipeCategories(new OvenCategory(OVEN, gui));
         r.addRecipeCategories(new VatCategory(VAT, gui));
+        r.addRecipeCategories(new StinkySoupCategory(STINKY_SOUP, gui));
+        r.addRecipeCategories(new BowlPotCategory(BOWL_POT, gui));
     }
 
     @Override
     public void registerRecipes(IRecipeRegistration r)
     {
-        r.addRecipes(DRYING, getRecipes(FLRecipeTypes.DRYING.get()));
-        r.addRecipes(SMOKING, getRecipes(FLRecipeTypes.SMOKING.get()));
-        r.addRecipes(MIXING_BOWL, getRecipes(FLRecipeTypes.MIXING_BOWL.get()));
-        r.addRecipes(OVEN, getRecipes(FLRecipeTypes.OVEN.get()));
-        r.addRecipes(VAT, getRecipes(FLRecipeTypes.VAT.get()));
+        r.addRecipes(DRYING, recipes(FLRecipeTypes.DRYING.get()));
+        r.addRecipes(SMOKING, recipes(FLRecipeTypes.SMOKING.get()));
+        r.addRecipes(MIXING_BOWL, recipes(FLRecipeTypes.MIXING_BOWL.get()));
+        r.addRecipes(OVEN, recipes(FLRecipeTypes.OVEN.get()));
+        r.addRecipes(VAT, recipes(FLRecipeTypes.VAT.get()));
+        r.addRecipes(BOWL_POT, recipes(TFCRecipeTypes.POT.get(), recipe -> recipe.getSerializer() == FLRecipeSerializers.BOWL_POT.get()));
     }
 
     @Override
@@ -105,6 +100,8 @@ public class FLJEIPlugin implements IModPlugin
         cat(r, TFCBlocks.PUMPKIN, PUMPKIN_KNAPPING);
         FLBlocks.CURED_OVEN_TOP.values().forEach(oven -> cat(r, oven, OVEN));
         cat(r, FLBlocks.VAT, VAT);
+        cat(r, TFCItems.POT.get(), BOWL_POT);
+        cat(r, TFCItems.POT.get(), STINKY_SOUP);
     }
 
     private static void cat(IRecipeCatalystRegistration r, Supplier<? extends Block> supplier, RecipeType<?> type)
@@ -116,4 +113,15 @@ public class FLJEIPlugin implements IModPlugin
     {
         r.addRecipeCatalyst(new ItemStack(item), type);
     }
+
+    private static <C extends Container, T extends Recipe<C>> List<T> recipes(net.minecraft.world.item.crafting.RecipeType<T> type, Predicate<T> filter)
+    {
+        return recipes(type).stream().filter(filter).collect(Collectors.toList());
+    }
+
+    private static <C extends Container, T extends Recipe<C>> List<T> recipes(net.minecraft.world.item.crafting.RecipeType<T> type)
+    {
+        return ClientHelpers.getLevelOrThrow().getRecipeManager().getAllRecipesFor(type);
+    }
+
 }

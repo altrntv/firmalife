@@ -24,6 +24,7 @@ public class FLRecipeTypes
     public static void init()
     {
         PotRecipe.register(FLHelpers.identifier("stinky_soup"), StinkySoupRecipe.OUTPUT_TYPE);
+        PotRecipe.register(FLHelpers.identifier("bowl"), BowlPotRecipe.OUTPUT_TYPE);
     }
 
     private static <R extends Recipe<?>> RegistryObject<RecipeType<R>> register(String name)

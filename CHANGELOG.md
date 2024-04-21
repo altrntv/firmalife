@@ -1,11 +1,10 @@
 
 ### Changes
 
-- Updated to latest TFC version (v3.2.0)
-- Added pasta, with egg noodle and rice noodle variants
-- Added tortilla chips and nachos
-- Made chromite rarer
-- Fix pumping station not working over river water.
-- Fix broken localization of firmalife damage sources
-- Fix greenhouse trapdoors not having any drops
-- Fix an issue with stinky soup
+- Allow placing cheese wheels on barrel racks. The cheese model and texture is now smaller to allow this.
+- Updated several food and item textures.
+- Fixed trapdoor loot tables again.
+- Numerous fixes to recipes, including making pasta recipes work.
+- Added some tooltips to Jade and JEI integration for Firmalife pot recipes.
+- Fix pies and pumpkin pies again. You should be getting the pan back now.
+- This update requires the latest TFC Version (v3.2.2)

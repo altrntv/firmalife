@@ -1,6 +1,6 @@
 {
   "__comment__": "This file was automatically created by mcresources",
-  "type": "minecraft:crafting_shapeless",
+  "type": "tfc:advanced_shapeless_crafting",
   "ingredients": [
     {
       "type": "tfc:not_rotten",
@@ -9,10 +9,32 @@
       }
     },
     {
-      "item": "firmalife:pie_pan"
+      "tag": "firmalife:pie_pans"
     }
   ],
   "result": {
-    "item": "firmalife:food/raw_pumpkin_pie"
+    "stack": {
+      "item": "firmalife:food/raw_pumpkin_pie"
+    },
+    "modifiers": [
+      {
+        "type": "tfc:meal",
+        "food": {
+          "hunger": 4,
+          "saturation": 4.0,
+          "decay_modifier": 4,
+          "fruit": 1.5,
+          "grain": 1,
+          "water": 4
+        }
+      },
+      "firmalife:add_pie_pan"
+    ]
+  },
+  "primary_ingredient": {
+    "type": "tfc:not_rotten",
+    "ingredient": {
+      "item": "firmalife:food/pumpkin_pie_dough"
+    }
   }
 }

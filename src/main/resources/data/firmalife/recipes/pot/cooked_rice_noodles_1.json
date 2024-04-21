@@ -18,5 +18,11 @@
   "item_output": {
     "item": "firmalife:food/cooked_rice_noodles",
     "count": 1
+  },
+  "food": {
+    "hunger": 4,
+    "saturation": 2,
+    "decay_modifier": 3,
+    "grain": 1.5
   }
 }

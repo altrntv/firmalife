@@ -1,16 +1,21 @@
 {
+	"credit": "Made with Blockbench",
 	"parent": "block/block",
-    "elements": [
-        {   "from": [ 1, 0, 1 ],
-            "to": [ 15, 8, 15 ],
-            "faces": {
-                "down":  { "texture": "#surface", "cullface": "down" },
-                "up":    { "texture": "#surface" },
-                "north": { "uv": [1, 7, 15, 15], "texture": "#surface" },
-                "south": { "uv": [1, 7, 15, 15], "texture": "#surface" },
-                "west":  { "uv": [1, 7, 15, 15], "texture": "#surface" },
-                "east":  { "uv": [1, 7, 15, 15], "texture": "#surface" }
-            }
-        }
-    ]
+	"textures": {
+		"surface": "firmalife:block/cheese/cheddar_wheel_surface_aged"
+	},
+	"elements": [
+		{
+			"from": [2, 0, 2],
+			"to": [14, 7, 14],
+			"faces": {
+				"north": {"uv": [2, 7, 14, 14], "texture": "#surface"},
+				"east": {"uv": [2, 7, 14, 14], "texture": "#surface"},
+				"south": {"uv": [2, 7, 14, 14], "texture": "#surface"},
+				"west": {"uv": [2, 7, 14, 14], "texture": "#surface"},
+				"up": {"uv": [2, 2, 14, 14], "texture": "#surface"},
+				"down": {"uv": [2, 2, 14, 14], "texture": "#surface", "cullface": "down"}
+			}
+		}
+	]
 }

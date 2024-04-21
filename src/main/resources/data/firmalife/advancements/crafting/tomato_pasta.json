@@ -8,7 +8,7 @@
         "items": [
           {
             "items": [
-              "firmalife:food/pie_dough"
+              "firmalife:food/cooked_pasta"
             ]
           }
         ]
@@ -17,7 +17,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "firmalife:crafting/raw_pumpkin_pie"
+        "recipe": "firmalife:crafting/tomato_pasta"
       }
     }
   },
@@ -29,7 +29,7 @@
   ],
   "rewards": {
     "recipes": [
-      "firmalife:crafting/raw_pumpkin_pie"
+      "firmalife:crafting/tomato_pasta"
     ]
   }
 }

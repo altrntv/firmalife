@@ -197,14 +197,13 @@ def generate(rm: ResourceManager):
         rm.item_model('%scopper_pipe' % pref, parent='firmalife:block/%spipe_inventory' % pref, no_textures=True)
 
     for cheese in CHEESE_WHEELS:
+        states = [({'rack': True}, {'model': 'tfc:block/barrel_rack'})]
         for age in ('fresh', 'aged', 'vintage'):
             for i in range(1, 5):
                 surf = 'firmalife:block/cheese/%s_wheel_surface_%s' % (cheese, age)
                 rm.block_model('cheese/%s_%s_%s' % (cheese, age, i), parent='firmalife:block/cheese_%s' % i, textures={'surface': surf, 'particle': surf, 'down': surf, 'inside': 'firmalife:block/cheese/%s_wheel_inner_%s' % (cheese, age)})
-        block = rm.blockstate('%s_wheel' % cheese, variants=dict(
-            ('age=%s,count=%s' % (a, c), {'model': 'firmalife:block/cheese/%s_%s_%s' % (cheese, a, c)})
-            for a in ('fresh', 'aged', 'vintage') for c in range(1, 5)
-        )).with_lang(lang('%s cheese wheel', cheese)).with_tag('cheese_wheels').with_item_tag('cheese_wheels')
+                states.append(({'age': age, 'count': i}, {'model': 'firmalife:block/cheese/%s_%s_%s' % (cheese, age, i)}))
+        block = rm.blockstate_multipart('%s_wheel' % cheese, *states).with_lang(lang('%s cheese wheel', cheese)).with_tag('cheese_wheels').with_item_tag('cheese_wheels')
         block.with_block_loot([{
             'name': 'firmalife:food/%s' % cheese,
             'functions': [loot_tables.set_count(c)],
@@ -566,7 +565,7 @@ def greenhouse_panel_roof(rm: ResourceManager, name: str, frame: str, glass: str
 
 def greenhouse_trapdoor(rm: ResourceManager, name: str, glass: str) -> 'BlockContext':
     rm.block('%s_greenhouse' % name).make_trapdoor(texture=glass)
-    block = rm.block('%s_greenhouse_trapdoor' % name).with_tag('minecraft:trapdoors').with_lang(lang('%s greenhouse trapdoor' % name)).with_block_loot('%s_greenhouse_trapdoor' % name)
+    block = rm.block('%s_greenhouse_trapdoor' % name).with_tag('minecraft:trapdoors').with_lang(lang('%s greenhouse trapdoor' % name)).with_block_loot('firmalife:%s_greenhouse_trapdoor' % name)
     greenhouse_tags(block, name)
     return block
 

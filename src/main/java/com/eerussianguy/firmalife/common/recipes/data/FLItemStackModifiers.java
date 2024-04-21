@@ -10,6 +10,7 @@ public class FLItemStackModifiers
     {
         register("add_pie_pan", AddPiePanModifier.INSTANCE);
         register("copy_dynamic_food", CopyDynamicFoodModifier.INSTANCE);
+        register("copy_bowl", CopyBowlModifier.INSTANCE);
         register("empty_pan", EmptyPanModifier.INSTANCE);
     }
 

@@ -8,7 +8,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "weathered_treated_wood_greenhouse_trapdoor"
+          "name": "firmalife:weathered_treated_wood_greenhouse_trapdoor"
         }
       ],
       "conditions": [

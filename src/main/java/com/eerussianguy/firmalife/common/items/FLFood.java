@@ -44,7 +44,6 @@ public enum FLFood
     BUTTER,
     PIE_DOUGH,
     PUMPKIN_PIE_DOUGH,
-    RAW_PUMPKIN_PIE,
     PIZZA_DOUGH,
     SHREDDED_CHEESE,
     PICKLED_EGG,

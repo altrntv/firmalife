@@ -1,10 +1,13 @@
 package com.eerussianguy.firmalife.common.recipes;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.eerussianguy.firmalife.common.items.FLItems;
 import com.google.gson.JsonObject;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -24,6 +27,8 @@ import net.dries007.tfc.common.fluids.TFCFluids;
 import net.dries007.tfc.common.recipes.PotRecipe;
 import net.dries007.tfc.common.recipes.SoupPotRecipe;
 import net.dries007.tfc.common.recipes.ingredients.FluidStackIngredient;
+import net.dries007.tfc.compat.jade.common.BlockEntityTooltip;
+import net.dries007.tfc.compat.jade.common.BlockEntityTooltips;
 import net.dries007.tfc.util.Helpers;
 
 import static net.dries007.tfc.common.recipes.SoupPotRecipe.*;
@@ -83,6 +88,17 @@ public class StinkySoupRecipe extends PotRecipe
         {
             return StinkySoupRecipe.OUTPUT_TYPE;
         }
+
+        @Override
+        public BlockEntityTooltip getTooltip()
+        {
+            return ((level, blockState, blockPos, blockEntity, tooltip) -> {
+                final List<Component> text = new ArrayList<>();
+                BlockEntityTooltips.itemWithCount(tooltip, this.stack);
+                FoodCapability.addTooltipInfo(this.stack, text);
+                text.forEach(tooltip);
+            });
+        }
     }
 
     @Override
@@ -136,7 +152,7 @@ public class StinkySoupRecipe extends PotRecipe
                 });
         }
 
-        return new SoupPotRecipe.SoupOutput(soupStack);
+        return new StinkOutput(soupStack);
     }
 
     @Override

@@ -15,8 +15,6 @@
     "firmalife:food/bacon",
     "firmalife:food/cooked_bacon",
     "firmalife:food/garlic_bread",
-    "firmalife:food/cooked_pasta",
-    "firmalife:food/pasta_with_tomato_sauce",
     "firmalife:food/cooked_lasagna",
     "#firmalife:foods/flatbreads",
     "#firmalife:foods/cheeses",
@@ -35,7 +33,6 @@
     "firmalife:food/pie_dough",
     "firmalife:food/pizza_dough",
     "firmalife:food/pumpkin_pie_dough",
-    "firmalife:food/raw_pumpkin_pie",
     "firmalife:food/cocoa_beans",
     "firmalife:food/raw_egg_noodles",
     "firmalife:food/raw_rice_noodles",
@@ -63,14 +60,18 @@
     "firmalife:food/strawberry_ice_cream",
     "firmalife:food/banana_split",
     "firmalife:food/filled_pie",
+    "firmalife:food/raw_pumpkin_pie",
     "firmalife:food/cooked_pie",
     "firmalife:food/stinky_soup",
+    "firmalife:food/cooked_pasta",
     "firmalife:food/cooked_rice_noodles",
+    "firmalife:food/pasta_with_tomato_sauce",
     "firmalife:food/raw_pizza",
     "firmalife:food/cooked_pizza",
     "firmalife:food/burrito",
     "firmalife:food/taco",
     "firmalife:food/maki_roll",
-    "firmalife:food/futo_maki_roll"
+    "firmalife:food/futo_maki_roll",
+    "minecraft:pumpkin_pie"
   ]
 }

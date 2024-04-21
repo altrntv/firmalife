@@ -8,7 +8,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "copper_greenhouse_trapdoor"
+          "name": "firmalife:copper_greenhouse_trapdoor"
         }
       ],
       "conditions": [
