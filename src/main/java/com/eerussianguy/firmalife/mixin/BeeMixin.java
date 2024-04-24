@@ -15,8 +15,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Bee.class)
-public abstract class BeeMixin extends Animal implements NeutralMob, FlyingAnimal {
-    protected BeeMixin(EntityType<? extends Animal> pEntityType, Level pLevel) {
+public abstract class BeeMixin extends Animal implements NeutralMob, FlyingAnimal
+{
+    protected BeeMixin(EntityType<? extends Animal> pEntityType, Level pLevel)
+    {
         super(pEntityType, pLevel);
     }
 
@@ -24,9 +26,12 @@ public abstract class BeeMixin extends Animal implements NeutralMob, FlyingAnima
     abstract void setHasNectar(boolean pHasNectar);
 
     @Inject(method = "tick", at = @At("TAIL"), cancellable = true)
-    private void injectLosePollenSometimes(CallbackInfo ci){
-        if(((Bee)(Object)this) instanceof FLBee){
-            if(((Bee)(Object)this).tickCount % (600) == 0){
+    private void injectLosePollenSometimes(CallbackInfo ci)
+    {
+        if (((Bee) (Object) this) instanceof FLBee)
+        {
+            if (((Bee) (Object) this).tickCount % (600) == 0)
+            {
                 setHasNectar(false);
             }
         }

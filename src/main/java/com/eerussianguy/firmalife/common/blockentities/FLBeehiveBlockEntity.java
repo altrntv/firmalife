@@ -250,10 +250,13 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
 
     }
 
-    private void controlEntitiesTick(){
-        if(level.isNight() && beesInWorld > 0){
+    private void controlEntitiesTick()
+    {
+        if(level.isNight() && beesInWorld > 0)
+        {
             beesInWorld = 0;
-        } else if (level.isDay() && beesInWorld <= 0){
+        } else if (level.isDay() && beesInWorld <= 0)
+        {
             assert level != null;
             final float temp = Climate.getTemperature(level, worldPosition);
 
@@ -263,15 +266,20 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
             Direction direction = getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
             BlockPos posInFront = worldPosition.relative(direction);
 
-            if(level.getBlockState(posInFront).getCollisionShape(level, posInFront).isEmpty() && !usableBees.isEmpty() && beesInWorld == 0){
-                for(IBee bee : usableBees){
-                    if(bee.hasQueen()){
+            if(level.getBlockState(posInFront).getCollisionShape(level, posInFront).isEmpty() && !usableBees.isEmpty() && beesInWorld == 0)
+            {
+                for(IBee bee : usableBees)
+                {
+                    if(bee.hasQueen())
+                    {
                         FLBee beeEntity = FLEntities.FLBEE.get().create(level);
                         assert beeEntity != null;
+
                         beeEntity.moveTo(worldPosition.relative(direction).getCenter());
                         beeEntity.setYRot(direction.toYRot());
                         beeEntity.setSpawnPos(posInFront);
                         level.addFreshEntity(beeEntity);
+
                         level.playSound((Player)null, worldPosition, SoundEvents.BEEHIVE_EXIT, SoundSource.BLOCKS, 1.0F, 1.0F);
                         beesInWorld++;
                     }

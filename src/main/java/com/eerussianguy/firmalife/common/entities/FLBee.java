@@ -22,15 +22,18 @@ import net.minecraft.world.phys.Vec3;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 
-public class FLBee extends Bee {
+public class FLBee extends Bee
+{
 
     @Nullable
     BlockPos spawnPos;
-    public FLBee(EntityType<? extends Bee> pEntityType, Level pLevel) {
+    public FLBee(EntityType<? extends Bee> pEntityType, Level pLevel)
+    {
         super(pEntityType, pLevel);
     }
 
-    protected void registerGoals() {
+    protected void registerGoals()
+    {
         super.registerGoals();
         EntityHelpers.removeGoalOfPriority(this.goalSelector, 1);
         EntityHelpers.removeGoalOfPriority(this.goalSelector, 5);
@@ -38,58 +41,70 @@ public class FLBee extends Bee {
         this.goalSelector.addGoal(8, new FLBeeWanderGoal());
     }
 
-    public void addAdditionalSaveData(CompoundTag pCompound) {
+    public void addAdditionalSaveData(CompoundTag pCompound)
+    {
         super.addAdditionalSaveData(pCompound);
         assert this.getSpawnPos() != null;
         pCompound.put("spawnPos", NbtUtils.writeBlockPos(this.getSpawnPos()));
     }
 
-    public void readAdditionalSaveData(CompoundTag pCompound) {
+    public void readAdditionalSaveData(CompoundTag pCompound)
+    {
         this.spawnPos = null;
         this.spawnPos = NbtUtils.readBlockPos(pCompound.getCompound("spawnPos"));
         super.readAdditionalSaveData(pCompound);
     }
 
     @Nullable
-    public BlockPos getSpawnPos() {
+    public BlockPos getSpawnPos()
+    {
         return spawnPos;
     }
 
-    public void setSpawnPos(BlockPos pos) {
+    public void setSpawnPos(BlockPos pos)
+    {
         spawnPos = pos;
     }
 
-    boolean closerThan(BlockPos pPos, int pDistance) {
+    boolean closerThan(BlockPos pPos, int pDistance)
+    {
         return pPos.closerThan(this.blockPosition(), (double)pDistance);
     }
 
-    class FLBeeWanderGoal extends Goal {
+    class FLBeeWanderGoal extends Goal
+    {
         private static final int WANDER_THRESHOLD = 6;
 
-        FLBeeWanderGoal() {
+        FLBeeWanderGoal()
+        {
             this.setFlags(EnumSet.of(Goal.Flag.MOVE));
         }
 
-        public boolean canUse() {
+        public boolean canUse()
+        {
             return FLBee.this.navigation.isDone() && FLBee.this.random.nextInt(10) == 0;
         }
         public boolean canContinueToUse() {
             return FLBee.this.navigation.isInProgress();
         }
 
-        public void start() {
+        public void start()
+        {
             Vec3 vec3 = this.findPos();
-            if (vec3 != null) {
+            if (vec3 != null)
+            {
                 FLBee.this.navigation.moveTo(FLBee.this.navigation.createPath(BlockPos.containing(vec3), 1), 1.0D);
             }
 
         }
 
         @Nullable
-        private Vec3 findPos() {
+        private Vec3 findPos()
+        {
             Vec3 vec3;
             assert spawnPos != null;
-            if (!closerThan(spawnPos, WANDER_THRESHOLD)) {
+            if (!closerThan(spawnPos, WANDER_THRESHOLD))
+            {
                 Vec3 vec31 = Vec3.atCenterOf(FLBee.this.spawnPos);
                 vec3 = vec31.subtract(FLBee.this.position()).normalize();
             } else {
@@ -103,13 +118,16 @@ public class FLBee extends Bee {
     }
 
     @Override
-    public void tick(){
-        if(tickCount == 10 && spawnPos == null){
+    public void tick()
+    {
+        if(tickCount == 10 && spawnPos == null)
+        {
             spawnPos = this.blockPosition();
         }
         super.tick();
         // goodnight bees
-        if(level().isNight() || level().isRaining()){
+        if(level().isNight() || level().isRaining())
+        {
             this.discard();
         }
     }

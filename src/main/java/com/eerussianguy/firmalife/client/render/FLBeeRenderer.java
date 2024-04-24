@@ -19,14 +19,16 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class FLBeeRenderer extends BeeRenderer {
-    public FLBeeRenderer(EntityRendererProvider.Context p_173931_) {
-        super(p_173931_);
+    public FLBeeRenderer(EntityRendererProvider.Context context)
+    {
+        super(context);
         this.shadowRadius = 0.15f;
         this.shadowStrength = 0.5f;
     }
 
     @Override
-    protected void scale(Bee entity, PoseStack poseStack, float ticks) {
+    protected void scale(Bee entity, PoseStack poseStack, float ticks)
+    {
         poseStack.scale(0.2f, 0.2f, 0.2f);
     }
 }
