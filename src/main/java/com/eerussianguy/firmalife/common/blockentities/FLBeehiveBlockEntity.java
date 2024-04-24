@@ -1,22 +1,34 @@
 package com.eerussianguy.firmalife.common.blockentities;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.eerussianguy.firmalife.common.entities.FLBee;
+import com.eerussianguy.firmalife.common.entities.FLEntities;
+import net.dries007.tfc.util.calendar.Day;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BeehiveBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -56,6 +68,7 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
 
     public static final int MIN_FLOWERS = 10;
     public static final int UPDATE_INTERVAL = ICalendar.TICKS_IN_DAY;
+    public static final int ENTITY_HANDLING_INTERVAL = 1000;
     public static final int SLOTS = 4;
     private static final Component NAME = FLHelpers.blockEntityName("beehive");
     private static final FarmlandBlockEntity.NutrientType N = FarmlandBlockEntity.NutrientType.NITROGEN;
@@ -63,7 +76,9 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
     private static final FarmlandBlockEntity.NutrientType K = FarmlandBlockEntity.NutrientType.POTASSIUM;
 
     private final IBee[] cachedBees;
-    private long lastPlayerTick, lastAreaTick;
+
+    private int beesInWorld;
+    private long lastPlayerTick, lastAreaTick, lastEntityTick;
     private int honey;
 
     public FLBeehiveBlockEntity(BlockPos pos, BlockState state)
@@ -71,8 +86,10 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
         super(FLBlockEntities.BEEHIVE.get(), pos, state, defaultInventory(SLOTS), NAME);
         lastPlayerTick = Integer.MIN_VALUE;
         lastAreaTick = Calendars.SERVER.getTicks();
+        lastEntityTick = Calendars.SERVER.getTicks();
         cachedBees = new IBee[] {null, null, null, null};
         honey = 0;
+        beesInWorld = 0;
 
         sidedInventory
             .on(new PartialItemHandler(inventory).insert(0, 1, 2, 3), Direction.Plane.HORIZONTAL)
@@ -86,6 +103,9 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
         nbt.putLong("lastTick", lastPlayerTick);
         nbt.putLong("lastAreaTick", lastAreaTick);
         nbt.putInt("honey", honey);
+        nbt.putInt("beesInWorld", beesInWorld);
+        nbt.putLong("lastEntityTick", lastEntityTick);
+
     }
 
     @Override
@@ -96,6 +116,8 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
         lastPlayerTick = nbt.getLong("lastTick");
         lastAreaTick = nbt.getLong("lastAreaTick");
         honey = Math.min(nbt.getInt("honey"), getMaxHoney());
+        beesInWorld = nbt.getInt("beesInWorld");
+        lastEntityTick = nbt.getLong("lastEntityTick");
     }
 
     @Override
@@ -120,6 +142,7 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
     public void tryPeriodicUpdate()
     {
         long now = Calendars.SERVER.getTicks();
+        //handle update interval
         if (now > (lastAreaTick + UPDATE_INTERVAL))
         {
             while (lastAreaTick < now)
@@ -128,6 +151,17 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
                 lastAreaTick += UPDATE_INTERVAL;
             }
             markForSync();
+        }
+
+        //handle interval for spawning the entities
+        if(now > (lastEntityTick + ENTITY_HANDLING_INTERVAL)){
+            while (lastEntityTick < now)
+            {
+                controlEntitiesTick();
+                lastEntityTick += ENTITY_HANDLING_INTERVAL;
+            }
+            markForSync();
+            lastEntityTick+= ENTITY_HANDLING_INTERVAL;
         }
     }
 
@@ -157,7 +191,16 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
      */
     private void updateTick()
     {
+
         assert level != null;
+
+        Direction direction = getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
+        BlockPos posInFront = worldPosition.relative(direction);
+        // check if the bees have access out the front
+        if(!level.getBlockState(posInFront).getCollisionShape(level, posInFront).isEmpty()){
+            return;
+        }
+
         final float temp = Climate.getTemperature(level, worldPosition);
         // collect bees that exist and have queens
         final List<IBee> usableBees = Arrays.stream(cachedBees).filter(bee -> bee != null && bee.hasQueen() && temp > BeeAbility.getMinTemperature(bee.getAbility(BeeAbility.HARDINESS))).collect(Collectors.toList());
@@ -203,6 +246,37 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
         {
             usableBees.removeIf(IBee::hasGeneticDisease);
             addHoney(usableBees.size());
+        }
+
+    }
+
+    private void controlEntitiesTick(){
+        if(level.isNight() && beesInWorld > 0){
+            beesInWorld = 0;
+        } else if (level.isDay() && beesInWorld <= 0){
+            assert level != null;
+            final float temp = Climate.getTemperature(level, worldPosition);
+
+            // collect bees that exist and have queens
+            final List<IBee> usableBees = Arrays.stream(cachedBees).filter(bee -> bee != null && bee.hasQueen() && temp > BeeAbility.getMinTemperature(bee.getAbility(BeeAbility.HARDINESS))).collect(Collectors.toList());
+
+            Direction direction = getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
+            BlockPos posInFront = worldPosition.relative(direction);
+
+            if(level.getBlockState(posInFront).getCollisionShape(level, posInFront).isEmpty() && !usableBees.isEmpty() && beesInWorld == 0){
+                for(IBee bee : usableBees){
+                    if(bee.hasQueen()){
+                        FLBee beeEntity = FLEntities.FLBEE.get().create(level);
+                        assert beeEntity != null;
+                        beeEntity.moveTo(worldPosition.relative(direction).getCenter());
+                        beeEntity.setYRot(direction.toYRot());
+                        beeEntity.setSpawnPos(posInFront);
+                        level.addFreshEntity(beeEntity);
+                        level.playSound((Player)null, worldPosition, SoundEvents.BEEHIVE_EXIT, SoundSource.BLOCKS, 1.0F, 1.0F);
+                        beesInWorld++;
+                    }
+                }
+            }
         }
     }
 

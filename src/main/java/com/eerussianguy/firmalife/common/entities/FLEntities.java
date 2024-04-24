@@ -17,8 +17,9 @@ public class FLEntities
 
     public static final RegistryObject<EntityType<SeedBall>> SEED_BALL = register("seed_ball", EntityType.Builder.<SeedBall>of(SeedBall::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10));
 
-    public static <E extends Entity> RegistryObject<EntityType<E>> register(String name, EntityType.Builder<E> builder)
-    {
+    public static final RegistryObject<EntityType<FLBee>> FLBEE = register("bee", EntityType.Builder.<FLBee>of(FLBee::new, MobCategory.CREATURE).sized(0.2F, 0.2F).clientTrackingRange(2));
+
+    public static <E extends Entity> RegistryObject<EntityType<E>> register(String name, EntityType.Builder<E> builder) {
         return register(name, builder, true);
     }
 

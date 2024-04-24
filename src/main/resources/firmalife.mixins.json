@@ -6,6 +6,6 @@
   "injectors": {
     "defaultRequire": 1
   },
-  "mixins": ["BarrelRackMixin"],
+  "mixins": ["BarrelRackMixin", "BeeMixin"],
   "refmap": "firmalife.refmap.json"
 }
