@@ -18,7 +18,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class FLBeeRenderer extends BeeRenderer {
+public class FLBeeRenderer extends BeeRenderer
+{
     public FLBeeRenderer(EntityRendererProvider.Context context)
     {
         super(context);

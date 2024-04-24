@@ -78,7 +78,7 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
     private final IBee[] cachedBees;
 
     private int beesInWorld;
-    private long lastPlayerTick, lastAreaTick, lastEntityTick;
+    private long lastPlayerTick, lastAreaTick;
     private int honey;
 
     public FLBeehiveBlockEntity(BlockPos pos, BlockState state)
@@ -86,7 +86,6 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
         super(FLBlockEntities.BEEHIVE.get(), pos, state, defaultInventory(SLOTS), NAME);
         lastPlayerTick = Integer.MIN_VALUE;
         lastAreaTick = Calendars.SERVER.getTicks();
-        lastEntityTick = Calendars.SERVER.getTicks();
         cachedBees = new IBee[] {null, null, null, null};
         honey = 0;
         beesInWorld = 0;
@@ -104,7 +103,6 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
         nbt.putLong("lastAreaTick", lastAreaTick);
         nbt.putInt("honey", honey);
         nbt.putInt("beesInWorld", beesInWorld);
-        nbt.putLong("lastEntityTick", lastEntityTick);
 
     }
 
@@ -117,7 +115,6 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
         lastAreaTick = nbt.getLong("lastAreaTick");
         honey = Math.min(nbt.getInt("honey"), getMaxHoney());
         beesInWorld = nbt.getInt("beesInWorld");
-        lastEntityTick = nbt.getLong("lastEntityTick");
     }
 
     @Override
@@ -154,14 +151,10 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
         }
 
         //handle interval for spawning the entities
-        if(now > (lastEntityTick + ENTITY_HANDLING_INTERVAL)){
-            while (lastEntityTick < now)
-            {
-                controlEntitiesTick();
-                lastEntityTick += ENTITY_HANDLING_INTERVAL;
-            }
+        if (Calendars.SERVER.getTicks() % ENTITY_HANDLING_INTERVAL == 0)
+        {
+            controlEntitiesTick();
             markForSync();
-            lastEntityTick+= ENTITY_HANDLING_INTERVAL;
         }
     }
 
@@ -197,7 +190,8 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
         Direction direction = getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
         BlockPos posInFront = worldPosition.relative(direction);
         // check if the bees have access out the front
-        if(!level.getBlockState(posInFront).getCollisionShape(level, posInFront).isEmpty()){
+        if (!level.getBlockState(posInFront).getCollisionShape(level, posInFront).isEmpty())
+        {
             return;
         }
 
@@ -252,7 +246,7 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
 
     private void controlEntitiesTick()
     {
-        if(level.isNight() && beesInWorld > 0)
+        if (level.isNight() && beesInWorld > 0)
         {
             beesInWorld = 0;
         } else if (level.isDay() && beesInWorld <= 0)
@@ -266,11 +260,11 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
             Direction direction = getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
             BlockPos posInFront = worldPosition.relative(direction);
 
-            if(level.getBlockState(posInFront).getCollisionShape(level, posInFront).isEmpty() && !usableBees.isEmpty() && beesInWorld == 0)
+            if (level.getBlockState(posInFront).getCollisionShape(level, posInFront).isEmpty() && !usableBees.isEmpty() && beesInWorld == 0)
             {
-                for(IBee bee : usableBees)
+                for (IBee bee : usableBees)
                 {
-                    if(bee.hasQueen())
+                    if (bee.hasQueen())
                     {
                         FLBee beeEntity = FLEntities.FLBEE.get().create(level);
                         assert beeEntity != null;

@@ -71,7 +71,7 @@ public class FLBee extends Bee
         return pPos.closerThan(this.blockPosition(), (double)pDistance);
     }
 
-    class FLBeeWanderGoal extends Goal
+    public class FLBeeWanderGoal extends Goal
     {
         private static final int WANDER_THRESHOLD = 6;
 
@@ -84,7 +84,8 @@ public class FLBee extends Bee
         {
             return FLBee.this.navigation.isDone() && FLBee.this.random.nextInt(10) == 0;
         }
-        public boolean canContinueToUse() {
+        public boolean canContinueToUse()
+        {
             return FLBee.this.navigation.isInProgress();
         }
 
@@ -107,7 +108,8 @@ public class FLBee extends Bee
             {
                 Vec3 vec31 = Vec3.atCenterOf(FLBee.this.spawnPos);
                 vec3 = vec31.subtract(FLBee.this.position()).normalize();
-            } else {
+            } else
+            {
                 vec3 = FLBee.this.getViewVector(0.0F);
             }
 
@@ -120,13 +122,13 @@ public class FLBee extends Bee
     @Override
     public void tick()
     {
-        if(tickCount == 10 && spawnPos == null)
+        if (tickCount == 10 && spawnPos == null)
         {
             spawnPos = this.blockPosition();
         }
         super.tick();
         // goodnight bees
-        if(level().isNight() || level().isRaining())
+        if (level().isNight() || level().isRaining())
         {
             this.discard();
         }
