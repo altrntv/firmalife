@@ -26,7 +26,7 @@ public class FLBee extends Bee
 {
 
     @Nullable
-    BlockPos spawnPos;
+    private BlockPos spawnPos;
     public FLBee(EntityType<? extends Bee> pEntityType, Level pLevel)
     {
         super(pEntityType, pLevel);
@@ -66,7 +66,7 @@ public class FLBee extends Bee
         spawnPos = pos;
     }
 
-    boolean closerThan(BlockPos pPos, int pDistance)
+    private boolean closerThan(BlockPos pPos, int pDistance)
     {
         return pPos.closerThan(this.blockPosition(), (double)pDistance);
     }
