@@ -168,6 +168,7 @@ DEFAULT_LANG = {
     'firmalife.creative_tab.firmalife': 'Firmalife Items',
     'effect.firmalife.swarm': 'Swarm',
     'entity.firmalife.seed_ball': 'Seed Ball',
+    'entity.firmalife.bee': 'Bee',
     'firmalife.tooltip.food_trait.dried': 'Dried',
     'firmalife.tooltip.food_trait.aged': 'Aged',
     'firmalife.tooltip.food_trait.vintage': 'Vintage',

@@ -1,5 +1,7 @@
 package com.eerussianguy.firmalife.common;
 
+import com.eerussianguy.firmalife.common.entities.FLBee;
+import com.eerussianguy.firmalife.common.entities.FLEntities;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 
@@ -10,6 +12,7 @@ import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraftforge.event.AddPackFindersEvent;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -26,6 +29,7 @@ public class FLEvents
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
         bus.addListener(FLEvents::onPackFinder);
+        bus.addListener(FLEvents::onEntityAttributeCreation);
     }
 
     public static void onPackFinder(AddPackFindersEvent event)
@@ -64,6 +68,11 @@ public class FLEvents
         {
             throw new RuntimeException(e);
         }
+    }
+
+    public static void onEntityAttributeCreation(EntityAttributeCreationEvent event)
+    {
+        event.put(FLEntities.FLBEE.get(), FLBee.createAttributes().build());
     }
 
 }

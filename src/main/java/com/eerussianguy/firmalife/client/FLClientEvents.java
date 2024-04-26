@@ -210,6 +210,7 @@ public class FLClientEvents
         event.registerBlockEntityRenderer(FLBlockEntities.COMPOST_TUMBLER.get(), ctx -> new CompostTumblerBlockEntityRenderer());
 
         event.registerEntityRenderer(FLEntities.SEED_BALL.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(FLEntities.FLBEE.get(), FLBeeRenderer::new);
     }
 
     public static void onLayers(EntityRenderersEvent.RegisterLayerDefinitions event)

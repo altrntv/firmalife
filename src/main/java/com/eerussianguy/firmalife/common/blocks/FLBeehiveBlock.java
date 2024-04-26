@@ -136,6 +136,7 @@ public class FLBeehiveBlock extends FourWayDeviceBlock implements HoeOverlayBloc
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random)
     {
+        //TODO probably this doesn't stay but I guess it's up to you! -aleki
         if (state.getValue(BEES) && level.getGameTime() % 24000 > 12000)
         {
             SwarmEffect.particles(level, pos, random);
