@@ -10,7 +10,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
@@ -137,9 +136,10 @@ public class FLBlocks
 
     public static final Map<FLFruitBlocks.StationaryBush, RegistryObject<Block>> STATIONARY_BUSHES = Helpers.mapOfKeys(FLFruitBlocks.StationaryBush.class, bush -> register("plant/" + bush.name() + "_bush", bush::create));
 
-    public static final Map<Wood, RegistryObject<Block>> FOOD_SHELVES = Helpers.mapOfKeys(Wood.class, wood -> register("wood/food_shelf/" + wood.getSerializedName(), () -> new FoodShelfBlock(shelfProperties())));
-    public static final Map<Wood, RegistryObject<Block>> HANGERS = Helpers.mapOfKeys(Wood.class, wood -> register("wood/hanger/" + wood.getSerializedName(), () -> new HangerBlock(hangerProperties())));
-    public static final Map<Wood, RegistryObject<Block>> JARBNETS = Helpers.mapOfKeys(Wood.class, wood -> register("wood/jarbnet/" + wood.getSerializedName(), () -> new JarbnetBlock(jarbnetProperties())));
+    public static final Map<Wood, RegistryObject<Block>> FOOD_SHELVES = Helpers.mapOfKeys(Wood.class, wood -> register("wood/food_shelf/" + wood.getSerializedName(), () -> new FoodShelfBlock(shelfProperties().mapColor(wood.woodColor()))));
+    public static final Map<Wood, RegistryObject<Block>> HANGERS = Helpers.mapOfKeys(Wood.class, wood -> register("wood/hanger/" + wood.getSerializedName(), () -> new HangerBlock(hangerProperties().mapColor(wood.woodColor()))));
+    public static final Map<Wood, RegistryObject<Block>> JARBNETS = Helpers.mapOfKeys(Wood.class, wood -> register("wood/jarbnet/" + wood.getSerializedName(), () -> new JarbnetBlock(jarbnetProperties().mapColor(wood.woodColor()))));
+    public static final Map<Wood, RegistryObject<Block>> BIG_BARRELS = Helpers.mapOfKeys(Wood.class, wood -> register("wood/big_barrel/" + wood.getSerializedName(), () -> new BigBarrelBlock(ExtendedProperties.of().mapColor(wood.woodColor()).sound(SoundType.WOOD).noOcclusion().strength(10f).pushReaction(PushReaction.BLOCK).flammableLikeLogs().blockEntity(FLBlockEntities.BIG_BARREL))));
 
     public static final Map<Carving, RegistryObject<Block>> CARVED_PUMPKINS = Helpers.mapOfKeys(Carving.class, carve ->
         register("carved_pumpkin/" + carve.getSerializedName(), () -> new CarvedPumpkinBlock(Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(1.0F).sound(SoundType.WOOD).isValidSpawn(FLBlocks::always)))

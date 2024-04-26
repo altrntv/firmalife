@@ -9,6 +9,7 @@ import com.eerussianguy.firmalife.common.util.FoodAge;
 public class FLStateProperties
 {
     public static final IntegerProperty LOGS = IntegerProperty.create("logs", 0, 4);
+    public static final IntegerProperty BARREL_PART = IntegerProperty.create("barrel_part", 0, 7);
     public static final BooleanProperty WATERED = BooleanProperty.create("watered");
     public static final BooleanProperty STASIS = BooleanProperty.create("stasis");
     public static final BooleanProperty HAS_CHIMNEY = BooleanProperty.create("has_chimney");

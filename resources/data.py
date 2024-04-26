@@ -180,6 +180,7 @@ def generate(rm: ResourceManager):
     item_size(rm, 'cheese_wheels', '#firmalife:cheese_wheels', Size.very_large, Weight.very_heavy)
     item_size(rm, 'dynamic_foods', '#firmalife:foods/dynamic', Size.very_small, Weight.very_heavy)
     item_size(rm, 'peel', 'firmalife:peel', Size.very_large, Weight.heavy)
+    item_size(rm, 'big_barrels', '#firmalife:big_barrels', Size.very_large, Weight.very_heavy)
 
     item_heat(rm, 'heatable_foods', '#firmalife:foods/heatable', 1)
 

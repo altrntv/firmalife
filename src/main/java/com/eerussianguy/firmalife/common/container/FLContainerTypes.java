@@ -2,6 +2,7 @@ package com.eerussianguy.firmalife.common.container;
 
 import java.util.function.Supplier;
 
+import com.eerussianguy.firmalife.common.blockentities.BigBarrelBlockEntity;
 import com.eerussianguy.firmalife.common.blockentities.StovetopGrillBlockEntity;
 import com.eerussianguy.firmalife.common.blockentities.StovetopPotBlockEntity;
 import net.minecraft.world.inventory.MenuType;
@@ -27,6 +28,7 @@ public class FLContainerTypes
     public static final RegistryObject<MenuType<BeehiveContainer>> BEEHIVE = FLContainerTypes.<FLBeehiveBlockEntity, BeehiveContainer>registerBlock("beehive", FLBlockEntities.BEEHIVE, BeehiveContainer::create);
     public static final RegistryObject<MenuType<StovetopGrillContainer>> STOVETOP_GRILL = FLContainerTypes.<StovetopGrillBlockEntity, StovetopGrillContainer>registerBlock("stovetop_grill", FLBlockEntities.STOVETOP_GRILL, StovetopGrillContainer::create);
     public static final RegistryObject<MenuType<StovetopPotContainer>> STOVETOP_POT = FLContainerTypes.<StovetopPotBlockEntity, StovetopPotContainer>registerBlock("stovetop_pot", FLBlockEntities.STOVETOP_POT, StovetopPotContainer::create);
+    public static final RegistryObject<MenuType<BigBarrelContainer>> BIG_BARREL = FLContainerTypes.<BigBarrelBlockEntity, BigBarrelContainer>registerBlock("big_barrel", FLBlockEntities.BIG_BARREL, BigBarrelContainer::create);
 
     private static <T extends InventoryBlockEntity<?>, C extends BlockEntityContainer<T>> RegistryObject<MenuType<C>> registerBlock(String name, Supplier<BlockEntityType<T>> type, BlockEntityContainer.Factory<T, C> factory)
     {

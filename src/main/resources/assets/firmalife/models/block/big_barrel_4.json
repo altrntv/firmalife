@@ -1,0 +1,22 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"textures": {
+		"1": "firmalife:block/wood/big_barrel/sequoia_0",
+		"2": "firmalife:block/wood/big_barrel/sequoia_0_side",
+		"9": "firmalife:block/wood/big_barrel/sequoia_0_top",
+		"particle": "firmalife:block/wood/big_barrel/sequoia_3_side"
+	},
+	"elements": [
+		{
+			"from": [2, 0, -2],
+			"to": [16, 14, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"south": {"uv": [2, 2, 16, 16], "texture": "#1"},
+				"west": {"uv": [16, 2, 0, 16], "texture": "#2"},
+				"up": {"uv": [0, 2, 16, 16], "rotation": 270, "texture": "#9"}
+			}
+		}
+	]
+}

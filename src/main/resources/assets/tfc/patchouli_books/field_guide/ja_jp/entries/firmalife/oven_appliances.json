@@ -57,7 +57,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "TFCの鍋やグリルは、$(thing)オーブンかまど$()の上に置くことができます。$(br2)これらの機器は、$(thing)オーブンかまど$()から熱を受け取れます。$(br2)しかし、いくつかの制約があります。$(br2)スロットは4つしかなく、鍋はスープ作りにしか使えません。通常の鍋レシピは扱えません。"
+      "text": "Pots and Grills from TFC can be placed on top of a $(thing)Bottom Oven$(). These devices will get heat automatically from the bottom oven. The pot is only able to be used for making soup. It cannot execute regular pot recipes."
     }
   ],
   "read_by_default": true,

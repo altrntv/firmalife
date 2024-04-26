@@ -57,7 +57,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "群峦传说中的锅与烤架能被放置在一个$(thing)烤箱顶部$()之上. 这些设备将自动从烤箱的底部获得热量。它们有几个限制：每个设备只有4个物品槽，而且锅只能用于煮汤，而无法使用常规的配方。"
+      "text": "Pots and Grills from TFC can be placed on top of a $(thing)Bottom Oven$(). These devices will get heat automatically from the bottom oven. The pot is only able to be used for making soup. It cannot execute regular pot recipes."
     }
   ],
   "read_by_default": true,

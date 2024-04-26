@@ -17,6 +17,7 @@ import com.eerussianguy.firmalife.client.model.PeelModel;
 import com.eerussianguy.firmalife.client.model.DynamicBlockModel;
 import com.eerussianguy.firmalife.client.model.QuadPlanterBlockModel;
 import com.eerussianguy.firmalife.client.model.TrellisPlanterBlockModel;
+import com.eerussianguy.firmalife.client.screen.BigBarrelScreen;
 import com.eerussianguy.firmalife.client.screen.StovetopGrillScreen;
 import com.eerussianguy.firmalife.client.screen.StovetopPotScreen;
 import com.eerussianguy.firmalife.common.FLCreativeTabs;
@@ -117,6 +118,7 @@ public class FLClientEvents
             MenuScreens.register(FLContainerTypes.BEEHIVE.get(), BeehiveScreen::new);
             MenuScreens.register(FLContainerTypes.STOVETOP_GRILL.get(), StovetopGrillScreen::new);
             MenuScreens.register(FLContainerTypes.STOVETOP_POT.get(), StovetopPotScreen::new);
+            MenuScreens.register(FLContainerTypes.BIG_BARREL.get(), BigBarrelScreen::new);
 
             TFCItems.FOOD.forEach((food, item) -> {
                 if (FLItems.TFC_FRUITS.contains(food))

@@ -57,7 +57,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Pots and Grills from TFC can be placed on top of a $(thing)Bottom Oven$(). These devices will get heat automatically from the bottom oven. They come with a couple restrictions: Each has only 4 slots, and the pot is only used for making soup. It cannot execute regular pot recipes."
+      "text": "Pots and Grills from TFC can be placed on top of a $(thing)Bottom Oven$(). These devices will get heat automatically from the bottom oven. The pot is only able to be used for making soup. It cannot execute regular pot recipes."
     }
   ],
   "read_by_default": true,

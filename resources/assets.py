@@ -299,6 +299,31 @@ def generate(rm: ResourceManager):
         rm.custom_block_model('firmalife:wood/jarbnet/%s_dynamic' % wood, 'firmalife:jarbnet', {'base': {'parent': 'firmalife:block/wood/jarbnet/%s' % wood}})
         rm.custom_block_model('firmalife:wood/jarbnet/%s_shut_dynamic' % wood, 'firmalife:jarbnet', {'base': {'parent': 'firmalife:block/wood/jarbnet/%s_shut' % wood}})
 
+        tex = {
+            '0': f'firmalife:block/wood/big_barrel/{wood}_3_side',
+            '1': f'firmalife:block/wood/big_barrel/{wood}_0',
+            '2': f'firmalife:block/wood/big_barrel/{wood}_0_side',
+            '3': f'firmalife:block/wood/big_barrel/{wood}_1',
+            '4': f'firmalife:block/wood/big_barrel/{wood}_1_side',
+            '5': f'firmalife:block/wood/big_barrel/{wood}_2',
+            '6': f'firmalife:block/wood/big_barrel/{wood}_2_side',
+            '7': f'firmalife:block/wood/big_barrel/{wood}_3',
+            '8': f'firmalife:block/wood/big_barrel/{wood}_3_top',
+            '9': f'firmalife:block/wood/big_barrel/{wood}_0_top',
+            '10': f'firmalife:block/wood/big_barrel/{wood}_1_top',
+            '11': f'firmalife:block/wood/big_barrel/{wood}_2_top',
+            '12': f'tfc:block/wood/log/{wood}',
+        }
+        for i in range(0, 8):
+            rm.block_model('wood/big_barrel/%s_%s' % (wood, i), parent='firmalife:block/big_barrel_%s' % i, textures=tex)
+        rm.block_model('wood/big_barrel/%s_item' % wood, parent='firmalife:block/big_barrel', textures=tex)
+        rm.item_model('wood/big_barrel/%s' % wood, parent='firmalife:block/wood/big_barrel/%s_item' % wood, no_textures=True)
+        block = rm.blockstate('wood/big_barrel/%s' % wood, variants=dict(
+            ('barrel_part=%s,facing=%s' % (i, f), {'model': 'firmalife:block/wood/big_barrel/%s_%s' % (wood, i), 'y': y if y != 0 else None})
+            for f, y in (('east', 90), ('north', 0), ('south', 180), ('west', 270)) for i in range(0, 8)
+        )).with_lang(lang('%s keg' % wood)).with_tag('minecraft:mineable/axe').with_block_loot({'name': 'firmalife:wood/big_barrel/%s' % wood, 'conditions': [loot_tables.block_state_property('firmalife:wood/big_barrel/%s[barrel_part=0]' % wood)]})
+        block.with_tag('firmalife:big_barrels').with_item_tag('firmalife:big_barrels')
+
     for fruit in FRUITS.keys():
         for prefix in ('', 'growing_'):
             block = rm.blockstate_multipart('plant/' + fruit + '_' + prefix + 'branch',
