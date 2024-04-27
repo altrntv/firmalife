@@ -1,0 +1,33 @@
+{
+  "__comment__": "This file was automatically created by mcresources",
+  "variants": {
+    "axis=x,lifecycle=dormant": {
+      "model": "firmalife:block/grape_top_dead",
+      "y": 90
+    },
+    "axis=z,lifecycle=dormant": {
+      "model": "firmalife:block/grape_top_dead"
+    },
+    "axis=x,lifecycle=healthy": {
+      "model": "firmalife:block/grape_top_0",
+      "y": 90
+    },
+    "axis=z,lifecycle=healthy": {
+      "model": "firmalife:block/grape_top_0"
+    },
+    "axis=x,lifecycle=flowering": {
+      "model": "firmalife:block/grape_top_1",
+      "y": 90
+    },
+    "axis=z,lifecycle=flowering": {
+      "model": "firmalife:block/grape_top_1"
+    },
+    "axis=x,lifecycle=fruiting": {
+      "model": "firmalife:block/grape_top_red",
+      "y": 90
+    },
+    "axis=z,lifecycle=fruiting": {
+      "model": "firmalife:block/grape_top_red"
+    }
+  }
+}

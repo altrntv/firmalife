@@ -1,0 +1,12 @@
+{
+  "__comment__": "This file was automatically created by mcresources",
+  "variants": {
+    "axis=x": {
+      "model": "firmalife:block/grape_trellis_string_center",
+      "y": 90
+    },
+    "axis=z": {
+      "model": "firmalife:block/grape_trellis_string_center"
+    }
+  }
+}

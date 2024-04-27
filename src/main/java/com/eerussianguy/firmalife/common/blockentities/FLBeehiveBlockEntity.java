@@ -246,10 +246,12 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
 
     private void controlEntitiesTick()
     {
+        assert level != null;
         if (level.isNight() && beesInWorld > 0)
         {
             beesInWorld = 0;
-        } else if (level.isDay() && beesInWorld <= 0)
+        }
+        else if (level.isDay() && beesInWorld <= 0)
         {
             assert level != null;
             final float temp = Climate.getTemperature(level, worldPosition);

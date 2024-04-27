@@ -125,6 +125,101 @@ def generate(rm: ResourceManager):
         'axis=z': {'model': 'firmalife:block/wool_string', 'y': 90}
     }).with_block_model(parent='firmalife:block/string', textures={'string': 'minecraft:block/white_wool'}).with_lang(lang('wool string')).with_tag('tfc:mineable_with_sharp_tool').with_item_model().with_block_loot('tfc:wool_yarn')
 
+    rm.blockstate('grape_string', variants={
+        'axis=x': {'model': 'firmalife:block/grape_trellis_string_center', 'y': 90},
+        'axis=z': {'model': 'firmalife:block/grape_trellis_string_center'}
+    }).with_lang(lang('grape string')).with_tag('tfc:mineable_with_sharp_tool').with_block_loot('tfc:jute_fiber')
+
+    rm.blockstate('grape_string_plant_red', variants={
+        'axis=x,stage=0': {'model': 'firmalife:block/grape_0', 'y': 90},
+        'axis=z,stage=0': {'model': 'firmalife:block/grape_0'},
+        'axis=x,stage=1': {'model': 'firmalife:block/grape_1', 'y': 90},
+        'axis=z,stage=1': {'model': 'firmalife:block/grape_1'},
+        'axis=x,stage=2': {'model': 'firmalife:block/grape_2', 'y': 90},
+        'axis=z,stage=2': {'model': 'firmalife:block/grape_2'},
+    }).with_lang(lang('red grape plant')).with_tag('tfc:mineable_with_sharp_tool').with_block_loot('tfc:jute_fiber')
+
+    rm.blockstate('grape_string_plant_white', variants={
+        'axis=x,stage=0': {'model': 'firmalife:block/grape_0', 'y': 90},
+        'axis=z,stage=0': {'model': 'firmalife:block/grape_0'},
+        'axis=x,stage=1': {'model': 'firmalife:block/grape_1', 'y': 90},
+        'axis=z,stage=1': {'model': 'firmalife:block/grape_1'},
+        'axis=x,stage=2': {'model': 'firmalife:block/grape_2', 'y': 90},
+        'axis=z,stage=2': {'model': 'firmalife:block/grape_2'},
+    }).with_lang(lang('white grape plant')).with_tag('tfc:mineable_with_sharp_tool').with_block_loot('tfc:jute_fiber')
+
+    rm.blockstate('grape_string_red', variants={
+        'axis=x,lifecycle=dormant': {'model': 'firmalife:block/grape_top_dead', 'y': 90},
+        'axis=z,lifecycle=dormant': {'model': 'firmalife:block/grape_top_dead'},
+        'axis=x,lifecycle=healthy': {'model': 'firmalife:block/grape_top_0', 'y': 90},
+        'axis=z,lifecycle=healthy': {'model': 'firmalife:block/grape_top_0'},
+        'axis=x,lifecycle=flowering': {'model': 'firmalife:block/grape_top_1', 'y': 90},
+        'axis=z,lifecycle=flowering': {'model': 'firmalife:block/grape_top_1'},
+        'axis=x,lifecycle=fruiting': {'model': 'firmalife:block/grape_top_red', 'y': 90},
+        'axis=z,lifecycle=fruiting': {'model': 'firmalife:block/grape_top_red'},
+    }).with_lang(lang('red grape plant')).with_tag('tfc:mineable_with_sharp_tool').with_block_loot('tfc:jute_fiber')
+
+    rm.blockstate('grape_string_white', variants={
+        'axis=x,lifecycle=dormant': {'model': 'firmalife:block/grape_top_dead', 'y': 90},
+        'axis=z,lifecycle=dormant': {'model': 'firmalife:block/grape_top_dead'},
+        'axis=x,lifecycle=healthy': {'model': 'firmalife:block/grape_top_0', 'y': 90},
+        'axis=z,lifecycle=healthy': {'model': 'firmalife:block/grape_top_0'},
+        'axis=x,lifecycle=flowering': {'model': 'firmalife:block/grape_top_1', 'y': 90},
+        'axis=z,lifecycle=flowering': {'model': 'firmalife:block/grape_top_1'},
+        'axis=x,lifecycle=fruiting': {'model': 'firmalife:block/grape_top_white', 'y': 90},
+        'axis=z,lifecycle=fruiting': {'model': 'firmalife:block/grape_top_white'},
+    }).with_lang(lang('white grape plant')).with_tag('tfc:mineable_with_sharp_tool').with_block_loot('tfc:jute_fiber')
+
+    rm.blockstate_multipart('grape_trellis_post',
+        ({'axis': 'x'}, {'model': 'firmalife:block/grape_trellis'}),
+        ({'axis': 'z'}, {'model': 'firmalife:block/grape_trellis', 'y': 90}),
+        ({'axis': 'x', 'string_plus': True}, {'model': 'firmalife:block/grape_trellis_string', 'y': 180}),
+        ({'axis': 'z', 'string_plus': True}, {'model': 'firmalife:block/grape_trellis_string', 'y': 90}),
+        ({'axis': 'x', 'string_minus': True}, {'model': 'firmalife:block/grape_trellis_string'}),
+        ({'axis': 'z', 'string_minus': True}, {'model': 'firmalife:block/grape_trellis_string', 'y': 270}),
+    ).with_lang(lang('grape_trellis_post')).with_tag('minecraft:mineable/axe').with_block_loot('firmalife:grape_trellis_post')
+    rm.item_model('grape_trellis_post', parent='firmalife:block/grape_trellis', no_textures=True)
+
+    rm.blockstate_multipart('grape_trellis_post_red',
+        ({'axis': 'x'}, {'model': 'firmalife:block/grape_trellis'}),
+        ({'axis': 'z'}, {'model': 'firmalife:block/grape_trellis', 'y': 90}),
+        ({'axis': 'x', 'lifecycle': 'healthy'}, {'model': 'firmalife:block/grape_top_0_norope'}),
+        ({'axis': 'z', 'lifecycle': 'healthy'}, {'model': 'firmalife:block/grape_top_0_norope', 'y': 90}),
+        ({'axis': 'x', 'lifecycle': 'flowering'}, {'model': 'firmalife:block/grape_top_1_norope'}),
+        ({'axis': 'z', 'lifecycle': 'flowering'}, {'model': 'firmalife:block/grape_top_1_norope', 'y': 90}),
+        ({'axis': 'x', 'lifecycle': 'fruiting'}, {'model': 'firmalife:block/grape_top_red_norope'}),
+        ({'axis': 'z', 'lifecycle': 'fruiting'}, {'model': 'firmalife:block/grape_top_red_norope', 'y': 90}),
+        ({'axis': 'x', 'lifecycle': 'dormant'}, {'model': 'firmalife:block/grape_top_dead_norope'}),
+        ({'axis': 'z', 'lifecycle': 'dormant'}, {'model': 'firmalife:block/grape_top_dead_norope', 'y': 90}),
+        ({'axis': 'x', 'string_plus': True}, {'model': 'firmalife:block/grape_trellis_string', 'y': 180}),
+        ({'axis': 'z', 'string_plus': True}, {'model': 'firmalife:block/grape_trellis_string', 'y': 90}),
+        ({'axis': 'x', 'string_minus': True}, {'model': 'firmalife:block/grape_trellis_string'}),
+        ({'axis': 'z', 'string_minus': True}, {'model': 'firmalife:block/grape_trellis_string', 'y': 270}),
+    ).with_lang(lang('grape_trellis_post')).with_tag('minecraft:mineable/axe').with_block_loot('firmalife:grape_trellis_post')
+    rm.blockstate_multipart('grape_trellis_post_white',
+        ({'axis': 'x'}, {'model': 'firmalife:block/grape_trellis'}),
+        ({'axis': 'z'}, {'model': 'firmalife:block/grape_trellis', 'y': 90}),
+        ({'axis': 'x', 'lifecycle': 'healthy'}, {'model': 'firmalife:block/grape_top_0_norope'}),
+        ({'axis': 'z', 'lifecycle': 'healthy'}, {'model': 'firmalife:block/grape_top_0_norope', 'y': 90}),
+        ({'axis': 'x', 'lifecycle': 'flowering'}, {'model': 'firmalife:block/grape_top_1_norope'}),
+        ({'axis': 'z', 'lifecycle': 'flowering'}, {'model': 'firmalife:block/grape_top_1_norope', 'y': 90}),
+        ({'axis': 'x', 'lifecycle': 'fruiting'}, {'model': 'firmalife:block/grape_top_white_norope'}),
+        ({'axis': 'z', 'lifecycle': 'fruiting'}, {'model': 'firmalife:block/grape_top_white_norope', 'y': 90}),
+        ({'axis': 'x', 'lifecycle': 'dormant'}, {'model': 'firmalife:block/grape_top_dead_norope'}),
+        ({'axis': 'z', 'lifecycle': 'dormant'}, {'model': 'firmalife:block/grape_top_dead_norope', 'y': 90}),
+        ({'axis': 'x', 'string_plus': True}, {'model': 'firmalife:block/grape_trellis_string', 'y': 180}),
+        ({'axis': 'z', 'string_plus': True}, {'model': 'firmalife:block/grape_trellis_string', 'y': 90}),
+        ({'axis': 'x', 'string_minus': True}, {'model': 'firmalife:block/grape_trellis_string'}),
+        ({'axis': 'z', 'string_minus': True}, {'model': 'firmalife:block/grape_trellis_string', 'y': 270}),
+    ).with_lang(lang('grape_trellis_post')).with_tag('minecraft:mineable/axe').with_block_loot('firmalife:grape_trellis_post')
+
+    for color in ('red', 'white'):
+        rm.item_model('seeds/%s_grape' % color, 'firmalife:item/seeds/%s_grape' % color).with_lang(lang('%s grape seeds', color)).with_tag('#tfc:seeds')
+
+    rm.item_model('beehive_frame_no_queen', 'firmalife:item/beehive_frame')
+    rm.item_model('beehive_frame_queen', 'firmalife:item/beehive_frame_queen')
+    item_model_property(rm, 'beehive_frame', [{'predicate': {'firmalife:queen': 1}, 'model': 'firmalife:item/beehive_frame_queen'}], {'parent': 'firmalife:item/beehive_frame_no_queen'}).with_lang(lang('beehive frame'))
+
     rm.blockstate('climate_station', variants={
         'stasis=true': {'model': 'firmalife:block/climate_station_valid'},
         'stasis=false': {'model': 'firmalife:block/climate_station_invalid'}

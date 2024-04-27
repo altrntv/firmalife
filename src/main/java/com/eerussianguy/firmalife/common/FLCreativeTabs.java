@@ -67,6 +67,12 @@ public final class FLCreativeTabs
         accept(out, FLItems.BEEKEEPER_LEGGINGS);
         accept(out, FLItems.BEEKEEPER_BOOTS);
         accept(out, FLItems.CINNAMON_BARK);
+        accept(out, FLItems.OLIVINE_WINE_BOTTLE);
+        accept(out, FLItems.HEMATITIC_WINE_BOTTLE);
+        accept(out, FLItems.VOLCANIC_WINE_BOTTLE);
+        accept(out, FLItems.RED_GRAPE_SEEDS);
+        accept(out, FLItems.WHITE_GRAPE_SEEDS);
+
         FLItems.SPICES.values().forEach(reg -> accept(out, reg));
 
         for (OvenType type : OvenType.values())
@@ -110,6 +116,7 @@ public final class FLCreativeTabs
         accept(out, FLBlocks.BONSAI_PLANTER);
         accept(out, FLBlocks.HANGING_PLANTER);
         accept(out, FLBlocks.TRELLIS_PLANTER);
+        accept(out, FLBlocks.GRAPE_TRELLIS_POST);
         accept(out, FLBlocks.SEALED_BRICKS);
         accept(out, FLBlocks.CHISELED_SEALED_BRICKS);
         accept(out, FLBlocks.POLISHED_SEALED_BRICKS);

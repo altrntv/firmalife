@@ -4,6 +4,11 @@
   "values": [
     "firmalife:drying_mat",
     "firmalife:wool_string",
+    "firmalife:grape_string",
+    "firmalife:grape_string_plant_red",
+    "firmalife:grape_string_plant_white",
+    "firmalife:grape_string_red",
+    "firmalife:grape_string_white",
     "firmalife:lit_pumpkin/none",
     "firmalife:carved_pumpkin/none",
     "firmalife:lit_pumpkin/circle",

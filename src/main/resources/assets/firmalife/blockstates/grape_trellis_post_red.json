@@ -1,0 +1,137 @@
+{
+  "__comment__": "This file was automatically created by mcresources",
+  "multipart": [
+    {
+      "when": {
+        "axis": "x"
+      },
+      "apply": {
+        "model": "firmalife:block/grape_trellis"
+      }
+    },
+    {
+      "when": {
+        "axis": "z"
+      },
+      "apply": {
+        "model": "firmalife:block/grape_trellis",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "axis": "x",
+        "lifecycle": "healthy"
+      },
+      "apply": {
+        "model": "firmalife:block/grape_top_0_norope"
+      }
+    },
+    {
+      "when": {
+        "axis": "z",
+        "lifecycle": "healthy"
+      },
+      "apply": {
+        "model": "firmalife:block/grape_top_0_norope",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "axis": "x",
+        "lifecycle": "flowering"
+      },
+      "apply": {
+        "model": "firmalife:block/grape_top_1_norope"
+      }
+    },
+    {
+      "when": {
+        "axis": "z",
+        "lifecycle": "flowering"
+      },
+      "apply": {
+        "model": "firmalife:block/grape_top_1_norope",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "axis": "x",
+        "lifecycle": "fruiting"
+      },
+      "apply": {
+        "model": "firmalife:block/grape_top_red_norope"
+      }
+    },
+    {
+      "when": {
+        "axis": "z",
+        "lifecycle": "fruiting"
+      },
+      "apply": {
+        "model": "firmalife:block/grape_top_red_norope",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "axis": "x",
+        "lifecycle": "dormant"
+      },
+      "apply": {
+        "model": "firmalife:block/grape_top_dead_norope"
+      }
+    },
+    {
+      "when": {
+        "axis": "z",
+        "lifecycle": "dormant"
+      },
+      "apply": {
+        "model": "firmalife:block/grape_top_dead_norope",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "axis": "x",
+        "string_plus": true
+      },
+      "apply": {
+        "model": "firmalife:block/grape_trellis_string",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "axis": "z",
+        "string_plus": true
+      },
+      "apply": {
+        "model": "firmalife:block/grape_trellis_string",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "axis": "x",
+        "string_minus": true
+      },
+      "apply": {
+        "model": "firmalife:block/grape_trellis_string"
+      }
+    },
+    {
+      "when": {
+        "axis": "z",
+        "string_minus": true
+      },
+      "apply": {
+        "model": "firmalife:block/grape_trellis_string",
+        "y": 270
+      }
+    }
+  ]
+}

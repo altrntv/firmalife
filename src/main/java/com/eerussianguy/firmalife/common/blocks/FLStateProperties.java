@@ -20,5 +20,7 @@ public class FLStateProperties
     public static final BooleanProperty ALT = BooleanProperty.create("alt");
     public static final BooleanProperty CCW = BooleanProperty.create("ccw");
     public static final BooleanProperty CW = BooleanProperty.create("cw");
+    public static final BooleanProperty STRING_PLUS = BooleanProperty.create("string_plus");
+    public static final BooleanProperty STRING_MINUS = BooleanProperty.create("string_minus");
     public static final EnumProperty<FoodAge> AGE = EnumProperty.create("age", FoodAge.class);
 }

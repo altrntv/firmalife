@@ -21,6 +21,8 @@ import com.eerussianguy.firmalife.client.screen.BigBarrelScreen;
 import com.eerussianguy.firmalife.client.screen.StovetopGrillScreen;
 import com.eerussianguy.firmalife.client.screen.StovetopPotScreen;
 import com.eerussianguy.firmalife.common.FLCreativeTabs;
+import com.eerussianguy.firmalife.common.capabilities.bee.BeeCapability;
+import com.eerussianguy.firmalife.common.capabilities.bee.IBee;
 import com.eerussianguy.firmalife.common.misc.SprinklerParticle;
 import com.eerussianguy.firmalife.common.util.FLFruit;
 import net.minecraft.ChatFormatting;
@@ -91,7 +93,8 @@ public class FLClientEvents
             FLBlocks.COMPOST_TUMBLER, FLBlocks.CHEDDAR_WHEEL,
             FLBlocks.RAJYA_METOK_WHEEL, FLBlocks.CHEVRE_WHEEL, FLBlocks.SHOSHA_WHEEL, FLBlocks.FETA_WHEEL, FLBlocks.GOUDA_WHEEL, FLBlocks.SMALL_CHROMITE,
             FLBlocks.MIXING_BOWL, FLBlocks.BUTTERFLY_GRASS, FLBlocks.VAT, FLBlocks.HYDROPONIC_PLANTER, FLBlocks.STOVETOP_GRILL, FLBlocks.STOVETOP_POT,
-            FLBlocks.DARK_LADDER, FLBlocks.JARRING_STATION
+            FLBlocks.DARK_LADDER, FLBlocks.JARRING_STATION, FLBlocks.GRAPE_TRELLIS_POST_RED, FLBlocks.GRAPE_TRELLIS_POST_WHITE, FLBlocks.GRAPE_TRELLIS_POST,
+            FLBlocks.GRAPE_STRING, FLBlocks.GRAPE_STRING_RED, FLBlocks.GRAPE_STRING_WHITE, FLBlocks.GRAPE_STRING_PLANT_RED, FLBlocks.GRAPE_STRING_PLANT_WHITE
         ).forEach(reg -> ItemBlockRenderTypes.setRenderLayer(reg.get(), cutout));
 
         ItemBlockRenderTypes.setRenderLayer(FLBlocks.SOLAR_DRIER.get(), translucent);
@@ -127,6 +130,9 @@ public class FLClientEvents
                 }
             });
             FLItems.FRUITS.forEach((food, item) -> registerDryProperty(item));
+
+            ItemProperties.register(FLItems.BEEHIVE_FRAME.get(), FLHelpers.identifier("queen"), (stack, a, b, c) -> stack.getCapability(BeeCapability.CAPABILITY).map(IBee::hasQueen).orElse(false) ? 1f : 0f);
+
         });
     }
 

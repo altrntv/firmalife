@@ -1,7 +1,12 @@
 {
   "__comment__": "This file was automatically created by mcresources",
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "firmalife:item/beehive_frame"
-  }
+  "parent": "firmalife:item/beehive_frame_no_queen",
+  "overrides": [
+    {
+      "predicate": {
+        "firmalife:queen": 1
+      },
+      "model": "firmalife:item/beehive_frame_queen"
+    }
+  ]
 }

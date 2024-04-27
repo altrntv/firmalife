@@ -58,6 +58,11 @@ public class FLItems
     public static final RegistryObject<Item> SPRINKLER = register("sprinkler", () -> new SprinklerItem(FLBlocks.SPRINKLER.get(), FLBlocks.FLOOR_SPRINKLER.get(), prop()));
     public static final RegistryObject<Item> TREATED_LUMBER = register("treated_lumber");
     public static final RegistryObject<Item> WATERING_CAN = register("watering_can", () -> new WateringCanItem(prop().defaultDurability(20)));
+    public static final RegistryObject<Item> HEMATITIC_WINE_BOTTLE = register("hematitic_wine_bottle");
+    public static final RegistryObject<Item> VOLCANIC_WINE_BOTTLE = register("volcanic_wine_bottle");
+    public static final RegistryObject<Item> OLIVINE_WINE_BOTTLE = register("olivine_wine_bottle");
+    public static final RegistryObject<Item> RED_GRAPE_SEEDS = register("seeds/red_grape", () -> new GrapeSeedItem(new Item.Properties(), FLBlocks.GRAPE_STRING_PLANT_RED));
+    public static final RegistryObject<Item> WHITE_GRAPE_SEEDS = register("seeds/white_grape", () -> new GrapeSeedItem(new Item.Properties(), FLBlocks.GRAPE_STRING_PLANT_WHITE));
 
     public static final RegistryObject<Item> BEEKEEPER_HELMET = register("beekeeper_helmet", () -> new ArmorItem(FLArmorMaterials.BEEKEEPER, ArmorItem.Type.HELMET, new Item.Properties()));
     public static final RegistryObject<Item> BEEKEEPER_CHESTPLATE = register("beekeeper_chestplate", () -> new ArmorItem(FLArmorMaterials.BEEKEEPER, ArmorItem.Type.CHESTPLATE, new Item.Properties()));

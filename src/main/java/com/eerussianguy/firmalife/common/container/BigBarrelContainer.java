@@ -60,7 +60,7 @@ public class BigBarrelContainer extends BlockEntityContainer<BigBarrelBlockEntit
 
     private void returnItem(Player player, ItemStack stack)
     {
-        if (player.isAlive() && !((ServerPlayer) player).hasDisconnected())
+        if (player.isAlive() && player instanceof ServerPlayer serverPlayer && !serverPlayer.hasDisconnected())
         {
             player.getInventory().placeItemBackInInventory(stack);
         }

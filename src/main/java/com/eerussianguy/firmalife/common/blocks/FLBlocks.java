@@ -4,6 +4,11 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.function.ToIntFunction;
+import com.eerussianguy.firmalife.common.blocks.plant.GrapeGroundPlantOnStringBlock;
+import com.eerussianguy.firmalife.common.blocks.plant.GrapeStringBlock;
+import com.eerussianguy.firmalife.common.blocks.plant.GrapeStringWithPlantBlock;
+import com.eerussianguy.firmalife.common.blocks.plant.GrapeTrellisPostBlock;
+import com.eerussianguy.firmalife.common.blocks.plant.GrapeTrellisPostWithPlantBlock;
 import javax.annotation.Nullable;
 
 import net.minecraft.core.BlockPos;
@@ -140,6 +145,15 @@ public class FLBlocks
     public static final Map<Wood, RegistryObject<Block>> HANGERS = Helpers.mapOfKeys(Wood.class, wood -> register("wood/hanger/" + wood.getSerializedName(), () -> new HangerBlock(hangerProperties().mapColor(wood.woodColor()))));
     public static final Map<Wood, RegistryObject<Block>> JARBNETS = Helpers.mapOfKeys(Wood.class, wood -> register("wood/jarbnet/" + wood.getSerializedName(), () -> new JarbnetBlock(jarbnetProperties().mapColor(wood.woodColor()))));
     public static final Map<Wood, RegistryObject<Block>> BIG_BARRELS = Helpers.mapOfKeys(Wood.class, wood -> register("wood/big_barrel/" + wood.getSerializedName(), () -> new BigBarrelBlock(ExtendedProperties.of().mapColor(wood.woodColor()).sound(SoundType.WOOD).noOcclusion().strength(10f).pushReaction(PushReaction.BLOCK).flammableLikeLogs().blockEntity(FLBlockEntities.BIG_BARREL))));
+
+    public static final RegistryObject<Block> GRAPE_TRELLIS_POST = register("grape_trellis_post", () -> new GrapeTrellisPostBlock(ExtendedProperties.of().noOcclusion().strength(4f).sound(SoundType.WOOD).mapColor(MapColor.COLOR_BROWN).flammableLikeLogs()));
+    public static final RegistryObject<Block> GRAPE_TRELLIS_POST_WHITE = registerNoItem("grape_trellis_post_white", () -> new GrapeTrellisPostWithPlantBlock(ExtendedProperties.of().noOcclusion().strength(4f).sound(SoundType.WOOD).mapColor(MapColor.COLOR_BROWN).flammableLikeLogs()));
+    public static final RegistryObject<Block> GRAPE_TRELLIS_POST_RED = registerNoItem("grape_trellis_post_red", () -> new GrapeTrellisPostWithPlantBlock(ExtendedProperties.of().noOcclusion().strength(4f).sound(SoundType.WOOD).mapColor(MapColor.COLOR_BROWN).flammableLikeLogs()));
+    public static final RegistryObject<Block> GRAPE_STRING = registerNoItem("grape_string", () -> new GrapeStringBlock(ExtendedProperties.of().noOcclusion().strength(1.0f).sound(SoundType.WOOL).flammableLikeLogs()));
+    public static final RegistryObject<Block> GRAPE_STRING_RED = registerNoItem("grape_string_red", () -> new GrapeStringWithPlantBlock(ExtendedProperties.of().noOcclusion().strength(1.0f).sound(SoundType.WOOL).flammableLikeLogs(), GRAPE_TRELLIS_POST_RED));
+    public static final RegistryObject<Block> GRAPE_STRING_WHITE = registerNoItem("grape_string_white", () -> new GrapeStringWithPlantBlock(ExtendedProperties.of().noOcclusion().strength(1.0f).sound(SoundType.WOOL).flammableLikeLogs(), GRAPE_TRELLIS_POST_WHITE));
+    public static final RegistryObject<Block> GRAPE_STRING_PLANT_RED = registerNoItem("grape_string_plant_red", () -> new GrapeGroundPlantOnStringBlock(ExtendedProperties.of().noOcclusion().strength(1.0f).sound(SoundType.WOOL).flammableLikeLogs(), GRAPE_STRING_RED));
+    public static final RegistryObject<Block> GRAPE_STRING_PLANT_WHITE = registerNoItem("grape_string_plant_white", () -> new GrapeGroundPlantOnStringBlock(ExtendedProperties.of().noOcclusion().strength(1.0f).sound(SoundType.WOOL).flammableLikeLogs(), GRAPE_STRING_WHITE));
 
     public static final Map<Carving, RegistryObject<Block>> CARVED_PUMPKINS = Helpers.mapOfKeys(Carving.class, carve ->
         register("carved_pumpkin/" + carve.getSerializedName(), () -> new CarvedPumpkinBlock(Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(1.0F).sound(SoundType.WOOD).isValidSpawn(FLBlocks::always)))

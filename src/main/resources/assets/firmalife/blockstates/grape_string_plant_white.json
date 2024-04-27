@@ -1,0 +1,26 @@
+{
+  "__comment__": "This file was automatically created by mcresources",
+  "variants": {
+    "axis=x,stage=0": {
+      "model": "firmalife:block/grape_0",
+      "y": 90
+    },
+    "axis=z,stage=0": {
+      "model": "firmalife:block/grape_0"
+    },
+    "axis=x,stage=1": {
+      "model": "firmalife:block/grape_1",
+      "y": 90
+    },
+    "axis=z,stage=1": {
+      "model": "firmalife:block/grape_1"
+    },
+    "axis=x,stage=2": {
+      "model": "firmalife:block/grape_2",
+      "y": 90
+    },
+    "axis=z,stage=2": {
+      "model": "firmalife:block/grape_2"
+    }
+  }
+}
