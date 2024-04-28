@@ -47,6 +47,8 @@ public class FLTags
         public static final TagKey<Item> USABLE_IN_STOVETOP_SOUP = create("usable_in_stovetop_soup");
         public static final TagKey<Item> BEEKEEPER_ARMOR = create("beekeeper_armor");
         public static final TagKey<Item> WINE_BOTTLES = create("wine_bottles");
+        public static final TagKey<Item> GRAPES = create("foods/grapes");
+        public static final TagKey<Item> SMASHED_GRAPES = create("foods/smashed_grapes");
 
         private static TagKey<Item> create(String id)
         {

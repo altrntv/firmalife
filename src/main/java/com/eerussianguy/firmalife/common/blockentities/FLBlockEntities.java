@@ -42,6 +42,7 @@ public class FLBlockEntities
     public static final RegistryObject<BlockEntityType<JarbnetBlockEntity>> JARBNET = register("jarbnet", JarbnetBlockEntity::new, Stream.of(FLBlocks.JARBNETS.values()).<Supplier<? extends Block>>flatMap(Helpers::flatten));
     public static final RegistryObject<BlockEntityType<BigBarrelBlockEntity>> BIG_BARREL = register("big_barrel", BigBarrelBlockEntity::new, Stream.of(FLBlocks.BIG_BARRELS.values()).<Supplier<? extends Block>>flatMap(Helpers::flatten));
     public static final RegistryObject<BlockEntityType<WineShelfBlockEntity>> WINE_SHELF = register("wine_shelf", WineShelfBlockEntity::new, Stream.of(FLBlocks.WINE_SHELVES.values()).<Supplier<? extends Block>>flatMap(Helpers::flatten));
+    public static final RegistryObject<BlockEntityType<StompingBarrelBlockEntity>> STOMPING_BARREL = register("stomping_barrel", StompingBarrelBlockEntity::new, Stream.of(FLBlocks.STOMPING_BARRELS.values()).<Supplier<? extends Block>>flatMap(Helpers::flatten));
     public static final RegistryObject<BlockEntityType<VatBlockEntity>> VAT = register("vat", VatBlockEntity::new, FLBlocks.VAT);
     public static final RegistryObject<BlockEntityType<AshTrayBlockEntity>> ASHTRAY = register("ashtray", AshTrayBlockEntity::new, FLBlocks.ASHTRAY);
     public static final RegistryObject<BlockEntityType<StovetopGrillBlockEntity>> STOVETOP_GRILL = register("stovetop_grill", StovetopGrillBlockEntity::new, FLBlocks.STOVETOP_GRILL);

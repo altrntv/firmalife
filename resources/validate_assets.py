@@ -3,7 +3,7 @@ import json
 from mcresources import utils
 
 assets_path = '../src/main/resources/assets/'
-texture_forgiveness_paths = ('crop', 'spice', 'fruitstuff', 'food', 'mallet', 'dried', 'pineapple', 'coconut', 'metal/full', 'cinnamon', 'block/white_wool', 'squash', 'cocoa', 'egg', 'metal/smooth')
+texture_forgiveness_paths = ('crop', 'spice', 'fruitstuff', 'food', 'mallet', 'dried', 'pineapple', 'coconut', 'metal/full', 'cinnamon', 'block/white_wool', 'squash', 'cocoa', 'egg', 'metal/smooth', 'smashed_grapes')
 
 def main():
     model_locations = glob(assets_path + 'firmalife/models/**/*.json', recursive=True)

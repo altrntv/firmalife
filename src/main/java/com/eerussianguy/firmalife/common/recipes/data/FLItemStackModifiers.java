@@ -12,7 +12,6 @@ public class FLItemStackModifiers
         register("copy_dynamic_food", CopyDynamicFoodModifier.INSTANCE);
         register("copy_bowl", CopyBowlModifier.INSTANCE);
         register("empty_pan", EmptyPanModifier.INSTANCE);
-        register("label_wine", LabelWineModifier.INSTANCE);
     }
 
     private static void register(String name, ItemStackModifier.Serializer<?> serializer)

@@ -2,6 +2,7 @@ package com.eerussianguy.firmalife.common.blocks;
 
 import com.eerussianguy.firmalife.common.FLHelpers;
 import com.eerussianguy.firmalife.common.FLTags;
+import com.eerussianguy.firmalife.common.blockentities.FLBlockEntities;
 import com.eerussianguy.firmalife.common.blockentities.WineShelfBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -38,25 +39,20 @@ public class WineShelfBlock extends FourWayDeviceBlock
     @SuppressWarnings("deprecation")
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result)
     {
-        if (level.getBlockEntity(pos) instanceof WineShelfBlockEntity shelf)
-        {
-            final IItemHandler inv = Helpers.getCapability(shelf, Capabilities.ITEM);
-            if (inv != null)
+        return FLHelpers.consumeInventory(level, pos, FLBlockEntities.WINE_SHELF, (shelf, inv) -> {
+            final ItemStack held = player.getItemInHand(hand);
+            if (Helpers.isItem(held, FLTags.Items.WINE_BOTTLES))
             {
-                final ItemStack held = player.getItemInHand(hand);
-                if (Helpers.isItem(held, FLTags.Items.WINE_BOTTLES))
-                {
-                    Helpers.playSound(level, pos, SoundEvents.GLASS_PLACE);
-                    return FLHelpers.insertOneAny(level, held, 0, 3, shelf, player);
-                }
-                else if (held.isEmpty())
-                {
-                    Helpers.playSound(level, pos, SoundEvents.GLASS_PLACE);
-                    return FLHelpers.takeOneAny(level, 0, 3, shelf, player);
-                }
+                Helpers.playSound(level, pos, SoundEvents.GLASS_PLACE);
+                return FLHelpers.insertOneAny(level, held, 0, 3, shelf, player);
             }
-        }
-        return InteractionResult.PASS;
+            else if (held.isEmpty())
+            {
+                Helpers.playSound(level, pos, SoundEvents.GLASS_PLACE);
+                return FLHelpers.takeOneAny(level, 0, 3, shelf, player);
+            }
+            return InteractionResult.PASS;
+        });
     }
 
     @Override

@@ -6,7 +6,10 @@ import net.minecraft.world.food.FoodProperties;
 public enum FLFruit
 {
     FIG,
-    PINEAPPLE;
+    PINEAPPLE,
+    RED_GRAPES,
+    WHITE_GRAPES
+    ;
 
     private final String name;
     private final boolean meat, fast;

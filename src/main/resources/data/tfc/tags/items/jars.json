@@ -9,6 +9,10 @@
     "firmalife:jar/fig",
     "firmalife:jar/fig_unsealed",
     "firmalife:jar/pineapple",
-    "firmalife:jar/pineapple_unsealed"
+    "firmalife:jar/pineapple_unsealed",
+    "firmalife:jar/red_grapes",
+    "firmalife:jar/red_grapes_unsealed",
+    "firmalife:jar/white_grapes",
+    "firmalife:jar/white_grapes_unsealed"
   ]
 }

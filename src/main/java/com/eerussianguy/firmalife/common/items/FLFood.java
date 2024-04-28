@@ -92,6 +92,8 @@ public enum FLFood
     COOKED_RICE_NOODLES,
     TORTILLA_CHIPS,
     NACHOS,
+    SMASHED_RED_GRAPES,
+    SMASHED_WHITE_GRAPES,
     ;
 
     private final boolean meat, fast;

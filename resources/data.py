@@ -124,6 +124,8 @@ def generate(rm: ResourceManager):
     food_item(rm, 'chocolate_chip_cookie', 'firmalife:food/chocolate_chip_cookie', Category.other, 4, 0.5, 0, 4.5, dairy=0.2, grain=1.0)
     food_item(rm, 'cookie', 'firmalife:food/sugar_cookie', Category.other, 4, 0.5, 0, 4.5, dairy=0.1, grain=0.8)
     food_item(rm, 'hardtack', 'firmalife:food/hardtack', Category.grain, 4, 0.1, 0, 0.02, grain=0.2)
+    food_item(rm, 'grapes', '#firmalife:foods/grapes', Category.fruit, 4, 0.5, 2, 2.5, fruit=0.5)
+    decayable(rm, 'smashed_grapes', '#firmalife:foods/smashed_grapes', Category.other, decay=2.5)
     decayable(rm, 'cookie_dough', 'firmalife:food/cookie_dough', Category.other)
     decayable(rm, 'hardtack_dough', 'firmalife:food/hardtack_dough', Category.other)
     decayable(rm, 'chocolate_chip_cookie_dough', 'firmalife:food/chocolate_chip_cookie_dough', Category.other)
