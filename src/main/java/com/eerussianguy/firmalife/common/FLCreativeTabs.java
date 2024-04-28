@@ -70,6 +70,10 @@ public final class FLCreativeTabs
         accept(out, FLItems.OLIVINE_WINE_BOTTLE);
         accept(out, FLItems.HEMATITIC_WINE_BOTTLE);
         accept(out, FLItems.VOLCANIC_WINE_BOTTLE);
+        accept(out, FLItems.EMPTY_OLIVINE_WINE_BOTTLE);
+        accept(out, FLItems.EMPTY_HEMATITIC_WINE_BOTTLE);
+        accept(out, FLItems.EMPTY_VOLCANIC_WINE_BOTTLE);
+        accept(out, FLItems.CORK);
         accept(out, FLItems.RED_GRAPE_SEEDS);
         accept(out, FLItems.WHITE_GRAPE_SEEDS);
 
@@ -120,6 +124,7 @@ public final class FLCreativeTabs
         accept(out, FLBlocks.SEALED_BRICKS);
         accept(out, FLBlocks.CHISELED_SEALED_BRICKS);
         accept(out, FLBlocks.POLISHED_SEALED_BRICKS);
+        accept(out, FLBlocks.DARK_LADDER);
         accept(out, FLBlocks.SEALED_DOOR);
         accept(out, FLBlocks.SEALED_WALL);
         accept(out, FLBlocks.SEALED_TRAPDOOR);
@@ -132,6 +137,7 @@ public final class FLCreativeTabs
             accept(out, FLBlocks.HANGERS, wood);
             accept(out, FLBlocks.JARBNETS, wood);
             accept(out, FLBlocks.BIG_BARRELS, wood);
+            accept(out, FLBlocks.WINE_SHELVES, wood);
         }
 
         for (Carving carving : Carving.values())

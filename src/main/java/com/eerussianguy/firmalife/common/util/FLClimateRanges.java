@@ -15,6 +15,7 @@ public class FLClimateRanges
 {
     public static final Map<FLFruitBlocks.Tree, Supplier<ClimateRange>> FRUIT_TREES = Helpers.mapOfKeys(FLFruitBlocks.Tree.class, tree -> register("plant/" + tree.name() + "_tree"));
     public static final Map<FLFruitBlocks.StationaryBush, Supplier<ClimateRange>> STATIONARY_BUSHES = Helpers.mapOfKeys(FLFruitBlocks.StationaryBush.class, bush -> register("plant/" + bush.name() + "_bush"));
+    public static final Supplier<ClimateRange> GRAPES = register("plant/grapes");
 
     private static RegisteredDataManager.Entry<ClimateRange> register(String name)
     {

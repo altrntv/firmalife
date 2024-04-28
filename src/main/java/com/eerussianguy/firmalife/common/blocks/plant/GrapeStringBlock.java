@@ -36,7 +36,7 @@ public class GrapeStringBlock extends DeviceBlock
         final Direction.Axis axis = state.getValue(AXIS);
         if (facing.getAxis() == axis)
         {
-            return facingState.getBlock() instanceof GrapeTrellisPostBlock ? state : Blocks.AIR.defaultBlockState();
+            return facingState.getBlock() instanceof GrapeTrellisPostBlock && facingState.getValue(AXIS) != axis ? state : Blocks.AIR.defaultBlockState();
         }
         return state;
     }

@@ -1,0 +1,7 @@
+{
+  "__comment__": "This file was automatically created by mcresources",
+  "loader": "firmalife:wine_shelf",
+  "base": {
+    "parent": "firmalife:block/wood/wine_shelf/mangrove"
+  }
+}

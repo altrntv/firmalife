@@ -58,9 +58,14 @@ public class FLItems
     public static final RegistryObject<Item> SPRINKLER = register("sprinkler", () -> new SprinklerItem(FLBlocks.SPRINKLER.get(), FLBlocks.FLOOR_SPRINKLER.get(), prop()));
     public static final RegistryObject<Item> TREATED_LUMBER = register("treated_lumber");
     public static final RegistryObject<Item> WATERING_CAN = register("watering_can", () -> new WateringCanItem(prop().defaultDurability(20)));
-    public static final RegistryObject<Item> HEMATITIC_WINE_BOTTLE = register("hematitic_wine_bottle");
-    public static final RegistryObject<Item> VOLCANIC_WINE_BOTTLE = register("volcanic_wine_bottle");
-    public static final RegistryObject<Item> OLIVINE_WINE_BOTTLE = register("olivine_wine_bottle");
+    public static final RegistryObject<Item> HEMATITIC_WINE_BOTTLE = register("hematitic_wine_bottle", () -> new FilledWineBottleItem(prop(), FLHelpers.identifier("block/hematitic_wine_bottle")));
+    public static final RegistryObject<Item> VOLCANIC_WINE_BOTTLE = register("volcanic_wine_bottle", () -> new FilledWineBottleItem(prop(), FLHelpers.identifier("block/volcanic_wine_bottle")));
+    public static final RegistryObject<Item> OLIVINE_WINE_BOTTLE = register("olivine_wine_bottle", () -> new FilledWineBottleItem(prop(), FLHelpers.identifier("block/olivine_wine_bottle")));
+    public static final RegistryObject<Item> EMPTY_HEMATITIC_WINE_BOTTLE = register("empty_hematitic_wine_bottle", () -> new WineBottleItem(prop(), FLHelpers.identifier("block/empty_hematitic_wine_bottle")));
+    public static final RegistryObject<Item> EMPTY_VOLCANIC_WINE_BOTTLE = register("empty_volcanic_wine_bottle", () -> new WineBottleItem(prop(), FLHelpers.identifier("block/empty_volcanic_wine_bottle")));
+    public static final RegistryObject<Item> EMPTY_OLIVINE_WINE_BOTTLE = register("empty_olivine_wine_bottle", () -> new WineBottleItem(prop(), FLHelpers.identifier("block/empty_olivine_wine_bottle")));
+    public static final RegistryObject<Item> CORK = register("cork");
+    public static final RegistryObject<Item> BOTTLE_LABEL = register("bottle_label");
     public static final RegistryObject<Item> RED_GRAPE_SEEDS = register("seeds/red_grape", () -> new GrapeSeedItem(new Item.Properties(), FLBlocks.GRAPE_STRING_PLANT_RED));
     public static final RegistryObject<Item> WHITE_GRAPE_SEEDS = register("seeds/white_grape", () -> new GrapeSeedItem(new Item.Properties(), FLBlocks.GRAPE_STRING_PLANT_WHITE));
 

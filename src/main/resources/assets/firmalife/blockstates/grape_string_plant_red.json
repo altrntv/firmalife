@@ -1,25 +1,88 @@
 {
   "__comment__": "This file was automatically created by mcresources",
   "variants": {
-    "axis=x,stage=0": {
+    "axis=x,lifecycle=dormant,stage=0": {
+      "model": "firmalife:block/grape_dead_0",
+      "y": 90
+    },
+    "axis=x,lifecycle=healthy,stage=0": {
       "model": "firmalife:block/grape_0",
       "y": 90
     },
-    "axis=z,stage=0": {
-      "model": "firmalife:block/grape_0"
+    "axis=x,lifecycle=fruiting,stage=0": {
+      "model": "firmalife:block/grape_0",
+      "y": 90
     },
-    "axis=x,stage=1": {
+    "axis=x,lifecycle=flowering,stage=0": {
+      "model": "firmalife:block/grape_0",
+      "y": 90
+    },
+    "axis=x,lifecycle=dormant,stage=1": {
+      "model": "firmalife:block/grape_dead_1",
+      "y": 90
+    },
+    "axis=x,lifecycle=healthy,stage=1": {
       "model": "firmalife:block/grape_1",
       "y": 90
     },
-    "axis=z,stage=1": {
-      "model": "firmalife:block/grape_1"
+    "axis=x,lifecycle=fruiting,stage=1": {
+      "model": "firmalife:block/grape_1",
+      "y": 90
     },
-    "axis=x,stage=2": {
+    "axis=x,lifecycle=flowering,stage=1": {
+      "model": "firmalife:block/grape_1",
+      "y": 90
+    },
+    "axis=x,lifecycle=dormant,stage=2": {
+      "model": "firmalife:block/grape_dead_2",
+      "y": 90
+    },
+    "axis=x,lifecycle=healthy,stage=2": {
       "model": "firmalife:block/grape_2",
       "y": 90
     },
-    "axis=z,stage=2": {
+    "axis=x,lifecycle=fruiting,stage=2": {
+      "model": "firmalife:block/grape_2",
+      "y": 90
+    },
+    "axis=x,lifecycle=flowering,stage=2": {
+      "model": "firmalife:block/grape_2",
+      "y": 90
+    },
+    "axis=z,lifecycle=dormant,stage=0": {
+      "model": "firmalife:block/grape_dead_0"
+    },
+    "axis=z,lifecycle=healthy,stage=0": {
+      "model": "firmalife:block/grape_0"
+    },
+    "axis=z,lifecycle=fruiting,stage=0": {
+      "model": "firmalife:block/grape_0"
+    },
+    "axis=z,lifecycle=flowering,stage=0": {
+      "model": "firmalife:block/grape_0"
+    },
+    "axis=z,lifecycle=dormant,stage=1": {
+      "model": "firmalife:block/grape_dead_1"
+    },
+    "axis=z,lifecycle=healthy,stage=1": {
+      "model": "firmalife:block/grape_1"
+    },
+    "axis=z,lifecycle=fruiting,stage=1": {
+      "model": "firmalife:block/grape_1"
+    },
+    "axis=z,lifecycle=flowering,stage=1": {
+      "model": "firmalife:block/grape_1"
+    },
+    "axis=z,lifecycle=dormant,stage=2": {
+      "model": "firmalife:block/grape_dead_2"
+    },
+    "axis=z,lifecycle=healthy,stage=2": {
+      "model": "firmalife:block/grape_2"
+    },
+    "axis=z,lifecycle=fruiting,stage=2": {
+      "model": "firmalife:block/grape_2"
+    },
+    "axis=z,lifecycle=flowering,stage=2": {
       "model": "firmalife:block/grape_2"
     }
   }

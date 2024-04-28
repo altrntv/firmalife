@@ -17,12 +17,14 @@ import com.eerussianguy.firmalife.client.model.PeelModel;
 import com.eerussianguy.firmalife.client.model.DynamicBlockModel;
 import com.eerussianguy.firmalife.client.model.QuadPlanterBlockModel;
 import com.eerussianguy.firmalife.client.model.TrellisPlanterBlockModel;
+import com.eerussianguy.firmalife.client.model.WineShelfBlockModel;
 import com.eerussianguy.firmalife.client.screen.BigBarrelScreen;
 import com.eerussianguy.firmalife.client.screen.StovetopGrillScreen;
 import com.eerussianguy.firmalife.client.screen.StovetopPotScreen;
 import com.eerussianguy.firmalife.common.FLCreativeTabs;
 import com.eerussianguy.firmalife.common.capabilities.bee.BeeCapability;
 import com.eerussianguy.firmalife.common.capabilities.bee.IBee;
+import com.eerussianguy.firmalife.common.items.WineBottleItem;
 import com.eerussianguy.firmalife.common.misc.SprinklerParticle;
 import com.eerussianguy.firmalife.common.util.FLFruit;
 import net.minecraft.ChatFormatting;
@@ -110,6 +112,7 @@ public class FLClientEvents
         FLBlocks.FOOD_SHELVES.values().forEach(reg -> ItemBlockRenderTypes.setRenderLayer(reg.get(), cutout));
         FLBlocks.HANGERS.values().forEach(reg -> ItemBlockRenderTypes.setRenderLayer(reg.get(), cutout));
         FLBlocks.JARBNETS.values().forEach(reg -> ItemBlockRenderTypes.setRenderLayer(reg.get(), cutout));
+        FLBlocks.WINE_SHELVES.values().forEach(reg -> ItemBlockRenderTypes.setRenderLayer(reg.get(), cutout));
         FLBlocks.CURED_OVEN_BOTTOM.values().forEach(reg -> ItemBlockRenderTypes.setRenderLayer(reg.get(), cutout));
         FLBlocks.CURED_OVEN_TOP.values().forEach(reg -> ItemBlockRenderTypes.setRenderLayer(reg.get(), cutout));
         FLBlocks.CURED_OVEN_HOPPER.values().forEach(reg -> ItemBlockRenderTypes.setRenderLayer(reg.get(), cutout));
@@ -176,6 +179,14 @@ public class FLClientEvents
         event.register(FLHelpers.identifier("block/jar/rotten_compost"));
         event.register(FLHelpers.identifier("block/jar/guano"));
         event.register(FLHelpers.identifier("block/jar/honey"));
+
+        for (Item item : ForgeRegistries.ITEMS.getValues())
+        {
+            if (item instanceof WineBottleItem wine)
+            {
+                event.register(wine.getModelLocation());
+            }
+        }
     }
 
     public static void registerLoaders(ModelEvent.RegisterGeometryLoaders event)
@@ -190,6 +201,7 @@ public class FLClientEvents
         event.register("jarring_station", new DynamicBlockModel.Loader(JarringStationBlockModel::new));
         event.register("food_shelf", new DynamicBlockModel.Loader(FoodShelfBlockModel::new));
         event.register("hanger", new DynamicBlockModel.Loader(HangerBlockModel::new));
+        event.register("wine_shelf", new DynamicBlockModel.Loader(WineShelfBlockModel::new));
     }
 
     private static void registerDryProperty(Supplier<Item> item)

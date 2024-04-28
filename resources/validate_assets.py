@@ -3,7 +3,7 @@ import json
 from mcresources import utils
 
 assets_path = '../src/main/resources/assets/'
-texture_forgiveness_paths = ('crop', 'spice', 'fruitstuff', 'food', 'mallet', 'dried', 'pineapple', 'coconut', 'metal/full', 'cinnamon', 'block/white_wool', 'squash', 'cocoa')
+texture_forgiveness_paths = ('crop', 'spice', 'fruitstuff', 'food', 'mallet', 'dried', 'pineapple', 'coconut', 'metal/full', 'cinnamon', 'block/white_wool', 'squash', 'cocoa', 'egg', 'metal/smooth')
 
 def main():
     model_locations = glob(assets_path + 'firmalife/models/**/*.json', recursive=True)
@@ -63,7 +63,7 @@ def validate_models_used(model_locations, known_models):
         tested += 1
         if f not in fixed_km:
             forgiven = False
-            for check in ('jar_jug', 'spoon', 'block/jar'):
+            for check in ('jar_jug', 'spoon', 'block/jar', 'jarbnet', 'wine_bottle', 'compost_tumbler', 'planter'):
                 if check in f:
                     forgiven = True
             if not forgiven:
@@ -107,7 +107,7 @@ def validate_textures(model_locations):
                             tested += 1
                             path = assets_path + 'firmalife/textures/%s.png' % res.path
                             if len(glob(path)) == 0:
-                                print('Using missing texture, unable to load %s : java.io.FileNotFoundException: %s' % (f, path))
+                                print('In model %s cannot find texture %s' % (f, path))
                                 errors += 1
                             else:
                                 existing_textures.append(path)

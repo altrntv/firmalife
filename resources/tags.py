@@ -37,6 +37,9 @@ def generate(rm: ResourceManager):
     rm.item_tag('foods/raw_fish', *['tfc:food/%s' % fish for fish in TFC_FISH_ITEMS])
     rm.item_tag('foods/cooked_fish', *['tfc:food/cooked_%s' % fish for fish in TFC_FISH_ITEMS])
     rm.item_tag('foods/egg_noodle_flour', *['tfc:food/%s_flour' % g for g in TFC_GRAINS])
+    rm.item_tag('empty_wine_bottles', 'empty_hematitic_wine_bottle', 'empty_olivine_wine_bottle', 'empty_volcanic_wine_bottle')
+    rm.item_tag('filled_wine_bottles', 'hematitic_wine_bottle', 'olivine_wine_bottle', 'volcanic_wine_bottle')
+    rm.item_tag('wine_bottles', '#firmalife:empty_wine_bottles', '#firmalife:filled_wine_bottles')
 
     block_and_item_tag(rm, 'tfc:wild_fruits', 'firmalife:plant/pineapple_bush', 'firmalife:plant/nightshade_bush', 'firmalife:plant/fig_sapling', 'firmalife:plant/cocoa_sapling')
 

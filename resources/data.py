@@ -181,6 +181,8 @@ def generate(rm: ResourceManager):
     item_size(rm, 'dynamic_foods', '#firmalife:foods/dynamic', Size.very_small, Weight.very_heavy)
     item_size(rm, 'peel', 'firmalife:peel', Size.very_large, Weight.heavy)
     item_size(rm, 'big_barrels', '#firmalife:big_barrels', Size.very_large, Weight.very_heavy)
+    item_size(rm, 'wine', '#firmalife:filled_wine_bottles', Size.very_large, Weight.very_heavy)
+    item_size(rm, 'empty_wine', '#firmalife:empty_wine_bottles', Size.normal, Weight.medium)
 
     item_heat(rm, 'heatable_foods', '#firmalife:foods/heatable', 1)
 
@@ -188,6 +190,7 @@ def generate(rm: ResourceManager):
         climate_range(rm, 'plant/%s_tree' % fruit, hydration=(hydration_from_rainfall(data.min_rain), 100, 0), temperature=(data.min_temp - 7, data.max_temp + 7, 0))
     for berry, data in STILL_BUSHES.items():
         climate_range(rm, 'plant/%s_bush' % berry, hydration=(hydration_from_rainfall(data[0]), 100, 0), temperature=(data[2], data[3], 0))
+    climate_range(rm, 'plant/grapes', hydration=(0, 100, 0), temperature=(0, 50, 0))
 
     damage_type(rm, 'oven', exhaustion=0.1, effects='burning')
     damage_type(rm, 'swarm')

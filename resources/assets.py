@@ -130,23 +130,15 @@ def generate(rm: ResourceManager):
         'axis=z': {'model': 'firmalife:block/grape_trellis_string_center'}
     }).with_lang(lang('grape string')).with_tag('tfc:mineable_with_sharp_tool').with_block_loot('tfc:jute_fiber')
 
-    rm.blockstate('grape_string_plant_red', variants={
-        'axis=x,stage=0': {'model': 'firmalife:block/grape_0', 'y': 90},
-        'axis=z,stage=0': {'model': 'firmalife:block/grape_0'},
-        'axis=x,stage=1': {'model': 'firmalife:block/grape_1', 'y': 90},
-        'axis=z,stage=1': {'model': 'firmalife:block/grape_1'},
-        'axis=x,stage=2': {'model': 'firmalife:block/grape_2', 'y': 90},
-        'axis=z,stage=2': {'model': 'firmalife:block/grape_2'},
-    }).with_lang(lang('red grape plant')).with_tag('tfc:mineable_with_sharp_tool').with_block_loot('tfc:jute_fiber')
+    rm.blockstate('grape_string_plant_red', variants=dict(
+       ('axis=%s,lifecycle=%s,stage=%s' % (a, l, s), {'model': 'firmalife:block/%s_%s' % (m, s), 'y': y if y != 0 else None})
+        for a, y in (('x', 90), ('z', 0)) for s in range(0, 3) for l, m in (('dormant', 'grape_dead'), ('healthy', 'grape'), ('fruiting', 'grape'), ('flowering', 'grape'))
+    )).with_lang(lang('red grape plant')).with_tag('tfc:mineable_with_sharp_tool').with_block_loot('tfc:jute_fiber')
 
-    rm.blockstate('grape_string_plant_white', variants={
-        'axis=x,stage=0': {'model': 'firmalife:block/grape_0', 'y': 90},
-        'axis=z,stage=0': {'model': 'firmalife:block/grape_0'},
-        'axis=x,stage=1': {'model': 'firmalife:block/grape_1', 'y': 90},
-        'axis=z,stage=1': {'model': 'firmalife:block/grape_1'},
-        'axis=x,stage=2': {'model': 'firmalife:block/grape_2', 'y': 90},
-        'axis=z,stage=2': {'model': 'firmalife:block/grape_2'},
-    }).with_lang(lang('white grape plant')).with_tag('tfc:mineable_with_sharp_tool').with_block_loot('tfc:jute_fiber')
+    rm.blockstate('grape_string_plant_white', variants=dict(
+        ('axis=%s,lifecycle=%s,stage=%s' % (a, l, s), {'model': 'firmalife:block/%s_%s' % (m, s), 'y': y if y != 0 else None})
+        for a, y in (('x', 90), ('z', 0)) for s in range(0, 3) for l, m in (('dormant', 'grape_dead'), ('healthy', 'grape'), ('fruiting', 'grape'), ('flowering', 'grape'))
+    )).with_lang(lang('white grape plant')).with_tag('tfc:mineable_with_sharp_tool').with_block_loot('tfc:jute_fiber')
 
     rm.blockstate('grape_string_red', variants={
         'axis=x,lifecycle=dormant': {'model': 'firmalife:block/grape_top_dead', 'y': 90},
@@ -214,11 +206,15 @@ def generate(rm: ResourceManager):
     ).with_lang(lang('grape_trellis_post')).with_tag('minecraft:mineable/axe').with_block_loot('firmalife:grape_trellis_post')
 
     for color in ('red', 'white'):
-        rm.item_model('seeds/%s_grape' % color, 'firmalife:item/seeds/%s_grape' % color).with_lang(lang('%s grape seeds', color)).with_tag('#tfc:seeds')
+        rm.item_model('seeds/%s_grape' % color, 'firmalife:item/seeds/%s_grape' % color).with_lang(lang('%s grape seeds', color)).with_tag('tfc:seeds')
 
     rm.item_model('beehive_frame_no_queen', 'firmalife:item/beehive_frame')
     rm.item_model('beehive_frame_queen', 'firmalife:item/beehive_frame_queen')
     item_model_property(rm, 'beehive_frame', [{'predicate': {'firmalife:queen': 1}, 'model': 'firmalife:item/beehive_frame_queen'}], {'parent': 'firmalife:item/beehive_frame_no_queen'}).with_lang(lang('beehive frame'))
+
+    for color in ('hematitic', 'olivine', 'volcanic'):
+        rm.block_model(f'{color}_wine_bottle', {'bottle_cork': 'firmalife:block/wine/bottle_cork', 'bottle': f'firmalife:block/wine/{color}_bottle', 'bottle_neck': f'firmalife:block/wine/{color}_bottle_neck'}, 'firmalife:block/wine_bottle')
+        rm.block_model(f'empty_{color}_wine_bottle', {'bottle_cork': 'tfc:block/empty'}, f'firmalife:block/{color}_wine_bottle')
 
     rm.blockstate('climate_station', variants={
         'stasis=true': {'model': 'firmalife:block/climate_station_valid'},
@@ -418,6 +414,12 @@ def generate(rm: ResourceManager):
             for f, y in (('east', 90), ('north', 0), ('south', 180), ('west', 270)) for i in range(0, 8)
         )).with_lang(lang('%s keg' % wood)).with_tag('minecraft:mineable/axe').with_block_loot({'name': 'firmalife:wood/big_barrel/%s' % wood, 'conditions': [loot_tables.block_state_property('firmalife:wood/big_barrel/%s[barrel_part=0]' % wood)]})
         block.with_tag('firmalife:big_barrels').with_item_tag('firmalife:big_barrels')
+
+        block = rm.blockstate('wood/wine_shelf/%s' % wood, variants=four_rotations('firmalife:block/wood/wine_shelf/%s_dynamic' % wood, (90, None, 180, 270)))
+        block.with_block_model({'0': 'tfc:block/wood/planks/%s' % wood, '2': 'tfc:block/wood/sheet/%s' % wood, '3': 'tfc:block/wood/stripped_log/%s' % wood}, 'firmalife:block/wine_shelf')
+        block.with_lang(lang('%s wine shelf', wood)).with_tag('firmalife:wine_shelves').with_item_tag('firmalife:wine_shelves').with_block_loot('firmalife:wood/wine_shelf/%s' % wood).with_tag('minecraft:mineable/axe')
+        rm.item_model('wood/wine_shelf/%s' % wood, parent='firmalife:block/wood/wine_shelf/%s' % wood, no_textures=True)
+        rm.custom_block_model('firmalife:wood/wine_shelf/%s_dynamic' % wood, 'firmalife:wine_shelf', {'base': {'parent': 'firmalife:block/wood/wine_shelf/%s' % wood}})
 
     for fruit in FRUITS.keys():
         for prefix in ('', 'growing_'):

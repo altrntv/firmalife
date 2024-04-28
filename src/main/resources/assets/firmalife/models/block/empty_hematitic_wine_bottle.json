@@ -1,0 +1,7 @@
+{
+  "__comment__": "This file was automatically created by mcresources",
+  "parent": "firmalife:block/hematitic_wine_bottle",
+  "textures": {
+    "bottle_cork": "tfc:block/empty"
+  }
+}
