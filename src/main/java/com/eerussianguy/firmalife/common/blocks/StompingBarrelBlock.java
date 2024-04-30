@@ -73,12 +73,6 @@ public class StompingBarrelBlock extends DeviceBlock
     }
 
     @Override
-    public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity)
-    {
-
-    }
-
-    @Override
     @SuppressWarnings("deprecation")
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context)
     {

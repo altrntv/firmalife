@@ -1,35 +1,30 @@
 package com.eerussianguy.firmalife.common.blockentities;
 
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.eerussianguy.firmalife.common.entities.FLBee;
 import com.eerussianguy.firmalife.common.entities.FLEntities;
-import net.dries007.tfc.util.calendar.Day;
+import com.eerussianguy.firmalife.common.items.FLItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntitySelector;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BeehiveBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -42,10 +37,13 @@ import com.eerussianguy.firmalife.common.capabilities.bee.IBee;
 import com.eerussianguy.firmalife.common.container.BeehiveContainer;
 import net.dries007.tfc.common.blockentities.FarmlandBlockEntity;
 import net.dries007.tfc.common.blockentities.IFarmland;
+import net.dries007.tfc.common.blockentities.InventoryBlockEntity;
 import net.dries007.tfc.common.blockentities.TickableInventoryBlockEntity;
 import net.dries007.tfc.common.blocks.soil.ConnectedGrassBlock;
 import net.dries007.tfc.common.blocks.soil.DirtBlock;
+import net.dries007.tfc.common.capabilities.InventoryItemHandler;
 import net.dries007.tfc.common.capabilities.PartialItemHandler;
+import net.dries007.tfc.common.items.TFCItems;
 import net.dries007.tfc.util.Helpers;
 import net.dries007.tfc.util.calendar.Calendars;
 import net.dries007.tfc.util.calendar.ICalendar;
@@ -64,12 +62,29 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
         {
             hive.updateState();
         }
+        if (hive.needsSlotUpdate)
+        {
+            if (hive.inventory.getStackInSlot(SLOT_JAR_OUT).isEmpty())
+            {
+                final ItemStack current = hive.inventory.getStackInSlot(SLOT_JAR_IN);
+                if (Helpers.isItem(current, TFCItems.EMPTY_JAR.get()) && hive.takeHoney(1) > 0)
+                {
+                    hive.inventory.setStackInSlot(SLOT_JAR_IN, ItemStack.EMPTY);
+                    hive.inventory.setStackInSlot(SLOT_JAR_OUT, FLItems.HONEY_JAR.get().getDefaultInstance());
+                    Helpers.playSound(level, pos, SoundEvents.BOTTLE_FILL);
+                }
+            }
+        }
     }
 
     public static final int MIN_FLOWERS = 10;
     public static final int UPDATE_INTERVAL = ICalendar.TICKS_IN_DAY;
     public static final int ENTITY_HANDLING_INTERVAL = 1000;
-    public static final int SLOTS = 4;
+    public static final int FRAME_SLOTS = 4;
+    public static final int TOTAL_SLOTS = 6;
+    public static final int SLOT_JAR_IN = 4;
+    public static final int SLOT_JAR_OUT = 5;
+
     private static final Component NAME = FLHelpers.blockEntityName("beehive");
     private static final FarmlandBlockEntity.NutrientType N = FarmlandBlockEntity.NutrientType.NITROGEN;
     private static final FarmlandBlockEntity.NutrientType P = FarmlandBlockEntity.NutrientType.PHOSPHOROUS;
@@ -80,10 +95,11 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
     private int beesInWorld;
     private long lastPlayerTick, lastAreaTick;
     private int honey;
+    private boolean needsSlotUpdate = false;
 
     public FLBeehiveBlockEntity(BlockPos pos, BlockState state)
     {
-        super(FLBlockEntities.BEEHIVE.get(), pos, state, defaultInventory(SLOTS), NAME);
+        super(FLBlockEntities.BEEHIVE.get(), pos, state, be -> new FixedISH(be, TOTAL_SLOTS), NAME);
         lastPlayerTick = Integer.MIN_VALUE;
         lastAreaTick = Calendars.SERVER.getTicks();
         cachedBees = new IBee[] {null, null, null, null};
@@ -91,8 +107,8 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
         beesInWorld = 0;
 
         sidedInventory
-            .on(new PartialItemHandler(inventory).insert(0, 1, 2, 3), Direction.Plane.HORIZONTAL)
-            .on(new PartialItemHandler(inventory).extract(0, 1, 2, 3), Direction.DOWN);
+            .on(new PartialItemHandler(inventory).insert(4), Direction.Plane.HORIZONTAL)
+            .on(new PartialItemHandler(inventory).extract(5), Direction.DOWN);
     }
 
     @Override
@@ -103,7 +119,7 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
         nbt.putLong("lastAreaTick", lastAreaTick);
         nbt.putInt("honey", honey);
         nbt.putInt("beesInWorld", beesInWorld);
-
+        nbt.putBoolean("updatedSize", true);
     }
 
     @Override
@@ -115,6 +131,7 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
         lastAreaTick = nbt.getLong("lastAreaTick");
         honey = Math.min(nbt.getInt("honey"), getMaxHoney());
         beesInWorld = nbt.getInt("beesInWorld");
+        needsSlotUpdate = true;
     }
 
     @Override
@@ -163,11 +180,12 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
     {
         super.setAndUpdateSlots(slot);
         updateCache();
+        needsSlotUpdate = true;
     }
 
     private void updateCache()
     {
-        for (int i = 0; i < SLOTS; i++)
+        for (int i = 0; i < FRAME_SLOTS; i++)
         {
             cachedBees[i] = getBee(i);
         }
@@ -207,7 +225,7 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
             IBee parent1 = null;
             IBee parent2 = null;
             IBee uninitializedBee = null;
-            for (int i = 0; i < SLOTS; i++)
+            for (int i = 0; i < FRAME_SLOTS; i++)
             {
                 final IBee bee = inventory.getStackInSlot(i).getCapability(BeeCapability.CAPABILITY).resolve().orElse(null);
                 if (bee != null)
@@ -458,7 +476,7 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
 
     private boolean hasBees()
     {
-        for (int i = 0; i < SLOTS; i++)
+        for (int i = 0; i < FRAME_SLOTS; i++)
         {
             if (cachedBees[i] != null && cachedBees[i].hasQueen())
             {
@@ -486,7 +504,15 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
     @Override
     public boolean isItemValid(int slot, ItemStack stack)
     {
-        return stack.getCapability(BeeCapability.CAPABILITY).isPresent();
+        if (slot < FRAME_SLOTS)
+        {
+            return stack.getCapability(BeeCapability.CAPABILITY).isPresent();
+        }
+        if (slot == SLOT_JAR_IN)
+        {
+            return Helpers.isItem(stack, TFCItems.EMPTY_JAR.get());
+        }
+        return false;
     }
 
     @Override
@@ -509,5 +535,31 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
     public void setLastCalendarUpdateTick(long tick)
     {
         lastPlayerTick = tick;
+    }
+
+    public static class FixedISH extends InventoryItemHandler
+    {
+        public FixedISH(InventoryBlockEntity<ItemStackHandler> be, int slots)
+        {
+            super(be, slots);
+        }
+
+        @Override
+        public void deserializeNBT(CompoundTag nbt)
+        {
+            setSize(stacks.size());
+            ListTag tagList = nbt.getList("Items", Tag.TAG_COMPOUND);
+            for (int i = 0; i < tagList.size(); i++)
+            {
+                CompoundTag itemTags = tagList.getCompound(i);
+                int slot = itemTags.getInt("Slot");
+
+                if (slot >= 0 && slot < stacks.size())
+                {
+                    stacks.set(slot, ItemStack.of(itemTags));
+                }
+            }
+            onLoad();
+        }
     }
 }

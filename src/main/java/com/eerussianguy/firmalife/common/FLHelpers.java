@@ -19,6 +19,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -56,6 +57,18 @@ public class FLHelpers
     public static Vec3 vec3(BlockPos pos)
     {
         return new Vec3(pos.getX(), pos.getY(), pos.getZ());
+    }
+
+    public static void returnItem(Player player, ItemStack stack)
+    {
+        if (player.isAlive() && player instanceof ServerPlayer serverPlayer && !serverPlayer.hasDisconnected())
+        {
+            player.getInventory().placeItemBackInInventory(stack);
+        }
+        else
+        {
+            player.drop(stack, false);
+        }
     }
 
     public static void resetCounter(Level level, BlockPos pos)

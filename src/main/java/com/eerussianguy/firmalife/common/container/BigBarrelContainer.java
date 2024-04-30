@@ -1,5 +1,6 @@
 package com.eerussianguy.firmalife.common.container;
 
+import com.eerussianguy.firmalife.common.FLHelpers;
 import com.eerussianguy.firmalife.common.blockentities.BigBarrelBlockEntity;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
@@ -54,19 +55,8 @@ public class BigBarrelContainer extends BlockEntityContainer<BigBarrelBlockEntit
     public void removed(Player player)
     {
         super.removed(player);
-        returnItem(player, slots.get(BigBarrelBlockEntity.SLOT_FLUID_CONTAINER_IN).remove(1));
-        returnItem(player, slots.get(BigBarrelBlockEntity.SLOT_FLUID_CONTAINER_OUT).remove(1));
+        FLHelpers.returnItem(player, slots.get(BigBarrelBlockEntity.SLOT_FLUID_CONTAINER_IN).remove(1));
+        FLHelpers.returnItem(player, slots.get(BigBarrelBlockEntity.SLOT_FLUID_CONTAINER_OUT).remove(1));
     }
 
-    private void returnItem(Player player, ItemStack stack)
-    {
-        if (player.isAlive() && player instanceof ServerPlayer serverPlayer && !serverPlayer.hasDisconnected())
-        {
-            player.getInventory().placeItemBackInInventory(stack);
-        }
-        else
-        {
-            player.drop(stack, false);
-        }
-    }
 }

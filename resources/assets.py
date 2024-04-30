@@ -416,7 +416,7 @@ def generate(rm: ResourceManager):
         block.with_tag('firmalife:big_barrels').with_item_tag('firmalife:big_barrels')
 
         rm.blockstate('wood/stomping_barrel/%s' % wood).with_block_model({'0': 'tfc:block/wood/sheet/%s' % wood}, 'firmalife:block/stomping_barrel').with_lang(lang('%s stomping barrel', wood)).with_tag('minecraft:mineable/axe').with_block_loot('firmalife:wood/stomping_barrel/%s' % wood).with_tag('firmalife:stomping_barrels').with_item_tag('firmalife:stomping_barrels')
-        rm.item_model('wood/stomping_barrel/%s' % wood, parent='firmalife:block/stomping_barrel/%s' % wood, no_textures=True)
+        rm.item_model('wood/stomping_barrel/%s' % wood, parent='firmalife:block/wood/stomping_barrel/%s' % wood, no_textures=True)
 
         block = rm.blockstate('wood/wine_shelf/%s' % wood, variants=four_rotations('firmalife:block/wood/wine_shelf/%s_dynamic' % wood, (90, None, 180, 270)))
         block.with_block_model({'0': 'tfc:block/wood/planks/%s' % wood, '2': 'tfc:block/wood/sheet/%s' % wood, '3': 'tfc:block/wood/stripped_log/%s' % wood}, 'firmalife:block/wine_shelf')

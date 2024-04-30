@@ -72,7 +72,7 @@ public class FLBeehiveBlock extends FourWayDeviceBlock implements HoeOverlayBloc
         return level.getBlockEntity(pos, FLBlockEntities.BEEHIVE.get()).map(hive ->
             hive.getCapability(Capabilities.ITEM).map(inv -> {
                 float calmChance = 0;
-                for (int i = 0; i < FLBeehiveBlockEntity.SLOTS; i++)
+                for (int i = 0; i < FLBeehiveBlockEntity.FRAME_SLOTS; i++)
                 {
                     IBee bee = inv.getStackInSlot(i).getCapability(BeeCapability.CAPABILITY).resolve().orElse(null);
                     if (bee != null && bee.hasQueen())
@@ -131,16 +131,6 @@ public class FLBeehiveBlock extends FourWayDeviceBlock implements HoeOverlayBloc
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource rand)
     {
         level.getBlockEntity(pos, FLBlockEntities.BEEHIVE.get()).ifPresent(FLBeehiveBlockEntity::tryPeriodicUpdate);
-    }
-
-    @Override
-    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random)
-    {
-        //TODO probably this doesn't stay but I guess it's up to you! -aleki
-        if (state.getValue(BEES) && level.getGameTime() % 24000 > 12000)
-        {
-            SwarmEffect.particles(level, pos, random);
-        }
     }
 
     @Override
