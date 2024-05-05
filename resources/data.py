@@ -66,6 +66,8 @@ def generate(rm: ResourceManager):
     simple_plantable(rm, 'sugarcane', 'potassium', 4, planter='large', firmalife=True)
     plantable(rm, 'jute', 'tfc:seeds/jute', 'tfc:jute', 'potassium', ['firmalife:block/crop/jute_%s' % i for i in range(0, 5)], 4, 'large')
     plantable(rm, 'papyrus', 'tfc:seeds/papyrus', 'tfc:papyrus', 'potassium', ['firmalife:block/crop/papyrus_%s' % i for i in range(0, 6)], 5, 'large')
+    plantable(rm, 'red_grapes', 'firmalife:seeds/red_grape', 'firmalife:food/red_grapes', 'nitrogen', ['firmalife:block/crop/%s' % c for c in ('grape_leaves', 'grape_leaves_dead', 'grape_leaves_flowering', 'grape_leaves_red')], 0, 'trellis', tier=15, seed_chance=0.1)
+    plantable(rm, 'white_grapes', 'firmalife:seeds/white_grape', 'firmalife:food/white_grapes', 'nitrogen', ['firmalife:block/crop/%s' % c for c in ('grape_leaves', 'grape_leaves_dead', 'grape_leaves_flowering', 'grape_leaves_white')], 0, 'trellis', tier=15, seed_chance=0.1)
 
     bonsai_plantable(rm, 'cherry', 'nitrogen')
     bonsai_plantable(rm, 'green_apple', 'nitrogen')
@@ -95,7 +97,6 @@ def generate(rm: ResourceManager):
     trellis_plantable(rm, 'wintergreen_berry', 'tfc:plant/wintergreen_berry_bush', 'tfc:food/wintergreen_berry', 'nitrogen')
     trellis_plantable(rm, 'nightshade', 'firmalife:plant/nightshade_bush', 'firmalife:food/nightshade_berry', 'nitrogen', firmalife=True)
     trellis_plantable(rm, 'pineapple', 'firmalife:plant/pineapple_bush', 'firmalife:food/pineapple', 'nitrogen', firmalife=True)
-    # missing is cranberries. hydroponic planter?
 
     # Drinkable
     drinkable(rm, 'chocolate', 'firmalife:chocolate', thirst=10, food={'hunger': 0, 'saturation': 1.0, 'dairy': 1.0})

@@ -12,11 +12,7 @@
       "item": "firmalife:food/cooked_pie"
     },
     "modifiers": [
-      "firmalife:copy_dynamic_food",
-      {
-        "type": "tfc:remove_trait",
-        "trait": "firmalife:raw"
-      }
+      "firmalife:copy_dynamic_food"
     ]
   },
   "temperature": 400,

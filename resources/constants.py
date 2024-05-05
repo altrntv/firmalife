@@ -183,7 +183,7 @@ DEFAULT_LANG = {
     'firmalife.tooltip.food_trait.shelved_3': 'On a Cellar Shelf III',
     'firmalife.tooltip.food_trait.smoked': 'Smoked',
     'firmalife.tooltip.food_trait.rancid_smoked': 'Rancid Smoked',
-    'firmalife.tooltip.food_trait.raw': 'Raw (INEDIBLE)',
+    'firmalife.tooltip.food_trait.fermented': 'Fermented',
     'firmalife.tooltip.seed_ball': 'Throw me!',
     'firmalife.tooltip.seed_ball_disabled': 'This server has disabled seed balls!',
     'firmalife.tooltip.planter_usable': 'Plantable in a %s',
@@ -240,7 +240,7 @@ DEFAULT_LANG = {
     **{'firmalife.bee.infection%s' % i: d for i, d in enumerate(PARASITIC_INFECTIONS)},
     'firmalife.beehive.honey': 'Honey: %s / 12',
     'firmalife.beehive.bee': 'Frame %s: ',
-    'firmalife.beehive.bee_cold': 'Too cold! Minimum: %s C, Current: %s C',
+    'firmalife.beehive.bee_cold': 'Too cold! %s C < %s C',
     'firmalife.beehive.has_queen': 'Has Queen. ',
     'firmalife.beehive.no_queen': 'Empty',
     'firmalife.beehive.flowers': 'Flowers: %s',
@@ -316,6 +316,8 @@ DEFAULT_LANG = {
     'tfc.jei.mixing_bowl': 'Mixing Bowl',
     'tfc.jei.oven': 'Oven',
     'tfc.jei.vat': 'Vat',
+    'tfc.jei.stomping': 'Stomping',
+    'tfc.jei.bowl_pot': 'Bowl Pot',
 }
 
 def lang(key: str, *args) -> str:

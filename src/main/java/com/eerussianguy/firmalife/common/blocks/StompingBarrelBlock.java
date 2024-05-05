@@ -1,9 +1,9 @@
 package com.eerussianguy.firmalife.common.blocks;
 
 import com.eerussianguy.firmalife.common.FLHelpers;
-import com.eerussianguy.firmalife.common.FLTags;
 import com.eerussianguy.firmalife.common.blockentities.FLBlockEntities;
 import com.eerussianguy.firmalife.common.blockentities.StompingBarrelBlockEntity;
+import com.eerussianguy.firmalife.common.recipes.StompingRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
@@ -23,6 +23,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 
 import net.dries007.tfc.common.blocks.ExtendedProperties;
 import net.dries007.tfc.common.blocks.devices.DeviceBlock;
+import net.dries007.tfc.common.recipes.inventory.ItemStackInventory;
 import net.dries007.tfc.util.Helpers;
 
 public class StompingBarrelBlock extends DeviceBlock
@@ -41,7 +42,7 @@ public class StompingBarrelBlock extends DeviceBlock
         return FLHelpers.consumeInventory(level, pos, FLBlockEntities.STOMPING_BARREL, (barrel, inv) -> {
             final ItemStack held = player.getItemInHand(hand);
             final ItemStack current = inv.getStackInSlot(0);
-            if (Helpers.isItem(held, FLTags.Items.GRAPES))
+            if (StompingRecipe.getRecipe(level, new ItemStackInventory(held)) != null)
             {
                 if ((ItemStack.isSameItem(current, held) || current.isEmpty()) && current.getCount() < StompingBarrelBlockEntity.MAX_GRAPES)
                 {

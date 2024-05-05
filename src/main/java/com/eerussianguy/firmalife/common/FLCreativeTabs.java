@@ -12,6 +12,7 @@ import com.eerussianguy.firmalife.common.blocks.plant.FLFruitBlocks;
 import com.eerussianguy.firmalife.common.items.FLItems;
 import com.eerussianguy.firmalife.common.util.Carving;
 import com.eerussianguy.firmalife.common.util.FLMetal;
+import com.eerussianguy.firmalife.common.util.FLSelfTests;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -263,7 +264,7 @@ public final class FLCreativeTabs
         if (reg.get().asItem() == Items.AIR)
         {
             FirmaLife.LOGGER.error("BlockItem with no Item added to creative tab: " + reg);
-            SelfTests.reportExternalError();
+            FLSelfTests.reportExternalError();
             return;
         }
         out.accept(reg.get());

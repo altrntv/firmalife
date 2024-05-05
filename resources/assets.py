@@ -187,7 +187,7 @@ def generate(rm: ResourceManager):
         ({'axis': 'z', 'string_plus': True}, {'model': 'firmalife:block/grape_trellis_string', 'y': 90}),
         ({'axis': 'x', 'string_minus': True}, {'model': 'firmalife:block/grape_trellis_string'}),
         ({'axis': 'z', 'string_minus': True}, {'model': 'firmalife:block/grape_trellis_string', 'y': 270}),
-    ).with_lang(lang('grape_trellis_post')).with_tag('minecraft:mineable/axe').with_block_loot('firmalife:grape_trellis_post')
+    ).with_lang(lang('red grape plant')).with_tag('minecraft:mineable/axe').with_block_loot('firmalife:grape_trellis_post')
     rm.blockstate_multipart('grape_trellis_post_white',
         ({'axis': 'x'}, {'model': 'firmalife:block/grape_trellis'}),
         ({'axis': 'z'}, {'model': 'firmalife:block/grape_trellis', 'y': 90}),
@@ -203,7 +203,7 @@ def generate(rm: ResourceManager):
         ({'axis': 'z', 'string_plus': True}, {'model': 'firmalife:block/grape_trellis_string', 'y': 90}),
         ({'axis': 'x', 'string_minus': True}, {'model': 'firmalife:block/grape_trellis_string'}),
         ({'axis': 'z', 'string_minus': True}, {'model': 'firmalife:block/grape_trellis_string', 'y': 270}),
-    ).with_lang(lang('grape_trellis_post')).with_tag('minecraft:mineable/axe').with_block_loot('firmalife:grape_trellis_post')
+    ).with_lang(lang('white grape plant')).with_tag('minecraft:mineable/axe').with_block_loot('firmalife:grape_trellis_post')
 
     for color in ('red', 'white'):
         rm.item_model('seeds/%s_grape' % color, 'firmalife:item/seeds/%s_grape' % color).with_lang(lang('%s grape seeds', color)).with_tag('tfc:seeds')
@@ -283,7 +283,7 @@ def generate(rm: ResourceManager):
             ({'up': True}, {'model': pipe_on, 'x': 180}),
             ({'up': False}, {'model': pipe_off, 'x': 180}),
         )
-        block.with_block_loot('firmalife:%scopper_pipe' % pref)
+        block.with_block_loot('firmalife:%scopper_pipe' % pref).with_tag('minecraft:mineable/pickaxe')
         block.with_lang(lang('%scopper_pipe', pref))
         rm.item_model('%scopper_pipe' % pref, parent='firmalife:block/%spipe_inventory' % pref, no_textures=True)
 
@@ -299,7 +299,7 @@ def generate(rm: ResourceManager):
             'name': 'firmalife:food/%s' % cheese,
             'functions': [loot_tables.set_count(c)],
             'conditions': [loot_tables.block_state_property('firmalife:%s_wheel[count=%s]' % (cheese, c))]
-        } for c in range(1, 5)])
+        } for c in range(1, 5)]).with_tag('tfc:mineable_with_sharp_tool')
         rm.item_model('firmalife:%s_wheel' % cheese, parent='firmalife:block/cheese/%s_fresh_4' % cheese, no_textures=True)
 
     ore = 'chromite'
@@ -331,6 +331,9 @@ def generate(rm: ResourceManager):
         slab_loot(rm, 'firmalife:%s_slab' % var)
         rm.block_loot('firmalife:%s_stairs' % var, 'firmalife:%s_stairs' % var)
         rm.block_loot('firmalife:%s_wall' % var, 'firmalife:%s_wall' % var)
+        rm.block_tag('minecraft:walls', 'firmalife:%s_wall' % var)
+        rm.block_tag('minecraft:stairs', 'firmalife:%s_stairs' % var)
+        rm.block_tag('minecraft:slabs', 'firmalife:%s_slab' % var)
         for extra in ('_slab', '_stairs', '_wall'):
             rm.block('firmalife:%s%s' % (var, extra)).with_lang(lang('%s%s', var.replace('bricks', 'brick').replace('tiles', 'tile'), extra)).with_tag('firmalife:oven_blocks')
 

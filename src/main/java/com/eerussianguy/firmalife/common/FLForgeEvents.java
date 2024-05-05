@@ -1,11 +1,17 @@
 package com.eerussianguy.firmalife.common;
 
+import com.eerussianguy.firmalife.common.blockentities.OvenBottomBlockEntity;
+import com.eerussianguy.firmalife.common.blockentities.OvenTopBlockEntity;
 import com.eerussianguy.firmalife.common.blocks.JarbnetBlock;
 import com.eerussianguy.firmalife.common.blocks.OvenBottomBlock;
+import com.eerussianguy.firmalife.common.blocks.OvenTopBlock;
 import com.eerussianguy.firmalife.common.capabilities.player.FLPlayerData;
 import com.eerussianguy.firmalife.common.capabilities.player.FLPlayerDataCapability;
+import com.eerussianguy.firmalife.common.util.FLSelfTests;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
@@ -20,6 +26,7 @@ import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.network.PacketDistributor;
@@ -36,6 +43,7 @@ import net.dries007.tfc.common.items.CandleBlockItem;
 import net.dries007.tfc.config.TFCConfig;
 import net.dries007.tfc.util.Helpers;
 import net.dries007.tfc.util.events.AnimalProductEvent;
+import net.dries007.tfc.util.events.DouseFireEvent;
 import net.dries007.tfc.util.events.StartFireEvent;
 
 public class FLForgeEvents
@@ -45,11 +53,21 @@ public class FLForgeEvents
         final IEventBus bus = MinecraftForge.EVENT_BUS;
 
         bus.addListener(FLForgeEvents::onFireStart);
+        bus.addListener(FLForgeEvents::onFireStop);
         bus.addListener(FLForgeEvents::addReloadListeners);
         bus.addListener(FLForgeEvents::onDataPackSync);
         bus.addListener(FLForgeEvents::onAnimalProduce);
         bus.addListener(FLForgeEvents::onLogin);
+        bus.addListener(FLForgeEvents::onLevelLoad);
         //bus.addListener(FLForgeEvents::onEntityCaps); use generic listener
+    }
+
+    public static void onLevelLoad(LevelEvent.Load event)
+    {
+        if (event.getLevel() instanceof ServerLevel level && level.dimension() == Level.OVERWORLD)
+        {
+            FLSelfTests.runServerSelfTests();
+        }
     }
 
     public static void onEntityCaps(AttachCapabilitiesEvent<Entity> event)
@@ -117,6 +135,26 @@ public class FLForgeEvents
                     }
                 }
             });
+        }
+    }
+
+    public static void onFireStop(DouseFireEvent event)
+    {
+        final BlockState state = event.getState();
+        final Level level = event.getLevel();
+        final BlockPos pos = event.getPos();
+
+        if (state.getBlock() instanceof OvenBottomBlock && level.getBlockEntity(pos) instanceof OvenBottomBlockEntity bottom)
+        {
+            bottom.extinguish(state);
+            Helpers.playSound(level, pos, SoundEvents.FIRE_EXTINGUISH);
+            event.setCanceled(true);
+        }
+        else if (state.getBlock() instanceof OvenTopBlock && level.getBlockEntity(pos) instanceof OvenTopBlockEntity top)
+        {
+            top.extinguish();
+            Helpers.playSound(level, pos, SoundEvents.FIRE_EXTINGUISH);
+            event.setCanceled(true);
         }
     }
 

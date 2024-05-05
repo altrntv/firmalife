@@ -82,6 +82,8 @@
     "firmalife:irrigation_tank",
     "firmalife:sprinkler",
     "firmalife:floor_sprinkler",
+    "firmalife:oxidized_copper_pipe",
+    "firmalife:copper_pipe",
     "firmalife:ore/normal_chromite/granite",
     "firmalife:ore/poor_chromite/granite",
     "firmalife:ore/rich_chromite/granite",
@@ -149,6 +151,10 @@
     "firmalife:rustic_bricks",
     "#firmalife:oven_blocks",
     "firmalife:metal/block/stainless_steel",
-    "firmalife:metal/block/chromium"
+    "firmalife:metal/block/stainless_steel_slab",
+    "firmalife:metal/block/stainless_steel_stairs",
+    "firmalife:metal/block/chromium",
+    "firmalife:metal/block/chromium_slab",
+    "firmalife:metal/block/chromium_stairs"
   ]
 }

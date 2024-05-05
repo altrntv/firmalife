@@ -20,6 +20,7 @@ public class FLRecipeTypes
     public static final RegistryObject<RecipeType<MixingBowlRecipe>> MIXING_BOWL = register("mixing_bowl");
     public static final RegistryObject<RecipeType<OvenRecipe>> OVEN = register("oven");
     public static final RegistryObject<RecipeType<VatRecipe>> VAT = register("vat");
+    public static final RegistryObject<RecipeType<StompingRecipe>> STOMPING = register("stomping");
 
     public static void init()
     {

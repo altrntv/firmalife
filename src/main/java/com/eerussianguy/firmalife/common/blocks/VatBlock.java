@@ -1,6 +1,5 @@
 package com.eerussianguy.firmalife.common.blocks;
 
-import java.util.Random;
 import com.eerussianguy.firmalife.common.FLHelpers;
 import com.eerussianguy.firmalife.common.blockentities.VatBlockEntity;
 import net.minecraft.core.BlockPos;

@@ -17,6 +17,7 @@ public class FLRecipeSerializers
 
     public static final RegistryObject<SimpleItemRecipe.Serializer<DryingRecipe>> DRYING = register("drying", () -> new SimpleItemRecipe.Serializer<>(DryingRecipe::new));
     public static final RegistryObject<SimpleItemRecipe.Serializer<SmokingRecipe>> SMOKING = register("smoking", () -> new SimpleItemRecipe.Serializer<>(SmokingRecipe::new));
+    public static final RegistryObject<StompingRecipe.StompingSerializer> STOMPING = register("stomping", StompingRecipe.StompingSerializer::new);
     public static final RegistryObject<MixingBowlRecipe.Serializer> MIXING_BOWL = register("mixing_bowl", MixingBowlRecipe.Serializer::new);
     public static final RegistryObject<OvenRecipe.Serializer> OVEN = register("oven", OvenRecipe.Serializer::new);
     public static final RegistryObject<StinkySoupRecipe.Serializer> STINKY_SOUP = register("stinky_soup", StinkySoupRecipe.Serializer::new);

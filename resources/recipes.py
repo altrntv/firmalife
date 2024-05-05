@@ -217,12 +217,16 @@ def generate(rm: ResourceManager):
     barrel_sealed_recipe(rm, 'cream', 'Cream', 1000, 'firmalife:cheesecloth', '1000 #tfc:milks', output_item='firmalife:cheesecloth', output_fluid='1000 firmalife:cream')
     barrel_sealed_recipe(rm, 'nixtamal', 'Nixtamal', 1000, not_rotten('firmalife:food/cured_maize'), '100 minecraft:water', output_item='firmalife:food/nixtamal')
     barrel_sealed_recipe(rm, 'mead', 'Mead', 72000, 'firmalife:raw_honey', '100 minecraft:water', output_fluid='100 firmalife:mead')
+    barrel_sealed_recipe(rm, 'fermented_red_grapes', 'Fermenting Red Grapes', 24000 * 5, not_rotten(lacks_trait('firmalife:food/smashed_red_grapes', 'firmalife:fermented')), output_item=item_stack_provider(copy_input=True, add_trait='firmalife:fermented'))
+    barrel_sealed_recipe(rm, 'fermented_white_grapes', 'Fermenting White Grapes', 24000 * 5, not_rotten(lacks_trait('firmalife:food/smashed_white_grapes', 'firmalife:fermented')), output_item=item_stack_provider(copy_input=True, add_trait='firmalife:fermented'))
 
     barrel_sealed_recipe(rm, 'shosha', 'Shosha Wheel', 16000, '3 firmalife:food/yak_curd', '750 tfc:salt_water', output_item='firmalife:shosha_wheel')
     barrel_sealed_recipe(rm, 'feta', 'Feta Wheel', 16000, '3 firmalife:food/goat_curd', '750 tfc:salt_water', output_item='firmalife:feta_wheel')
     barrel_sealed_recipe(rm, 'gouda', 'Gouda Wheel', 16000, '3 firmalife:food/milk_curd', '750 tfc:salt_water', output_item='firmalife:gouda_wheel')
 
     quern_recipe(rm, 'masa', not_rotten('firmalife:food/nixtamal'), 'firmalife:food/masa_flour', count=4)
+    quern_recipe(rm, 'crushed_red_grapes', not_rotten('firmalife:food/red_grapes'), 'firmalife:food/smashed_red_grapes')
+    quern_recipe(rm, 'crushed_white_grapes', not_rotten('firmalife:food/white_grapes'), 'firmalife:food/smashed_white_grapes')
 
     loom_recipe(rm, 'pineapple_leather', '16 firmalife:pineapple_yarn', 'firmalife:pineapple_leather', 16, 'firmalife:block/pineapple')
 
@@ -230,9 +234,9 @@ def generate(rm: ResourceManager):
     clay_knapping(rm, 'oven_bottom', ['XX XX', 'X   X', 'X   X', 'XX XX', 'XXXXX'], 'firmalife:oven_bottom')
     clay_knapping(rm, 'oven_chimney', ['XX XX', 'XX XX', 'XX XX'], 'firmalife:oven_chimney')
 
-    oven_recipe(rm, 'cooked_pie', not_rotten('firmalife:food/filled_pie'), 400, result_item=item_stack_provider('firmalife:food/cooked_pie', other_modifier='firmalife:copy_dynamic_food', remove_trait='firmalife:raw'))
-    oven_recipe(rm, 'cooked_pizza', not_rotten('firmalife:food/raw_pizza'), 400, result_item=item_stack_provider('firmalife:food/cooked_pizza', other_modifier='firmalife:copy_dynamic_food', remove_trait='firmalife:raw'))
-    oven_recipe(rm, 'pumpkin_pie', not_rotten('firmalife:food/raw_pumpkin_pie'), 400, result_item=item_stack_provider('minecraft:pumpkin_pie', other_modifier='firmalife:copy_dynamic_food', remove_trait='firmalife:raw'))
+    oven_recipe(rm, 'cooked_pie', not_rotten('firmalife:food/filled_pie'), 400, result_item=item_stack_provider('firmalife:food/cooked_pie', other_modifier='firmalife:copy_dynamic_food'))
+    oven_recipe(rm, 'cooked_pizza', not_rotten('firmalife:food/raw_pizza'), 400, result_item=item_stack_provider('firmalife:food/cooked_pizza', other_modifier='firmalife:copy_dynamic_food'))
+    oven_recipe(rm, 'pumpkin_pie', not_rotten('firmalife:food/raw_pumpkin_pie'), 400, result_item=item_stack_provider('minecraft:pumpkin_pie', other_modifier='firmalife:copy_dynamic_food'))
     oven_recipe(rm, 'roasted_cocoa_beans', not_rotten('firmalife:food/cocoa_beans'), 400, result_item=item_stack_provider('firmalife:food/roasted_cocoa_beans'))
     oven_recipe(rm, 'taco_shell', not_rotten('firmalife:food/corn_tortilla'), 400, result_item=item_stack_provider('firmalife:food/taco_shell'))
     oven_recipe(rm, 'sugar_cookie', not_rotten('firmalife:food/cookie_dough'), 400, result_item=item_stack_provider('firmalife:food/sugar_cookie'))
@@ -257,6 +261,10 @@ def generate(rm: ResourceManager):
         drying_recipe(rm, '%s_chocolate' % choc, 'firmalife:food/%s_chocolate_blend' % choc, item_stack_provider('firmalife:food/%s_chocolate' % choc))
     for dirt in ('loam', 'sandy_loam', 'silty_loam', 'silt'):
         drying_recipe(rm, '%s_dirt' % dirt, 'tfc:mud/%s' % dirt, item_stack_provider('tfc:dirt/%s' % dirt))
+
+    stomping_recipe(rm, 'red_grapes', not_rotten(lacks_trait('firmalife:food/red_grapes', 'firmalife:dried')), item_stack_provider('firmalife:food/smashed_red_grapes'), 'firmalife:block/red_unsmashed_grapes', 'firmalife:block/red_smashed_grapes')
+    stomping_recipe(rm, 'white_grapes', not_rotten(lacks_trait('firmalife:food/white_grapes', 'firmalife:dried')), item_stack_provider('firmalife:food/smashed_red_grapes'), 'firmalife:block/white_unsmashed_grapes', 'firmalife:block/white_smashed_grapes')
+    stomping_recipe(rm, 'charcoal', 'minecraft:charcoal', item_stack_provider('4 tfc:powder/charcoal'), 'tfc:block/charcoal_pile', 'tfc:block/powder/charcoal', 'tfc:block.charcoal.fall')
 
     smoking_recipe(rm, 'meat', not_rotten(has_trait(lacks_trait('#tfc:foods/raw_meats', 'firmalife:smoked'), 'tfc:brined')), item_stack_provider(copy_input=True, add_trait='firmalife:smoked'))
     smoking_recipe(rm, 'cheese', not_rotten(lacks_trait('#firmalife:foods/cheeses', 'firmalife:smoked')), item_stack_provider(copy_input=True, add_trait='firmalife:smoked'))
@@ -434,6 +442,8 @@ def generate(rm: ResourceManager):
     anvil_recipe(rm, 'copper_pipe', '#forge:sheets/copper', '8 firmalife:copper_pipe', 1, Rules.draw_last, Rules.bend_not_last)
 
     glass_recipe(rm, 'reinforced_glass_pane', ['flatten', 'soda_ash', 'table_pour'], 'tfc:silica_glass_batch', 'firmalife:reinforced_poured_glass')
+    for glass in ('olivine', 'hematitic', 'volcanic'):
+        glass_recipe(rm, '%s_wine_bottle' % glass, ['blow', 'blow', 'pinch', 'saw'], 'tfc:%s_glass_batch' % glass, 'firmalife:empty_%s_wine_bottle' % glass)
 
     for recipe in DISABLED_TFC_RECIPES:
         rm.domain = 'tfc' # DOMAIN CHANGE
@@ -543,6 +553,15 @@ def drying_recipe(rm: ResourceManager, name: utils.ResourceIdentifier, item: Any
     return rm.recipe(('drying', name), 'firmalife:drying', {
         'ingredient': utils.ingredient(item) if isinstance(item, str) else item,
         'result': result
+    })
+
+def stomping_recipe(rm: ResourceManager, name: utils.ResourceIdentifier, item: Any, result: Json, input_texture: str, output_texture: str, sound: str = 'minecraft:entity.slime.squish') -> RecipeContext:
+    return rm.recipe(('stomping', name), 'firmalife:stomping', {
+        'ingredient': utils.ingredient(item) if isinstance(item, str) else item,
+        'result': result,
+        'input_texture': input_texture,
+        'output_texture': output_texture,
+        'sound': sound
     })
 
 def smoking_recipe(rm: ResourceManager, name: utils.ResourceIdentifier, item: Any, result: Json) -> RecipeContext:

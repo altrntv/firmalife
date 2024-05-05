@@ -5,15 +5,12 @@ import java.util.List;
 import com.eerussianguy.firmalife.common.FLTags;
 import com.eerussianguy.firmalife.common.capabilities.wine.WineCapability;
 import com.eerussianguy.firmalife.common.util.Plantable;
-import com.google.common.base.Stopwatch;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
-import com.eerussianguy.firmalife.FirmaLife;
-import com.eerussianguy.firmalife.common.FLHelpers;
 import com.eerussianguy.firmalife.common.capabilities.bee.BeeCapability;
 
 import net.dries007.tfc.util.Helpers;
@@ -31,12 +28,7 @@ public class FLClientForgeEvents
 
     private static void onSelfTest(SelfTests.ClientSelfTestEvent event)
     {
-        if (FLHelpers.ASSERTIONS_ENABLED)
-        {
-            final Stopwatch tick = Stopwatch.createStarted();
-            FLClientSelfTests.validateModels();
-            FirmaLife.LOGGER.info("Client self tests passed in {}", tick.stop());
-        }
+        FLClientSelfTests.runClientSelfTests();
     }
 
     private static void onTooltip(ItemTooltipEvent event)

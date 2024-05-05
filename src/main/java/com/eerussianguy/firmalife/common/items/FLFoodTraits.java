@@ -25,13 +25,13 @@ public class FLFoodTraits
         OVEN_BAKED(0.9f),
         SMOKED(0.7f),
         RANCID_SMOKED(2.0f),
-        RAW(1f),
         SHELVED(0.4f),
         SHELVED_2(0.35f),
         SHELVED_3(0.25f),
         HUNG(0.35f),
         HUNG_2(0.3f),
-        HUNG_3(0.25f)
+        HUNG_3(0.25f),
+        FERMENTED(0.25f),
         ;
 
         private final float mod;
@@ -68,13 +68,13 @@ public class FLFoodTraits
     public static final FoodTrait OVEN_BAKED = register(Default.OVEN_BAKED);
     public static final FoodTrait SMOKED = register(Default.SMOKED);
     public static final FoodTrait RANCID_SMOKED = register(Default.RANCID_SMOKED);
-    public static final FoodTrait RAW = register(Default.RAW);
     public static final FoodTrait SHELVED = register(Default.SHELVED);
     public static final FoodTrait SHELVED_2 = register(Default.SHELVED_2);
     public static final FoodTrait SHELVED_3 = register(Default.SHELVED_3);
     public static final FoodTrait HUNG = register(Default.HUNG);
     public static final FoodTrait HUNG_2 = register(Default.HUNG_2);
     public static final FoodTrait HUNG_3 = register(Default.HUNG_3);
+    public static final FoodTrait FERMENTED = register(Default.FERMENTED);
 
     private static FoodTrait register(FLFoodTraits.Default trait)
     {

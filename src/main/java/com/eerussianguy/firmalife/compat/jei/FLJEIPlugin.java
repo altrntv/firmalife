@@ -5,8 +5,6 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.Container;
@@ -52,6 +50,7 @@ public class FLJEIPlugin implements IModPlugin
 
     public static final RecipeType<DryingRecipe> DRYING = type("drying", DryingRecipe.class);
     public static final RecipeType<SmokingRecipe> SMOKING = type("smoking", SmokingRecipe.class);
+    public static final RecipeType<StompingRecipe> STOMPING = type("stomping", StompingRecipe.class);
     public static final RecipeType<MixingBowlRecipe> MIXING_BOWL = type("mixing_bowl", MixingBowlRecipe.class);
     public static final RecipeType<KnappingRecipe> PUMPKIN_KNAPPING = type("pumpkin_knapping", KnappingRecipe.class);
     public static final RecipeType<OvenRecipe> OVEN = type("oven", OvenRecipe.class);
@@ -71,6 +70,7 @@ public class FLJEIPlugin implements IModPlugin
         IGuiHelper gui = r.getJeiHelpers().getGuiHelper();
         r.addRecipeCategories(new DryingCategory(DRYING, gui));
         r.addRecipeCategories(new SmokingCategory(SMOKING, gui));
+        r.addRecipeCategories(new StompingCategory(STOMPING, gui));
         r.addRecipeCategories(new MixingCategory(MIXING_BOWL, gui));
         r.addRecipeCategories(new OvenCategory(OVEN, gui));
         r.addRecipeCategories(new VatCategory(VAT, gui));
@@ -83,6 +83,7 @@ public class FLJEIPlugin implements IModPlugin
     {
         r.addRecipes(DRYING, recipes(FLRecipeTypes.DRYING.get()));
         r.addRecipes(SMOKING, recipes(FLRecipeTypes.SMOKING.get()));
+        r.addRecipes(STOMPING, recipes(FLRecipeTypes.STOMPING.get()));
         r.addRecipes(MIXING_BOWL, recipes(FLRecipeTypes.MIXING_BOWL.get()));
         r.addRecipes(OVEN, recipes(FLRecipeTypes.OVEN.get()));
         r.addRecipes(VAT, recipes(FLRecipeTypes.VAT.get()));
@@ -102,6 +103,7 @@ public class FLJEIPlugin implements IModPlugin
         cat(r, FLBlocks.VAT, VAT);
         cat(r, TFCItems.POT.get(), BOWL_POT);
         cat(r, TFCItems.POT.get(), STINKY_SOUP);
+        FLBlocks.STOMPING_BARRELS.values().forEach(barrel -> cat(r, barrel, STOMPING));
     }
 
     private static void cat(IRecipeCatalystRegistration r, Supplier<? extends Block> supplier, RecipeType<?> type)

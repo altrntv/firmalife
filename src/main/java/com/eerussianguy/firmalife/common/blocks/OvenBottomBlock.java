@@ -35,6 +35,7 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.Nullable;
 
 public class OvenBottomBlock extends AbstractOvenBlock implements IBellowsConsumer
@@ -79,6 +80,16 @@ public class OvenBottomBlock extends AbstractOvenBlock implements IBellowsConsum
                 return InteractionResult.SUCCESS;
             });
             return res1 == InteractionResult.PASS ? InteractionResult.SUCCESS : res1;
+        }
+        else if (item.isEmpty() && !state.getValue(LIT))
+        {
+            return FLHelpers.consumeInventory(level, pos, FLBlockEntities.OVEN_BOTTOM, (oven, inv) -> {
+                for (int i = OvenBottomBlockEntity.SLOT_FUEL_MIN; i <= OvenBottomBlockEntity.SLOT_FUEL_MAX; i++)
+                {
+                    ItemHandlerHelper.giveItemToPlayer(player, inv.extractItem(i, 64, false));
+                }
+                return InteractionResult.SUCCESS;
+            });
         }
         else if (Helpers.isItem(item, FLItems.OVEN_INSULATION.get()) && insulated != null)
         {

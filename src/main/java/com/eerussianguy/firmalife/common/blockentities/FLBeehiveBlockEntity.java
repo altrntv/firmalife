@@ -277,8 +277,8 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
             // collect bees that exist and have queens
             final List<IBee> usableBees = Arrays.stream(cachedBees).filter(bee -> bee != null && bee.hasQueen() && temp > BeeAbility.getMinTemperature(bee.getAbility(BeeAbility.HARDINESS))).collect(Collectors.toList());
 
-            Direction direction = getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
-            BlockPos posInFront = worldPosition.relative(direction);
+            final Direction direction = getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
+            final BlockPos posInFront = worldPosition.relative(direction);
 
             if (level.getBlockState(posInFront).getCollisionShape(level, posInFront).isEmpty() && !usableBees.isEmpty() && beesInWorld == 0)
             {
@@ -294,7 +294,7 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
                         beeEntity.setSpawnPos(posInFront);
                         level.addFreshEntity(beeEntity);
 
-                        level.playSound((Player)null, worldPosition, SoundEvents.BEEHIVE_EXIT, SoundSource.BLOCKS, 1.0F, 1.0F);
+                        level.playSound(null, worldPosition, SoundEvents.BEEHIVE_EXIT, SoundSource.BLOCKS, 1.0F, 1.0F);
                         beesInWorld++;
                     }
                 }

@@ -62,7 +62,7 @@ public class VatBlockEntity extends BoilingBlockEntity<VatBlockEntity.VatInvento
     {
         final FluidStack fluid = inventory.getFluidInTank(0);
         final ItemStack stack = inventory.getStackInSlot(0);
-        if (fluid.hasTag() && fluid.getTag().contains("fruit", Tag.TAG_COMPOUND) && Helpers.isItem(stack, TFCItems.EMPTY_JAR.get()))
+        if (fluid.hasTag() && fluid.getTag().contains("fruit", Tag.TAG_COMPOUND) && Helpers.isItem(stack, TFCItems.EMPTY_JAR_WITH_LID.get()))
         {
             final int jars = stack.getCount();
             final int maxFill = fluid.getAmount() / 500;

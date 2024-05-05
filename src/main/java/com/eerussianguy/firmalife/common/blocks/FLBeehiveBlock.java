@@ -3,6 +3,8 @@ package com.eerussianguy.firmalife.common.blocks;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.eerussianguy.firmalife.common.FLHelpers;
+import com.eerussianguy.firmalife.common.FLTags;
 import com.eerussianguy.firmalife.common.items.FLItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -71,17 +73,19 @@ public class FLBeehiveBlock extends FourWayDeviceBlock implements HoeOverlayBloc
         }
         return level.getBlockEntity(pos, FLBlockEntities.BEEHIVE.get()).map(hive ->
             hive.getCapability(Capabilities.ITEM).map(inv -> {
+                boolean anyBees = false;
                 float calmChance = 0;
                 for (int i = 0; i < FLBeehiveBlockEntity.FRAME_SLOTS; i++)
                 {
-                    IBee bee = inv.getStackInSlot(i).getCapability(BeeCapability.CAPABILITY).resolve().orElse(null);
+                    final IBee bee = inv.getStackInSlot(i).getCapability(BeeCapability.CAPABILITY).resolve().orElse(null);
                     if (bee != null && bee.hasQueen())
                     {
+                        anyBees = true;
                         calmChance += bee.getAbility(BeeAbility.CALMNESS);
                     }
                     calmChance /= 40f;
                 }
-                return level.random.nextFloat() > calmChance;
+                return anyBees && level.random.nextFloat() > calmChance;
         }).orElse(false)).orElse(false);
     }
 
@@ -103,7 +107,7 @@ public class FLBeehiveBlock extends FourWayDeviceBlock implements HoeOverlayBloc
     @SuppressWarnings("deprecation")
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result)
     {
-        ItemStack held = player.getItemInHand(hand);
+        final ItemStack held = player.getItemInHand(hand);
         if (Helpers.isItem(held, TFCItems.EMPTY_JAR.get()) && !player.isShiftKeyDown())
         {
             level.getBlockEntity(pos, FLBlockEntities.BEEHIVE.get()).ifPresent(hive -> {
@@ -115,7 +119,27 @@ public class FLBeehiveBlock extends FourWayDeviceBlock implements HoeOverlayBloc
             });
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
-        else if (!player.isShiftKeyDown())
+        else if (Helpers.isItem(held, FLItems.BEEHIVE_FRAME.get()))
+        {
+            final var res = FLHelpers.consumeInventory(level, pos, FLBlockEntities.BEEHIVE, (hive, inv) ->
+                FLHelpers.insertOneAny(level, held.split(1), 0, FLBeehiveBlockEntity.FRAME_SLOTS - 1, inv, player)
+            );
+            if (res.consumesAction())
+                return res;
+        }
+        else if (held.isEmpty() && player.isShiftKeyDown())
+        {
+            final var res = FLHelpers.consumeInventory(level, pos, FLBlockEntities.BEEHIVE, (hive, inv) ->
+                FLHelpers.takeOneAny(level, 0, FLBeehiveBlockEntity.FRAME_SLOTS - 1, inv, player)
+            );
+            if (res.consumesAction())
+            {
+                if (shouldAnger(level, pos))
+                    attack(player);
+                return res;
+            }
+        }
+        if (!player.isShiftKeyDown())
         {
             if (player instanceof ServerPlayer serverPlayer)
             {
@@ -174,8 +198,8 @@ public class FLBeehiveBlock extends FourWayDeviceBlock implements HoeOverlayBloc
                 }
                 else
                 {
-                    if (bee != null) noQueen++;
-                    beeText.append(Component.translatable("firmalife.beehive.no_queen"));
+                    if (bee != null)
+                        noQueen++;
                 }
                 text.add(beeText);
             }

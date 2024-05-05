@@ -14,7 +14,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-import net.dries007.tfc.common.TFCTags;
 import net.dries007.tfc.common.blockentities.TickableInventoryBlockEntity;
 import net.dries007.tfc.common.capabilities.Capabilities;
 import net.dries007.tfc.common.capabilities.PartialItemHandler;
@@ -63,8 +62,8 @@ public class JarringStationBlockEntity extends TickableInventoryBlockEntity<Item
     {
         super(FLBlockEntities.JARRING_STATION.get(), pos, state, defaultInventory(SLOTS), FLHelpers.blockEntityName("jarring_station"));
         sidedInventory
-            .on(new PartialItemHandler(inventory).extract(0, 1, 2, 3, 4, 5, 6, 7, 8), Direction.DOWN)
-            .on(new PartialItemHandler(inventory).insert(0, 1, 2, 3, 4, 5, 6, 7, 8), Direction.Plane.HORIZONTAL);
+            .on(new PartialItemHandler(inventory).extractAll(), Direction.DOWN)
+            .on(new PartialItemHandler(inventory).insertAll(), Direction.Plane.HORIZONTAL);
     }
 
     @Override
@@ -80,7 +79,7 @@ public class JarringStationBlockEntity extends TickableInventoryBlockEntity<Item
     @Override
     public boolean isItemValid(int slot, ItemStack stack)
     {
-        return Helpers.isItem(stack, TFCTags.Items.JARS);
+        return Helpers.isItem(stack, TFCItems.EMPTY_JAR_WITH_LID.get());
     }
 
     @Override

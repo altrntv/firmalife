@@ -8,6 +8,11 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import com.eerussianguy.firmalife.common.FLCreativeTabs;
+import com.eerussianguy.firmalife.common.FLHelpers;
+import com.eerussianguy.firmalife.common.blockentities.CompostTumblerBlockEntity;
+import com.eerussianguy.firmalife.common.blocks.greenhouse.PlanterType;
+import com.eerussianguy.firmalife.common.util.FoodAge;
+import com.google.common.base.Stopwatch;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -23,6 +28,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import com.eerussianguy.firmalife.FirmaLife;
@@ -42,6 +48,7 @@ import net.dries007.tfc.common.capabilities.forge.ForgingBonus;
 import net.dries007.tfc.common.capabilities.heat.Heat;
 import net.dries007.tfc.common.capabilities.size.Size;
 import net.dries007.tfc.common.capabilities.size.Weight;
+import net.dries007.tfc.config.TFCConfig;
 import net.dries007.tfc.util.Metal;
 import net.dries007.tfc.util.calendar.Day;
 import net.dries007.tfc.util.calendar.Month;
@@ -54,6 +61,22 @@ import static net.dries007.tfc.util.SelfTests.*;
 public final class FLClientSelfTests
 {
     private static final Logger LOGGER = FirmaLife.LOGGER;
+
+    public static void runClientSelfTests()
+    {
+        if (FLHelpers.ASSERTIONS_ENABLED)
+        {
+            TFCConfig.COMMON.enableDatapackTests.set(true);
+            final Stopwatch tick = Stopwatch.createStarted();
+            throwIfAny(
+                validateOwnBlockEntities(),
+                validateModels(),
+                validateTranslationsAndCreativeTabs()
+            );
+            MinecraftForge.EVENT_BUS.post(new ClientSelfTestEvent()); // For other mods, as this is invoked via a tricky mixin
+            LOGGER.info("Client self tests passed in {}", tick.stop());
+        }
+    }
 
     @SuppressWarnings("deprecation")
     public static boolean validateModels()
@@ -69,10 +92,13 @@ public final class FLClientSelfTests
             .flatMap(states(s -> !s.isAir() && shaper.getParticleIcon(s) == missingParticle))
             .toList();
 
-        validateTranslationsAndCreativeTabs();
-
         return logErrors("{} block states with missing models:", missingModelErrors, FirmaLife.LOGGER)
             | logErrors("{} block states with missing particles:", missingParticleErrors, FirmaLife.LOGGER);
+    }
+
+    private static boolean validateOwnBlockEntities()
+    {
+        return validateBlockEntities(stream(ForgeRegistries.BLOCKS, MOD_ID), LOGGER);
     }
 
     /**
@@ -114,7 +140,7 @@ public final class FLClientSelfTests
             error |= validateTranslation(LOGGER, missingTranslations, tab.getDisplayName());
         }
 
-        error |= Stream.of(ForgeStep.class, ForgingBonus.class, Metal.Tier.class, Heat.class, Nutrient.class, Size.class, Weight.class, Day.class, Month.class, KoppenClimateClassification.class, ForestType.class, RockDisplayCategory.class, RockDisplayCategory.class)
+        error |= Stream.of(FoodAge.class, PlanterType.class, CompostTumblerBlockEntity.AdditionType.class)
             .anyMatch(clazz -> validateTranslations(LOGGER, missingTranslations, clazz));
 
         return error | logErrors("{} missing translation keys:", missingTranslations, LOGGER);
