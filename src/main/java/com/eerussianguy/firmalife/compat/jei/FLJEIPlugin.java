@@ -33,16 +33,11 @@ import net.dries007.tfc.common.items.TFCItems;
 import net.dries007.tfc.common.recipes.KnappingRecipe;
 import net.dries007.tfc.common.recipes.PotRecipe;
 import net.dries007.tfc.common.recipes.TFCRecipeTypes;
-import net.dries007.tfc.util.Helpers;
+
 
 @JeiPlugin
 public class FLJEIPlugin implements IModPlugin
 {
-    private static void addCatalystTag(IRecipeCatalystRegistration r, TagKey<Item> tag, RecipeType<?> recipeType)
-    {
-        Helpers.getAllTagValues(tag, ForgeRegistries.ITEMS).forEach(item -> r.addRecipeCatalyst(new ItemStack(item), recipeType));
-    }
-
     private static <T> RecipeType<T> type(String name, Class<T> tClass)
     {
         return RecipeType.create(FirmaLife.MOD_ID, name, tClass);
@@ -51,6 +46,7 @@ public class FLJEIPlugin implements IModPlugin
     public static final RecipeType<DryingRecipe> DRYING = type("drying", DryingRecipe.class);
     public static final RecipeType<SmokingRecipe> SMOKING = type("smoking", SmokingRecipe.class);
     public static final RecipeType<StompingRecipe> STOMPING = type("stomping", StompingRecipe.class);
+    public static final RecipeType<PressRecipe> PRESS = type("press", PressRecipe.class);
     public static final RecipeType<MixingBowlRecipe> MIXING_BOWL = type("mixing_bowl", MixingBowlRecipe.class);
     public static final RecipeType<KnappingRecipe> PUMPKIN_KNAPPING = type("pumpkin_knapping", KnappingRecipe.class);
     public static final RecipeType<OvenRecipe> OVEN = type("oven", OvenRecipe.class);
@@ -71,6 +67,7 @@ public class FLJEIPlugin implements IModPlugin
         r.addRecipeCategories(new DryingCategory(DRYING, gui));
         r.addRecipeCategories(new SmokingCategory(SMOKING, gui));
         r.addRecipeCategories(new StompingCategory(STOMPING, gui));
+        r.addRecipeCategories(new PressCategory(PRESS, gui));
         r.addRecipeCategories(new MixingCategory(MIXING_BOWL, gui));
         r.addRecipeCategories(new OvenCategory(OVEN, gui));
         r.addRecipeCategories(new VatCategory(VAT, gui));
@@ -84,6 +81,7 @@ public class FLJEIPlugin implements IModPlugin
         r.addRecipes(DRYING, recipes(FLRecipeTypes.DRYING.get()));
         r.addRecipes(SMOKING, recipes(FLRecipeTypes.SMOKING.get()));
         r.addRecipes(STOMPING, recipes(FLRecipeTypes.STOMPING.get()));
+        r.addRecipes(PRESS, recipes(FLRecipeTypes.PRESS.get()));
         r.addRecipes(MIXING_BOWL, recipes(FLRecipeTypes.MIXING_BOWL.get()));
         r.addRecipes(OVEN, recipes(FLRecipeTypes.OVEN.get()));
         r.addRecipes(VAT, recipes(FLRecipeTypes.VAT.get()));
@@ -104,6 +102,7 @@ public class FLJEIPlugin implements IModPlugin
         cat(r, TFCItems.POT.get(), BOWL_POT);
         cat(r, TFCItems.POT.get(), STINKY_SOUP);
         FLBlocks.STOMPING_BARRELS.values().forEach(barrel -> cat(r, barrel, STOMPING));
+        FLBlocks.BARREL_PRESSES.values().forEach(barrel -> cat(r, barrel, PRESS));
     }
 
     private static void cat(IRecipeCatalystRegistration r, Supplier<? extends Block> supplier, RecipeType<?> type)

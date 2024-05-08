@@ -1,0 +1,54 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "tfc:block/metal/smooth/wrought_iron",
+		"particle": "tfc:block/metal/smooth/wrought_iron"
+	},
+	"elements": [
+		{
+			"name": "Shaft",
+			"from": [7, 12, 7],
+			"to": [9, 24, 9],
+			"faces": {
+				"north": {"uv": [0, 4, 2, 16], "texture": "#0"},
+				"east": {"uv": [0, 4, 2, 16], "texture": "#0"},
+				"south": {"uv": [0, 4, 2, 16], "texture": "#0"},
+				"west": {"uv": [0, 4, 2, 16], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Handle",
+			"from": [7, 24, 4],
+			"to": [9, 26, 12],
+			"faces": {
+				"north": {"uv": [2, 6, 4, 8], "texture": "#0"},
+				"east": {"uv": [8, 2, 16, 4], "texture": "#0"},
+				"south": {"uv": [2, 6, 4, 8], "texture": "#0"},
+				"west": {"uv": [8, 2, 16, 4], "texture": "#0"},
+				"up": {"uv": [2, 8, 4, 16], "texture": "#0"},
+				"down": {"uv": [2, 8, 4, 16], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Press",
+			"from": [2, 10, 2],
+			"to": [14, 12, 14],
+			"faces": {
+				"north": {"uv": [4, 2, 16, 4], "texture": "#0"},
+				"east": {"uv": [4, 2, 16, 4], "texture": "#0"},
+				"south": {"uv": [4, 2, 16, 4], "texture": "#0"},
+				"west": {"uv": [4, 2, 16, 4], "texture": "#0"},
+				"up": {"uv": [4, 4, 16, 16], "texture": "#0"},
+				"down": {"uv": [4, 4, 16, 16], "texture": "#0"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "Press",
+			"origin": [0, 0, 0],
+			"color": 0,
+			"children": [0, 1, 2]
+		}
+	]
+}

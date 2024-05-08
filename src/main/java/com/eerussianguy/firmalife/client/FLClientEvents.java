@@ -113,6 +113,7 @@ public class FLClientEvents
         FLBlocks.HANGERS.values().forEach(reg -> ItemBlockRenderTypes.setRenderLayer(reg.get(), cutout));
         FLBlocks.JARBNETS.values().forEach(reg -> ItemBlockRenderTypes.setRenderLayer(reg.get(), cutout));
         FLBlocks.STOMPING_BARRELS.values().forEach(reg -> ItemBlockRenderTypes.setRenderLayer(reg.get(), cutout));
+        FLBlocks.BARREL_PRESSES.values().forEach(reg -> ItemBlockRenderTypes.setRenderLayer(reg.get(), cutout));
         FLBlocks.WINE_SHELVES.values().forEach(reg -> ItemBlockRenderTypes.setRenderLayer(reg.get(), cutout));
         FLBlocks.CURED_OVEN_BOTTOM.values().forEach(reg -> ItemBlockRenderTypes.setRenderLayer(reg.get(), cutout));
         FLBlocks.CURED_OVEN_TOP.values().forEach(reg -> ItemBlockRenderTypes.setRenderLayer(reg.get(), cutout));
@@ -180,6 +181,7 @@ public class FLClientEvents
         event.register(FLHelpers.identifier("block/jar/rotten_compost"));
         event.register(FLHelpers.identifier("block/jar/guano"));
         event.register(FLHelpers.identifier("block/jar/honey"));
+        event.register(FLHelpers.identifier("block/barrel_press_piston"));
 
         for (Item item : ForgeRegistries.ITEMS.getValues())
         {
@@ -228,6 +230,7 @@ public class FLClientEvents
         event.registerBlockEntityRenderer(FLBlockEntities.HYDROPONIC_PLANTER.get(), ctx -> new HydroponicPlanterBlockEntityRenderer());
         event.registerBlockEntityRenderer(FLBlockEntities.COMPOST_TUMBLER.get(), ctx -> new CompostTumblerBlockEntityRenderer());
         event.registerBlockEntityRenderer(FLBlockEntities.STOMPING_BARREL.get(), ctx -> new StompingBarrelBlockEntityRenderer());
+        event.registerBlockEntityRenderer(FLBlockEntities.BARREL_PRESS.get(), ctx -> new BarrelPressBlockEntityRenderer());
 
         event.registerEntityRenderer(FLEntities.SEED_BALL.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(FLEntities.FLBEE.get(), FLBeeRenderer::new);

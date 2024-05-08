@@ -118,7 +118,8 @@ public class StompingBarrelBlockEntity extends InventoryBlockEntity<ItemStackHan
 
     public void causeTextureUpdate()
     {
-        assert level != null;
+        if (level == null)
+            return;
         // the case where nothing is in it, we can show nothing
         final ItemStack current = inventory.getStackInSlot(0);
         if (current.isEmpty())
