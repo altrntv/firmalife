@@ -14,7 +14,6 @@ import com.eerussianguy.firmalife.common.container.BeehiveContainer;
 import net.dries007.tfc.client.RenderHelpers;
 import net.dries007.tfc.client.screen.BlockEntityScreen;
 
-
 public class BeehiveScreen extends BlockEntityScreen<FLBeehiveBlockEntity, BeehiveContainer>
 {
     private static final ResourceLocation TEXTURE = FLHelpers.identifier("textures/gui/beehive.png");
@@ -40,7 +39,7 @@ public class BeehiveScreen extends BlockEntityScreen<FLBeehiveBlockEntity, Beehi
     public void renderTooltip(GuiGraphics graphics, int x, int y)
     {
         super.renderTooltip(graphics, x, y);
-        if (RenderHelpers.isInside(x, y, leftPos + 43, topPos + 40, 72, 65))
+        if (RenderHelpers.isInside(x, y, leftPos + 43, topPos + 40, 72, 26))
         {
             graphics.renderTooltip(font, Component.translatable("firmalife.beehive.honey", blockEntity.getHoney()).withStyle(ChatFormatting.GOLD), x, y);
         }

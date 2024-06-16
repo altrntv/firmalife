@@ -56,7 +56,10 @@ public class TrellisPlanterBlockModel extends SimpleDynamicBlockModel<TrellisPla
         poseStack.pushPose();
 
         TextureAtlasSprite sprite = atlas.apply(plant.getTexture(id));
-        RenderHelpers.renderTexturedCuboid(poseStack, buffer, sprite, packedLight, packedOverlay, 0f, 0f, 0f, 1f, 1.01f, 1f);
+
+        final boolean odd = planter.getBlockPos().getY() % 2 == 0;
+        poseStack.scale(odd ? 1.01f : 1f, 1.01f, odd ? 1.01f : 1f);
+        RenderHelpers.renderTexturedCuboid(poseStack, buffer, sprite, packedLight, packedOverlay, 0f, 0f, 0f, 1f, 1f, 1f);
 
         poseStack.popPose();
     }

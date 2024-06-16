@@ -1,5 +1,6 @@
 package com.eerussianguy.firmalife.common.blocks.plant;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 import com.eerussianguy.firmalife.common.blockentities.GrapePlantBlockEntity;
@@ -106,7 +107,9 @@ public class GrapeGroundPlantOnStringBlock extends GrapeStringBlock implements I
         if (level.getBlockEntity(pos) instanceof GrapePlantBlockEntity grape)
         {
             tooltip.add(Component.literal("[Debug] Growth: " + grape.getGrowth()));
-            tooltip.add(Component.literal("[Debug] Brain Pos: " + grape.getBrainBlock().toShortString()));
+            tooltip.add(Component.literal("[Debug] Brain Pos: " + grape.getBrainPos().toShortString()));
+            tooltip.add(Component.literal("[Debug] Soil data: " + Arrays.toString(grape.debugViewOfSoilData())));
+            tooltip.add(Component.literal("[Debug] Bees: " + grape.debugHasBees()));
         }
     }
 

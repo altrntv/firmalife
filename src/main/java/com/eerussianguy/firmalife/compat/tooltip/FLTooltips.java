@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.eerussianguy.firmalife.common.blocks.plant.FLFruitTreeSaplingBlock;
+import com.eerussianguy.firmalife.common.capabilities.wine.WineType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.Entity;
@@ -51,6 +52,7 @@ public final class FLTooltips
             register(r, "tumbler", TUMBLER, CompostTumblerBlock.class);
             register(r, "fruit_tree_sapling", FRUIT_TREE_SAPLING, FLFruitTreeSaplingBlock.class);
             register(r, "jarbnet", JARBNET, JarbnetBlock.class);
+            register(r, "barrel_press", BARREL_PRESS, JarbnetBlock.class);
         }
 
         private static void register(RegisterCallback<BlockEntityTooltip, Block> r, String name, BlockEntityTooltip tooltip, Class<? extends Block> aClass)
@@ -242,6 +244,20 @@ public final class FLTooltips
             }
         };
 
+        public static final BlockEntityTooltip BARREL_PRESS = (level, state, pos, entity, tooltip) -> {
+            if (entity instanceof BarrelPressBlockEntity press)
+            {
+                if (press.getOutput() != null)
+                {
+                    tooltip.accept(Component.translatable("firmalife.wine.has_output", press.getOutput().getServings(), FLHelpers.translateEnum(press.getOutput().getType())));
+                }
+                final WineType type = press.getWineType();
+                if (type != null)
+                {
+                    tooltip.accept(Component.translatable("firmalife.wine.making", FLHelpers.translateEnum(type)));
+                }
+            }
+        };
     }
 
     public static final class Entities

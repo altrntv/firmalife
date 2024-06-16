@@ -2,6 +2,7 @@ package com.eerussianguy.firmalife.common.container;
 
 import java.util.function.Supplier;
 
+import com.eerussianguy.firmalife.common.blockentities.BarrelPressBlockEntity;
 import com.eerussianguy.firmalife.common.blockentities.BigBarrelBlockEntity;
 import com.eerussianguy.firmalife.common.blockentities.StovetopGrillBlockEntity;
 import com.eerussianguy.firmalife.common.blockentities.StovetopPotBlockEntity;
@@ -16,7 +17,6 @@ import com.eerussianguy.firmalife.common.blockentities.FLBlockEntities;
 import net.dries007.tfc.common.blockentities.InventoryBlockEntity;
 import net.dries007.tfc.common.container.BlockEntityContainer;
 import net.dries007.tfc.common.container.ItemStackContainer;
-import net.dries007.tfc.common.container.KnappingContainer;
 import net.dries007.tfc.util.registry.RegistrationHelpers;
 
 import static com.eerussianguy.firmalife.FirmaLife.MOD_ID;
@@ -29,6 +29,7 @@ public class FLContainerTypes
     public static final RegistryObject<MenuType<StovetopGrillContainer>> STOVETOP_GRILL = FLContainerTypes.<StovetopGrillBlockEntity, StovetopGrillContainer>registerBlock("stovetop_grill", FLBlockEntities.STOVETOP_GRILL, StovetopGrillContainer::create);
     public static final RegistryObject<MenuType<StovetopPotContainer>> STOVETOP_POT = FLContainerTypes.<StovetopPotBlockEntity, StovetopPotContainer>registerBlock("stovetop_pot", FLBlockEntities.STOVETOP_POT, StovetopPotContainer::create);
     public static final RegistryObject<MenuType<BigBarrelContainer>> BIG_BARREL = FLContainerTypes.<BigBarrelBlockEntity, BigBarrelContainer>registerBlock("big_barrel", FLBlockEntities.BIG_BARREL, BigBarrelContainer::create);
+    public static final RegistryObject<MenuType<BarrelPressContainer>> BARREL_PRESS = FLContainerTypes.<BarrelPressBlockEntity, BarrelPressContainer>registerBlock("barrel_press", FLBlockEntities.BARREL_PRESS, BarrelPressContainer::create);
 
     private static <T extends InventoryBlockEntity<?>, C extends BlockEntityContainer<T>> RegistryObject<MenuType<C>> registerBlock(String name, Supplier<BlockEntityType<T>> type, BlockEntityContainer.Factory<T, C> factory)
     {

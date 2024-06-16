@@ -42,6 +42,7 @@ def generate(rm: ResourceManager):
     rm.item_tag('empty_wine_bottles', 'empty_hematitic_wine_bottle', 'empty_olivine_wine_bottle', 'empty_volcanic_wine_bottle')
     rm.item_tag('filled_wine_bottles', 'hematitic_wine_bottle', 'olivine_wine_bottle', 'volcanic_wine_bottle')
     rm.item_tag('wine_bottles', '#firmalife:empty_wine_bottles', '#firmalife:filled_wine_bottles')
+    rm.item_tag('can_be_pressed_like_grapes', '#firmalife:foods/smashed_grapes')
 
     block_and_item_tag(rm, 'tfc:wild_fruits', 'firmalife:plant/pineapple_bush', 'firmalife:plant/nightshade_bush', 'firmalife:plant/fig_sapling', 'firmalife:plant/cocoa_sapling')
 

@@ -75,6 +75,7 @@ public final class FLCreativeTabs
         accept(out, FLItems.EMPTY_HEMATITIC_WINE_BOTTLE);
         accept(out, FLItems.EMPTY_VOLCANIC_WINE_BOTTLE);
         accept(out, FLItems.CORK);
+        accept(out, FLItems.BARREL_STAVE);
         accept(out, FLItems.RED_GRAPE_SEEDS);
         accept(out, FLItems.WHITE_GRAPE_SEEDS);
 

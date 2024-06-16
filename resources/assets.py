@@ -162,6 +162,26 @@ def generate(rm: ResourceManager):
         'axis=z,lifecycle=fruiting': {'model': 'firmalife:block/grape_top_white'},
     }).with_lang(lang('white grape plant')).with_tag('tfc:mineable_with_sharp_tool').with_block_loot('tfc:jute_fiber')
 
+    rm.blockstate('grape_fluff_red', variants={
+        'lifecycle=dormant': [{'model': 'firmalife:block/grape_fluff_dormant_%s' % i} for i in range(1, 4)],
+        'lifecycle=healthy': [{'model': 'firmalife:block/grape_fluff_healthy_%s' % i} for i in range(1, 4)],
+        'lifecycle=fruiting': [{'model': 'firmalife:block/grape_fluff_fruiting_red_%s' % i} for i in range(1, 4)],
+        'lifecycle=flowering': [{'model': 'firmalife:block/grape_fluff_flowering_%s' % i} for i in range(1, 4)],
+    }, use_default_model=False).with_lang(lang('red grape plant')).with_tag('tfc:mineable_with_sharp_tool')
+    rm.blockstate('grape_fluff_white', variants={
+        'lifecycle=dormant': [{'model': 'firmalife:block/grape_fluff_dormant_%s' % i} for i in range(1, 4)],
+        'lifecycle=healthy': [{'model': 'firmalife:block/grape_fluff_healthy_%s' % i} for i in range(1, 4)],
+        'lifecycle=fruiting': [{'model': 'firmalife:block/grape_fluff_fruiting_white_%s' % i} for i in range(1, 4)],
+        'lifecycle=flowering': [{'model': 'firmalife:block/grape_fluff_flowering_%s' % i} for i in range(1, 4)],
+    }, use_default_model=False).with_lang(lang('white grape plant')).with_tag('tfc:mineable_with_sharp_tool')
+
+    for i in range(1, 4):
+        rm.block_model('grape_fluff_dormant_%s' % i, textures={'all': 'firmalife:block/crop/grape_leaves_dead'}, parent='tfc:block/groundcover/fallen_leaves_height%s' % str(i * 2))
+        rm.block_model('grape_fluff_flowering_%s' % i, textures={'all': 'firmalife:block/crop/grape_leaves_flowering'}, parent='tfc:block/groundcover/fallen_leaves_height%s' % str(i * 2))
+        rm.block_model('grape_fluff_healthy_%s' % i, textures={'all': 'firmalife:block/crop/grape_leaves'}, parent='tfc:block/groundcover/fallen_leaves_height%s' % str(i * 2))
+        rm.block_model('grape_fluff_fruiting_red_%s' % i, textures={'all': 'firmalife:block/crop/grape_leaves_red'}, parent='tfc:block/groundcover/fallen_leaves_height%s' % str(i * 2))
+        rm.block_model('grape_fluff_fruiting_white_%s' % i, textures={'all': 'firmalife:block/crop/grape_leaves_white'}, parent='tfc:block/groundcover/fallen_leaves_height%s' % str(i * 2))
+
     rm.blockstate_multipart('grape_trellis_post',
         ({'axis': 'x'}, {'model': 'firmalife:block/grape_trellis'}),
         ({'axis': 'z'}, {'model': 'firmalife:block/grape_trellis', 'y': 90}),
@@ -410,7 +430,7 @@ def generate(rm: ResourceManager):
         }
         for i in range(0, 8):
             rm.block_model('wood/big_barrel/%s_%s' % (wood, i), parent='firmalife:block/big_barrel_%s' % i, textures=tex)
-        rm.block_model('wood/big_barrel/%s_item' % wood, parent='firmalife:block/big_barrel', textures=tex)
+        rm.block_model('wood/big_barrel/%s_item' % wood, parent='firmalife:block/big_barrel_item', textures=tex)
         rm.item_model('wood/big_barrel/%s' % wood, parent='firmalife:block/wood/big_barrel/%s_item' % wood, no_textures=True)
         block = rm.blockstate('wood/big_barrel/%s' % wood, variants=dict(
             ('barrel_part=%s,facing=%s' % (i, f), {'model': 'firmalife:block/wood/big_barrel/%s_%s' % (wood, i), 'y': y if y != 0 else None})

@@ -1,6 +1,6 @@
 {
   "__comment__": "This file was automatically created by mcresources",
-  "parent": "firmalife:block/big_barrel",
+  "parent": "firmalife:block/big_barrel_item",
   "textures": {
     "0": "firmalife:block/wood/big_barrel/ash_3_side",
     "1": "firmalife:block/wood/big_barrel/ash_0",

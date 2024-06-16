@@ -1,27 +1,38 @@
 package com.eerussianguy.firmalife.common.blockentities;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.eerussianguy.firmalife.common.blocks.plant.GrapeGroundPlantOnStringBlock;
 import com.eerussianguy.firmalife.common.blocks.plant.IGrape;
+import com.eerussianguy.firmalife.common.items.FLFoodTraits;
 import com.eerussianguy.firmalife.common.util.FLClimateRanges;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.Tags;
+import org.jetbrains.annotations.NotNull;
 
-import net.dries007.tfc.common.blockentities.TFCBlockEntity;
+import net.dries007.tfc.common.TFCTags;
+import net.dries007.tfc.common.blockentities.TickableBlockEntity;
 import net.dries007.tfc.common.blocks.plant.fruit.Lifecycle;
+import net.dries007.tfc.common.capabilities.food.FoodTrait;
+import net.dries007.tfc.util.Helpers;
 import net.dries007.tfc.util.calendar.Calendars;
 import net.dries007.tfc.util.calendar.ICalendar;
 import net.dries007.tfc.util.calendar.ICalendarTickable;
+import net.dries007.tfc.util.calendar.Month;
 import net.dries007.tfc.util.climate.Climate;
 import net.dries007.tfc.util.climate.ClimateRange;
 
-public class GrapePlantBlockEntity extends TFCBlockEntity implements ICalendarTickable
+public class GrapePlantBlockEntity extends TickableBlockEntity implements ICalendarTickable
 {
     public static void serverTick(Level level, BlockPos pos, BlockState state, GrapePlantBlockEntity plant)
     {
         plant.checkForCalendarUpdate();
+        plant.checkForLastTickSync();
     }
 
     public static final int UPDATE_INTERVAL = ICalendar.TICKS_IN_DAY;
@@ -29,6 +40,10 @@ public class GrapePlantBlockEntity extends TFCBlockEntity implements ICalendarTi
     private long lastUpdateTick; // The last tick this crop was ticked via the block entity's tick() method. A delta of > 1 is used to detect time skips
     private long lastGrowthTick; // The last tick the crop block was ticked via ICropBlock#growthTick()
     private float growth = 0f;
+    private int[] soilData = new int[] {0, 0, 0, 0, 0}; // grass, gravel, dirt, 0, -1
+    private int dirt, grass, gravel, minus, zero = 0;
+
+    private boolean hasBees = false;
 
     public GrapePlantBlockEntity(BlockPos pos, BlockState state)
     {
@@ -55,6 +70,7 @@ public class GrapePlantBlockEntity extends TFCBlockEntity implements ICalendarTi
                 updateTick();
                 lastGrowthTick += UPDATE_INTERVAL;
             }
+            recordOwnData();
             markForSync();
         }
     }
@@ -63,6 +79,7 @@ public class GrapePlantBlockEntity extends TFCBlockEntity implements ICalendarTi
     {
         assert level != null;
 
+        Lifecycle lifecycle = Lifecycle.DORMANT;
         if (FLClimateRanges.GRAPES.get().checkTemperature(Climate.getTemperature(level, worldPosition), false) == ClimateRange.Result.VALID)
         {
             growth += 0.125f + (level.random.nextFloat() * 0.05f);
@@ -73,15 +90,19 @@ public class GrapePlantBlockEntity extends TFCBlockEntity implements ICalendarTi
                 growth = 0f;
                 markForSync();
             }
-            lifecycleAt(worldPosition, Lifecycle.HEALTHY);
-            lifecycleAt(worldPosition.above(), Lifecycle.HEALTHY);
+            lifecycle = Lifecycle.HEALTHY;
+            final Month month = Calendars.get(level).getCalendarMonthOfYear();
+            if (month == Month.JUNE)
+            {
+                lifecycle = Lifecycle.FLOWERING;
+            }
+            else if (month == Month.JULY)
+            {
+                lifecycle = Lifecycle.FRUITING;
+            }
         }
-        else
-        {
-
-            lifecycleAt(worldPosition, Lifecycle.DORMANT);
-            lifecycleAt(worldPosition.above(), Lifecycle.DORMANT);
-        }
+        lifecycleAt(worldPosition, lifecycle);
+        lifecycleAt(worldPosition.above(), lifecycle);
     }
 
     private void advanceAt(BlockPos pos)
@@ -104,11 +125,11 @@ public class GrapePlantBlockEntity extends TFCBlockEntity implements ICalendarTi
         }
     }
 
-    public BlockPos getBrainBlock()
+    public BlockPos getBrainPos()
     {
         assert level != null;
         BlockState state = level.getBlockState(worldPosition);
-        final Direction dir = state.getValue(GrapeGroundPlantOnStringBlock.AXIS) == Direction.Axis.X ? Direction.EAST : Direction.SOUTH;
+        final Direction dir = getStringDirection(state);
         final BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
         cursor.set(worldPosition);
         while (state.getBlock() instanceof GrapeGroundPlantOnStringBlock)
@@ -120,15 +141,154 @@ public class GrapePlantBlockEntity extends TFCBlockEntity implements ICalendarTi
         return cursor.immutable();
     }
 
+    @NotNull
+    private static Direction getStringDirection(BlockState state)
+    {
+        return state.getValue(GrapeGroundPlantOnStringBlock.AXIS) == Direction.Axis.X ? Direction.EAST : Direction.SOUTH;
+    }
+
+    public List<FoodTrait> scanAndReport()
+    {
+        assert level != null;
+
+        final BlockPos brainPos = getBrainPos();
+        if (!worldPosition.equals(brainPos)) // if we are not at the brain
+        {
+            if (level.getBlockEntity(brainPos) instanceof GrapePlantBlockEntity plant)
+            {
+                return plant.scanAndReport(); // ask the brain to report
+            }
+        }
+
+        int dirtCount = soilData[0];
+        int grassCount = soilData[1];
+        int gravelCount = soilData[2];
+        int countAtMinus1 = soilData[3];
+        int countAtZero = soilData[4];
+        boolean anyBees = hasBees;
+
+        final Direction dir = getStringDirection(level.getBlockState(worldPosition)).getOpposite();
+        final BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
+        cursor.set(worldPosition);
+        while (true)
+        {
+            cursor.move(dir, 2);
+            if (level.getBlockEntity(cursor) instanceof GrapePlantBlockEntity plant)
+            {
+                dirtCount += plant.soilData[0];
+                grassCount += plant.soilData[1];
+                gravelCount += plant.soilData[2];
+                countAtMinus1 += plant.soilData[3];
+                countAtZero += plant.soilData[4];
+                anyBees |= plant.hasBees;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        final List<FoodTrait> traits = new ArrayList<>();
+        if (anyBees)
+        {
+            traits.add(FLFoodTraits.BEE_GROWN);
+        }
+        if (dirtCount > gravelCount && dirtCount > grassCount)
+        {
+            traits.add(FLFoodTraits.DIRT_GROWN);
+        }
+        if (gravelCount > dirtCount && gravelCount > grassCount)
+        {
+            traits.add(FLFoodTraits.GRAVEL_GROWN);
+        }
+        // a little bit about the math
+        // each level has 49 blocks
+        // we can say there's probably a slope if theres a bit less blocks than 49 at the level below the plant
+        // and if theres at least some blocks that *are* at the level of the plant
+        if (countAtMinus1 < 33 && countAtZero > 20)
+        {
+            traits.add(FLFoodTraits.SLOPE_GROWN);
+        }
+        return traits;
+    }
+
+    private void recordOwnData()
+    {
+        assert level != null;
+        final BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
+        final float temp = Climate.getTemperature(level, worldPosition);
+
+        int dirtCount = 0;
+        int grassCount = 0;
+        int gravelCount = 0;
+        int countAtMinus1 = 0;
+        int countAtZero = 0;
+
+        boolean bees = false;
+
+        for (int x = -3; x <= 3; x++)
+        {
+            for (int z = -3; z <= 3; z++)
+            {
+                for (int y = -1; y <= 0; y++)
+                {
+                    cursor.setWithOffset(worldPosition, x, y, z);
+                    if (level.isLoaded(cursor))
+                    {
+                        final BlockState state = level.getBlockState(cursor);
+                        if (!state.isAir())
+                        {
+                            if (y == -1)
+                                countAtMinus1 += 1;
+                            else
+                                countAtZero += 1;
+                        }
+                        if (Helpers.isBlock(state, TFCTags.Blocks.GRASS))
+                        {
+                            grassCount += 1;
+                        }
+                        else if (Helpers.isBlock(state, BlockTags.DIRT))
+                        {
+                            dirtCount += 1;
+                        }
+                        else if (Helpers.isBlock(state, Tags.Blocks.GRAVEL))
+                        {
+                            gravelCount += 1;
+                        }
+                        else if (!bees && level.getBlockEntity(cursor) instanceof FLBeehiveBlockEntity hive && !hive.getUsableBees(temp).isEmpty())
+                        {
+                            bees = true;
+                        }
+                    }
+
+                }
+            }
+        }
+
+        hasBees = bees;
+        this.soilData = new int[] {dirtCount, grassCount, gravelCount, countAtMinus1, countAtZero};
+    }
+
     public boolean isBrain()
     {
-        return getBrainBlock().equals(worldPosition);
+        return getBrainPos().equals(worldPosition);
+    }
+
+    public int[] debugViewOfSoilData()
+    {
+        return soilData;
+    }
+
+    public boolean debugHasBees()
+    {
+        return hasBees;
     }
 
     public float getGrowth()
     {
         return growth;
     }
+
 
     public long getLastGrowthTick()
     {
@@ -161,6 +321,8 @@ public class GrapePlantBlockEntity extends TFCBlockEntity implements ICalendarTi
         lastUpdateTick = nbt.getLong("tick");
         lastGrowthTick = nbt.getLong("lastGrowthTick");
         growth = nbt.getFloat("growth");
+        hasBees = nbt.getBoolean("hasBees");
+        soilData = nbt.getIntArray("soilData");
         super.loadAdditional(nbt);
     }
 
@@ -170,6 +332,8 @@ public class GrapePlantBlockEntity extends TFCBlockEntity implements ICalendarTi
         nbt.putLong("tick", lastUpdateTick);
         nbt.putLong("lastGrowthTick", lastGrowthTick);
         nbt.putFloat("growth", growth);
+        nbt.putBoolean("hasBees", hasBees);
+        nbt.putIntArray("soilData", soilData);
         super.saveAdditional(nbt);
     }
 }

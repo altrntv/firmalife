@@ -60,7 +60,7 @@ public class FLSelfTests
 
     private static boolean validateOwnBlockLootTables()
     {
-        final Set<Block> expectedNoLootTableBlocks = Stream.of(TFCBlocks.PLACED_ITEM)
+        final Set<Block> expectedNoLootTableBlocks = Stream.of(FLBlocks.GRAPE_FLUFF_RED, FLBlocks.GRAPE_FLUFF_WHITE)
             .map(Supplier::get)
             .collect(Collectors.toSet());
         final Set<Class<?>> expectedNoLootTableClasses = ImmutableSet.of(BodyPlantBlock.class, GrowingFruitTreeBranchBlock.class, LiquidBlock.class, BranchingCactusBlock.class, GrowingBranchingCactusBlock.class, PouredGlassBlock.class);

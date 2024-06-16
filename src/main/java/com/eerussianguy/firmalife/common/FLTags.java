@@ -6,6 +6,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
 
+import net.dries007.tfc.util.Helpers;
+
 @SuppressWarnings("unused")
 public class FLTags
 {
@@ -46,9 +48,12 @@ public class FLTags
         public static final TagKey<Item> CAN_BE_HUNG = create("can_be_hung");
         public static final TagKey<Item> USABLE_IN_STOVETOP_SOUP = create("usable_in_stovetop_soup");
         public static final TagKey<Item> BEEKEEPER_ARMOR = create("beekeeper_armor");
+        public static final TagKey<Item> EMPTY_WINE_BOTTLES = create("empty_wine_bottles");
         public static final TagKey<Item> WINE_BOTTLES = create("wine_bottles");
         public static final TagKey<Item> GRAPES = create("foods/grapes");
         public static final TagKey<Item> SMASHED_GRAPES = create("foods/smashed_grapes");
+        public static final TagKey<Item> CAN_BE_PRESSED_LIKE_GRAPES = create("can_be_pressed_like_grapes");
+        public static final TagKey<Item> SWEETENER = TagKey.create(Registries.ITEM, Helpers.identifier("sweetener"));
 
         private static TagKey<Item> create(String id)
         {

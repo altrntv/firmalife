@@ -18,7 +18,7 @@ public interface IGrape
 
     default void updateLifecycle(Level level, BlockPos pos, BlockState state, Lifecycle lifecycle)
     {
-        if (state.hasProperty(TFCBlockStateProperties.LIFECYCLE) && state.getValue(TFCBlockStateProperties.LIFECYCLE) != lifecycle)
+        if (state.hasProperty(TFCBlockStateProperties.LIFECYCLE) && state.getValue(TFCBlockStateProperties.LIFECYCLE).advanceTowards(lifecycle) != state.getValue(TFCBlockStateProperties.LIFECYCLE))
         {
             level.setBlockAndUpdate(pos, state.setValue(TFCBlockStateProperties.LIFECYCLE, lifecycle));
         }

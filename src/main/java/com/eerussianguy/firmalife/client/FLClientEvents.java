@@ -46,6 +46,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import com.eerussianguy.firmalife.client.render.*;
 import com.eerussianguy.firmalife.client.screen.BeehiveScreen;
+import com.eerussianguy.firmalife.client.screen.BarrelPressScreen;
 import com.eerussianguy.firmalife.common.FLHelpers;
 import com.eerussianguy.firmalife.common.blockentities.FLBlockEntities;
 import com.eerussianguy.firmalife.common.blocks.FLBlocks;
@@ -96,7 +97,8 @@ public class FLClientEvents
             FLBlocks.RAJYA_METOK_WHEEL, FLBlocks.CHEVRE_WHEEL, FLBlocks.SHOSHA_WHEEL, FLBlocks.FETA_WHEEL, FLBlocks.GOUDA_WHEEL, FLBlocks.SMALL_CHROMITE,
             FLBlocks.MIXING_BOWL, FLBlocks.BUTTERFLY_GRASS, FLBlocks.VAT, FLBlocks.HYDROPONIC_PLANTER, FLBlocks.STOVETOP_GRILL, FLBlocks.STOVETOP_POT,
             FLBlocks.DARK_LADDER, FLBlocks.JARRING_STATION, FLBlocks.GRAPE_TRELLIS_POST_RED, FLBlocks.GRAPE_TRELLIS_POST_WHITE, FLBlocks.GRAPE_TRELLIS_POST,
-            FLBlocks.GRAPE_STRING, FLBlocks.GRAPE_STRING_RED, FLBlocks.GRAPE_STRING_WHITE, FLBlocks.GRAPE_STRING_PLANT_RED, FLBlocks.GRAPE_STRING_PLANT_WHITE
+            FLBlocks.GRAPE_STRING, FLBlocks.GRAPE_STRING_RED, FLBlocks.GRAPE_STRING_WHITE, FLBlocks.GRAPE_STRING_PLANT_RED, FLBlocks.GRAPE_STRING_PLANT_WHITE,
+            FLBlocks.GRAPE_FLUFF_RED, FLBlocks.GRAPE_FLUFF_WHITE
         ).forEach(reg -> ItemBlockRenderTypes.setRenderLayer(reg.get(), cutout));
 
         ItemBlockRenderTypes.setRenderLayer(FLBlocks.SOLAR_DRIER.get(), translucent);
@@ -124,6 +126,7 @@ public class FLClientEvents
 
         event.enqueueWork(() -> {
             MenuScreens.register(FLContainerTypes.BEEHIVE.get(), BeehiveScreen::new);
+            MenuScreens.register(FLContainerTypes.BARREL_PRESS.get(), BarrelPressScreen::new);
             MenuScreens.register(FLContainerTypes.STOVETOP_GRILL.get(), StovetopGrillScreen::new);
             MenuScreens.register(FLContainerTypes.STOVETOP_POT.get(), StovetopPotScreen::new);
             MenuScreens.register(FLContainerTypes.BIG_BARREL.get(), BigBarrelScreen::new);

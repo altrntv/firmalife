@@ -113,6 +113,9 @@ def generate(rm: ResourceManager):
     rm.crafting_shaped('crafting/pumping_station', ['SRS', 'BBB', 'ZZZ'], {'S': '#forge:sheets/bronze', 'R': '#forge:dusts/redstone', 'B': 'tfc:brass_mechanisms', 'Z': '#tfc:axles'}, 'firmalife:pumping_station').with_advancement('tfc:brass_mechanisms')
     damage_shapeless(rm, 'crafting/chiseled_sealed_bricks', ('firmalife:sealed_bricks', '#tfc:chisels', 'tfc:mortar'), 'firmalife:chiseled_sealed_bricks').with_advancement('firmalife:sealed_bricks')
     damage_shapeless(rm, 'crafting/polished_sealed_bricks', ('firmalife:sealed_bricks', '#tfc:chisels'), 'firmalife:polished_sealed_bricks').with_advancement('firmalife:sealed_bricks')
+    damage_shapeless(rm, 'crafting/barrel_stave', ('firmalife:treated_lumber', 'firmalife:treated_lumber', '#forge:sheets/wrought_iron', '#tfc:hammers'), 'firmalife:barrel_stave').with_advancement('#forge:sheets/wrought_iron')
+    rm.crafting_shaped('crafting/grape_trellis_post', ['X', 'X', 'X'], {'X': 'firmalife:treated_lumber'}, 'firmalife:grape_trellis_post').with_advancement('firmalife:treated_lumber')
+    damage_shapeless(rm, 'crafting/bottle_label', ('minecraft:paper', '#tfc:knives', 'firmalife:beeswax'), '16 firmalife:bottle_label').with_advancement('firmalife:bottle_label')
 
     for section in ARMOR_SECTIONS:
         rm.crafting_shapeless('crafting/beekeeper_%s' % section, ('minecraft:leather_%s' % section, 'tfc:burlap_cloth', 'tfc:burlap_cloth', 'tfc:powder/wood_ash'), 'firmalife:beekeeper_%s' % section).with_advancement('tfc:burlap_cloth')
@@ -140,6 +143,10 @@ def generate(rm: ResourceManager):
         rm.crafting_shaped('crafting/wood/%s_hanger' % wood, ['XXX', ' Y ', ' Y ', ], {'X': 'tfc:wood/planks/%s' % wood, 'Y': '#forge:string'}, 'firmalife:wood/hanger/%s' % wood).with_advancement('tfc:wood/lumber/%s' % wood)
         rm.crafting_shaped('crafting/wood/%s_shelf' % wood, ['XXX', 'YYY', 'XXX'], {'X': 'tfc:wood/planks/%s' % wood, 'Y': 'tfc:wood/lumber/%s' % wood}, 'firmalife:wood/food_shelf/%s' % wood).with_advancement('tfc:wood/lumber/%s' % wood)
         rm.crafting_shaped('crafting/wood/%s_jarbnet' % wood, ['X  ', 'ZYY', 'X  '], {'X': 'tfc:wood/log/%s' % wood, 'Y': 'tfc:wood/lumber/%s' % wood, 'Z': '#forge:rods/brass'}, '2 firmalife:wood/jarbnet/%s' % wood).with_advancement('tfc:wood/lumber/%s' % wood)
+        rm.crafting_shaped('crafting/wood/%s_wine_shelf' % wood, ['XYX', 'XYX', 'XYX'], {'X': 'tfc:wood/log/%s' % wood, 'Y': 'firmalife:treated_lumber'}, '4 firmalife:wood/wine_shelf/%s' % wood).with_advancement('tfc:wood/log/%s' % wood)
+        damage_shapeless(rm, 'crafting/wood/%s_stomping_barrel' % wood, ('#tfc:saws', 'tfc:wood/barrel/%s' % wood), 'firmalife:wood/stomping_barrel/%s' % wood).with_advancement('tfc:wood/barrel/%s' % wood)
+        rm.crafting_shapeless('crafting/wood/%s_barrel_press' % wood, ('firmalife:wood/stomping_barrel/%s' % wood, '#forge:rods/wrought_iron', '#forge:sheets/wrought_iron', 'tfc:brass_mechanisms'), 'firmalife:wood/barrel_press/%s' % wood).with_advancement('firmalife:wood/stomping_barrel/%s' % wood)
+        rm.crafting_shaped('crafting/wood/%s_keg' % wood, ['XYX', 'YZY', 'XYX'], {'X': 'tfc:wood/log/%s' % wood, 'Y': 'firmalife:barrel_stave', 'Z': 'tfc:glue'}, 'firmalife:wood/big_barrel/%s' % wood).with_advancement('tfc:wood/log/%s' % wood)
 
     # Chisel
     def chisel_stair_slab(name: str, ingredient: str):
@@ -219,6 +226,7 @@ def generate(rm: ResourceManager):
     barrel_sealed_recipe(rm, 'mead', 'Mead', 72000, 'firmalife:raw_honey', '100 minecraft:water', output_fluid='100 firmalife:mead')
     barrel_sealed_recipe(rm, 'fermented_red_grapes', 'Fermenting Red Grapes', 24000 * 5, not_rotten(lacks_trait('firmalife:food/smashed_red_grapes', 'firmalife:fermented')), output_item=item_stack_provider(copy_input=True, add_trait='firmalife:fermented'))
     barrel_sealed_recipe(rm, 'fermented_white_grapes', 'Fermenting White Grapes', 24000 * 5, not_rotten(lacks_trait('firmalife:food/smashed_white_grapes', 'firmalife:fermented')), output_item=item_stack_provider(copy_input=True, add_trait='firmalife:fermented'))
+    barrel_sealed_recipe(rm, 'cork', 'Making Corks', 24000, 'firmalife:treated_lumber', '1000 tfc:limewater', output_item='8 firmalife:cork')
 
     barrel_sealed_recipe(rm, 'shosha', 'Shosha Wheel', 16000, '3 firmalife:food/yak_curd', '750 tfc:salt_water', output_item='firmalife:shosha_wheel')
     barrel_sealed_recipe(rm, 'feta', 'Feta Wheel', 16000, '3 firmalife:food/goat_curd', '750 tfc:salt_water', output_item='firmalife:feta_wheel')

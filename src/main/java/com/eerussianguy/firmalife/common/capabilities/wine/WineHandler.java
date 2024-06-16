@@ -10,6 +10,8 @@ import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import net.dries007.tfc.util.climate.KoppenClimateClassification;
+
 public class WineHandler implements IWine, ICapabilitySerializable<CompoundTag>
 {
     private final ItemStack stack;
@@ -18,6 +20,8 @@ public class WineHandler implements IWine, ICapabilitySerializable<CompoundTag>
     private final LazyOptional<IWine> capability = LazyOptional.of(() -> this);
     private boolean initialized = false;
     @Nullable private String labelText = null;
+    private WineType wineType = WineType.RED;
+    @Nullable private KoppenClimateClassification climate = null;
 
     public WineHandler(ItemStack stack)
     {
@@ -35,6 +39,32 @@ public class WineHandler implements IWine, ICapabilitySerializable<CompoundTag>
     public void setLabelText(String labelText)
     {
         this.labelText = labelText;
+        save();
+    }
+
+    @Override
+    public WineType getWineType()
+    {
+        return wineType;
+    }
+
+    @Override
+    public void setWineType(WineType type)
+    {
+        this.wineType = type;
+        save();
+    }
+
+    @Override
+    public @Nullable KoppenClimateClassification getClimate()
+    {
+        return climate;
+    }
+
+    @Override
+    public void setClimate(@Nullable KoppenClimateClassification koppen)
+    {
+        this.climate = koppen;
         save();
     }
 
@@ -85,6 +115,9 @@ public class WineHandler implements IWine, ICapabilitySerializable<CompoundTag>
                 final CompoundTag wineTag = tag.getCompound("wine");
                 creationDate = wineTag.getLong("creationDate");
                 openDate = wineTag.getLong("openDate");
+                wineType = WineType.VALUES[wineTag.getInt("wineType")];
+                if (wineTag.contains("climate", Tag.TAG_INT))
+                    climate = WineType.KOPPEN_VALUES[wineTag.getInt("climate")];
             }
         }
     }
@@ -95,6 +128,9 @@ public class WineHandler implements IWine, ICapabilitySerializable<CompoundTag>
         final CompoundTag wineTag = new CompoundTag();
         wineTag.putLong("creationDate", creationDate);
         wineTag.putLong("openDate", openDate);
+        wineTag.putInt("wineType", wineType.ordinal());
+        if (climate != null)
+            wineTag.putInt("climate", climate.ordinal());
         tag.put("wine", wineTag);
     }
 

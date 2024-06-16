@@ -49,6 +49,8 @@ import net.dries007.tfc.util.calendar.Calendars;
 import net.dries007.tfc.util.calendar.ICalendar;
 import net.dries007.tfc.util.calendar.ICalendarTickable;
 import net.dries007.tfc.util.climate.Climate;
+
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStackHandler> implements ICalendarTickable
@@ -215,7 +217,7 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
 
         final float temp = Climate.getTemperature(level, worldPosition);
         // collect bees that exist and have queens
-        final List<IBee> usableBees = Arrays.stream(cachedBees).filter(bee -> bee != null && bee.hasQueen() && temp > BeeAbility.getMinTemperature(bee.getAbility(BeeAbility.HARDINESS))).collect(Collectors.toList());
+        final List<IBee> usableBees = getUsableBees(temp);
         // perform area of effect actions
         final int flowers = getFlowers(usableBees, true);
 
@@ -275,7 +277,7 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
             final float temp = Climate.getTemperature(level, worldPosition);
 
             // collect bees that exist and have queens
-            final List<IBee> usableBees = Arrays.stream(cachedBees).filter(bee -> bee != null && bee.hasQueen() && temp > BeeAbility.getMinTemperature(bee.getAbility(BeeAbility.HARDINESS))).collect(Collectors.toList());
+            final List<IBee> usableBees = getUsableBees(temp);
 
             final Direction direction = getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
             final BlockPos posInFront = worldPosition.relative(direction);
@@ -300,6 +302,12 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
                 }
             }
         }
+    }
+
+    @NotNull
+    public List<IBee> getUsableBees(float temp)
+    {
+        return Arrays.stream(cachedBees).filter(bee -> bee != null && bee.hasQueen() && temp > BeeAbility.getMinTemperature(bee.getAbility(BeeAbility.HARDINESS))).collect(Collectors.toList());
     }
 
     @SuppressWarnings("deprecation")

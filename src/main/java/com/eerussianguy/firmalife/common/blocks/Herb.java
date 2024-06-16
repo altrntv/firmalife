@@ -2,12 +2,12 @@ package com.eerussianguy.firmalife.common.blocks;
 
 public enum Herb
 {
-    BASIL,
+    BASIL, // pizza
     BAY_LAUREL,
     CARDAMOM,
-    CILANTRO,
+    CILANTRO, // salsa
     CUMIN,
-    OREGANO,
+    OREGANO, // lasagna
     PIMENTO,
-    VANILLA
+    VANILLA, // ice cream
 }

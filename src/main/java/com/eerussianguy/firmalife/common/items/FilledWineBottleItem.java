@@ -1,6 +1,8 @@
 package com.eerussianguy.firmalife.common.items;
 
 import java.util.List;
+import com.eerussianguy.firmalife.common.FLHelpers;
+import com.eerussianguy.firmalife.common.capabilities.wine.IWine;
 import com.eerussianguy.firmalife.common.capabilities.wine.WineCapability;
 import com.eerussianguy.firmalife.common.capabilities.wine.WineHandler;
 import net.minecraft.ChatFormatting;
@@ -12,7 +14,6 @@ import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickAction;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -49,6 +50,13 @@ public class FilledWineBottleItem extends WineBottleItem
             }).orElse(false);
         }
         return false;
+    }
+
+    @Override
+    public Component getName(ItemStack stack)
+    {
+        final IWine wine = Helpers.getCapability(stack, WineCapability.CAPABILITY);
+        return wine != null && wine.getCreationDate() > 0 ? Component.translatable("firmalife.wine." + (wine.isSealed() ? "sealed" : "unsealed"), FLHelpers.translateEnum(wine.getWineType())) : super.getName(stack);
     }
 
     @Override

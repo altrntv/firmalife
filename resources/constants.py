@@ -11,7 +11,7 @@ class Wood(NamedTuple):
 
 SIMPLE_ITEMS = ('fruit_leaf', 'cinnamon_bark', 'beeswax', 'pineapple_fiber', 'pineapple_leather', 'pineapple_yarn', 'raw_honey', 'rennet', 'watering_can', 'treated_lumber', 'cheesecloth', 'spoon',
                 'pie_pan', 'seed_ball', 'rustic_finish', 'stone_finish', 'tile_finish', 'oven_insulation', 'ice_shavings', 'beekeeper_helmet', 'beekeeper_chestplate', 'beekeeper_leggings', 'beekeeper_boots', 'reinforced_glass', 'pottery_sherd',
-                'hematitic_wine_bottle', 'olivine_wine_bottle', 'volcanic_wine_bottle', 'empty_hematitic_wine_bottle', 'empty_olivine_wine_bottle', 'empty_volcanic_wine_bottle', 'cork', 'bottle_label')
+                'hematitic_wine_bottle', 'olivine_wine_bottle', 'volcanic_wine_bottle', 'empty_hematitic_wine_bottle', 'empty_olivine_wine_bottle', 'empty_volcanic_wine_bottle', 'cork', 'bottle_label', 'barrel_stave')
 SIMPLE_FOODS = ('frothy_coconut', 'white_chocolate_blend', 'dark_chocolate_blend', 'milk_chocolate_blend', 'tofu', 'soy_mixture', 'yak_curd', 'goat_curd', 'milk_curd', 'cheddar', 'chevre', 'rajya_metok', 'gouda', 'feta', 'shosha', 'butter',
                 'pie_dough', 'filled_pie', 'cooked_pie', 'pizza_dough', 'raw_pizza', 'cooked_pizza', 'shredded_cheese', 'pickled_egg', 'pumpkin_pie_dough', 'raw_pumpkin_pie', 'cooked_pumpkin_pie', 'cocoa_beans', 'roasted_cocoa_beans',
                 'cocoa_butter', 'cocoa_powder', 'toast', 'dark_chocolate', 'milk_chocolate', 'white_chocolate', 'garlic_bread', 'cured_maize', 'nixtamal', 'masa', 'masa_flour', 'corn_tortilla', 'taco_shell', 'burrito', 'taco', 'salsa',
@@ -28,7 +28,7 @@ SIMPLE_BLOCKS: Dict[str, str] = {
     'rustic_bricks': 'minecraft:mineable/pickaxe',
 }
 COLORS = ('white', 'orange', 'magenta', 'light_blue', 'yellow', 'lime', 'pink', 'gray', 'light_gray', 'cyan', 'purple', 'blue', 'brown', 'green', 'red', 'black')
-BLOCK_ENTITIES = ('oven_bottom', 'oven_top', 'drying_mat', 'beehive', 'solar_drier', 'mixing_bowl', 'string', 'berry_bush', 'large_planter', 'bonsai_planter', 'trellis_planter', 'hanging_planter', 'quad_planter', 'climate_station', 'hydroponic_planter', 'vat', 'oven_hopper', 'ashtray', 'stovetop_grill', 'stovetop_pot', 'jarbnet', 'plate', 'big_barrel', 'jarring_station')
+BLOCK_ENTITIES = ('oven_bottom', 'oven_top', 'drying_mat', 'beehive', 'solar_drier', 'mixing_bowl', 'string', 'berry_bush', 'large_planter', 'bonsai_planter', 'trellis_planter', 'hanging_planter', 'quad_planter', 'climate_station', 'hydroponic_planter', 'vat', 'oven_hopper', 'ashtray', 'stovetop_grill', 'stovetop_pot', 'jarbnet', 'plate', 'big_barrel', 'jarring_station', 'barrel_press', 'stomping_barrel')
 EXTRA_FLUIDS = ('yeast_starter', 'coconut_milk', 'yak_milk', 'goat_milk', 'curdled_yak_milk', 'curdled_goat_milk', 'pina_colada', 'cream', 'chocolate', 'sugar_water', 'fruity_fluid', 'mead')
 JARS: Sequence[Tuple[str, int, str]] = (
     ('honey', 1, 'firmalife:raw_honey'),
@@ -184,6 +184,10 @@ DEFAULT_LANG = {
     'firmalife.tooltip.food_trait.smoked': 'Smoked',
     'firmalife.tooltip.food_trait.rancid_smoked': 'Rancid Smoked',
     'firmalife.tooltip.food_trait.fermented': 'Fermented',
+    'firmalife.tooltip.food_trait.bee_grown': 'Bee Grown',
+    'firmalife.tooltip.food_trait.slope_grown': 'Slope Grown',
+    'firmalife.tooltip.food_trait.dirt_grown': 'Dirt Grown',
+    'firmalife.tooltip.food_trait.gravel_grown': 'Gravel Grown',
     'firmalife.tooltip.seed_ball': 'Throw me!',
     'firmalife.tooltip.seed_ball_disabled': 'This server has disabled seed balls!',
     'firmalife.tooltip.planter_usable': 'Plantable in a %s',
@@ -222,6 +226,11 @@ DEFAULT_LANG = {
     'firmalife.enum.additiontype.charcoal': 'Charcoal',
     'firmalife.enum.additiontype.bone': 'Bones',
     'firmalife.enum.additiontype.pottery': 'Pottery',
+    'firmalife.enum.winetype.red': 'Red',
+    'firmalife.enum.winetype.white': 'White',
+    'firmalife.enum.winetype.rose': 'Rosé',
+    'firmalife.enum.winetype.sparkling': 'Sparkling',
+    'firmalife.enum.winetype.dessert': 'Dessert',
 
     'firmalife.bee.queen': 'Queen',
     'firmalife.bee.no_queen': 'No Queen',
@@ -251,9 +260,11 @@ DEFAULT_LANG = {
     'firmalife.beehive.honey_chance_100': 'Daily Honey Chance: Guaranteed',
     'firmalife.wine.age_time': 'Aging for: %s',
     'firmalife.wine.age_time_opened': 'Aged for: %s',
-    'firmalife.wine.sealed': 'Sealed',
-    'firmalife.wine.unsealed': 'Unsealed',
+    'firmalife.wine.sealed': '%s Wine Bottle',
+    'firmalife.wine.unsealed': 'Open %s Wine Bottle',
+    'firmalife.wine.making': 'Making %s Wine',
     'firmalife.wine.how_to_open': 'Right click with a knife to pop the cork.',
+    'firmalife.wine.has_output': '%s servings of %s wine',
     'greenhouse.firmalife.treated_wood': 'Treated Wood',
     'greenhouse.firmalife.copper': 'Copper',
     'greenhouse.firmalife.iron': 'Iron',
@@ -301,6 +312,7 @@ DEFAULT_LANG = {
     'config.jade.plugin_firmalife.vat': 'Vat',
     'config.jade.plugin_firmalife.tumbler': 'Tumbler',
     'config.jade.plugin_firmalife.jarbnet': 'Jarbnet',
+    'config.jade.plugin_firmalife.barrel_press': 'Barrel Press',
 
     'death.attack.firmalife.oven': '%1$s died by sticking their hand in a hot oven.',
     'death.attack.firmalife.oven.player': '%1$s climbed into an oven to escape %2$s.',

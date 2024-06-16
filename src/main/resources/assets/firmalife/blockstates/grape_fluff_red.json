@@ -1,0 +1,49 @@
+{
+  "__comment__": "This file was automatically created by mcresources",
+  "variants": {
+    "lifecycle=dormant": [
+      {
+        "model": "firmalife:block/grape_fluff_dormant_1"
+      },
+      {
+        "model": "firmalife:block/grape_fluff_dormant_2"
+      },
+      {
+        "model": "firmalife:block/grape_fluff_dormant_3"
+      }
+    ],
+    "lifecycle=healthy": [
+      {
+        "model": "firmalife:block/grape_fluff_healthy_1"
+      },
+      {
+        "model": "firmalife:block/grape_fluff_healthy_2"
+      },
+      {
+        "model": "firmalife:block/grape_fluff_healthy_3"
+      }
+    ],
+    "lifecycle=fruiting": [
+      {
+        "model": "firmalife:block/grape_fluff_fruiting_red_1"
+      },
+      {
+        "model": "firmalife:block/grape_fluff_fruiting_red_2"
+      },
+      {
+        "model": "firmalife:block/grape_fluff_fruiting_red_3"
+      }
+    ],
+    "lifecycle=flowering": [
+      {
+        "model": "firmalife:block/grape_fluff_flowering_1"
+      },
+      {
+        "model": "firmalife:block/grape_fluff_flowering_2"
+      },
+      {
+        "model": "firmalife:block/grape_fluff_flowering_3"
+      }
+    ]
+  }
+}
