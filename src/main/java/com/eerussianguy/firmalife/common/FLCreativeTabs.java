@@ -49,7 +49,6 @@ public final class FLCreativeTabs
         accept(out, FLItems.BEEHIVE_FRAME);
         accept(out, FLItems.CHEESECLOTH);
         accept(out, FLItems.FRUIT_LEAF);
-        accept(out, FLItems.HOLLOW_SHELL);
         accept(out, FLItems.ICE_SHAVINGS);
         accept(out, FLItems.OVEN_INSULATION);
         accept(out, FLItems.PEEL);
@@ -75,6 +74,7 @@ public final class FLCreativeTabs
         accept(out, FLItems.EMPTY_HEMATITIC_WINE_BOTTLE);
         accept(out, FLItems.EMPTY_VOLCANIC_WINE_BOTTLE);
         accept(out, FLItems.CORK);
+        accept(out, FLItems.BOTTLE_LABEL);
         accept(out, FLItems.BARREL_STAVE);
         accept(out, FLItems.RED_GRAPE_SEEDS);
         accept(out, FLItems.WHITE_GRAPE_SEEDS);
@@ -131,6 +131,7 @@ public final class FLCreativeTabs
         accept(out, FLBlocks.SEALED_WALL);
         accept(out, FLBlocks.SEALED_TRAPDOOR);
         accept(out, FLItems.HOLLOW_SHELL);
+        accept(out, FLItems.WINE_GLASS);
         accept(out, FLItems.TREATED_LUMBER);
         accept(out, FLBlocks.TREATED_WOOD);
         for (Wood wood : Wood.values())
@@ -233,6 +234,7 @@ public final class FLCreativeTabs
         {
             FLItems.METAL_FLUID_BUCKETS.values().forEach(reg -> accept(out, reg));
             FLItems.EXTRA_FLUID_BUCKETS.values().forEach(reg -> accept(out, reg));
+            FLItems.WINE_FLUID_BUCKETS.values().forEach(reg -> accept(out, reg));
         }
     }
 

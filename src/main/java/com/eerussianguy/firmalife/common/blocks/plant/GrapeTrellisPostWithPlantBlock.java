@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -65,6 +66,7 @@ public class GrapeTrellisPostWithPlantBlock extends GrapeTrellisPostBlock implem
                     FoodCapability.applyTrait(stack, trait);
                 }
             }
+            FoodCapability.updateFoodDecayOnCreate(stack);
             ItemHandlerHelper.giveItemToPlayer(player, stack);
             level.setBlockAndUpdate(pos, state.setValue(LIFECYCLE, Lifecycle.HEALTHY));
             return InteractionResult.sidedSuccess(level.isClientSide);
@@ -126,5 +128,11 @@ public class GrapeTrellisPostWithPlantBlock extends GrapeTrellisPostBlock implem
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
     {
         super.createBlockStateDefinition(builder.add(LIFECYCLE));
+    }
+
+    @Override
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player)
+    {
+        return new ItemStack(FLBlocks.GRAPE_TRELLIS_POST.get());
     }
 }

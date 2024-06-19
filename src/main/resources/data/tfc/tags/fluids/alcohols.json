@@ -3,6 +3,11 @@
   "replace": false,
   "values": [
     "firmalife:pina_colada",
-    "firmalife:mead"
+    "firmalife:mead",
+    "firmalife:red_wine",
+    "firmalife:white_wine",
+    "firmalife:rose_wine",
+    "firmalife:sparkling_wine",
+    "firmalife:dessert_wine"
   ]
 }

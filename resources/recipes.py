@@ -111,8 +111,8 @@ def generate(rm: ResourceManager):
     rm.crafting_shapeless('crafting/oxidized_copper_pipe', ('firmalife:copper_pipe', 'firmalife:copper_pipe', 'firmalife:copper_pipe', 'firmalife:copper_pipe', 'tfc:powder/wood_ash'), '4 firmalife:oxidized_copper_pipe').with_advancement('firmalife:copper_pipe')
     rm.crafting_shapeless('crafting/irrigation_tank', ('#tfc:barrels', '#forge:sheets/bronze', 'firmalife:copper_pipe'), 'firmalife:irrigation_tank').with_advancement('firmalife:copper_pipe')
     rm.crafting_shaped('crafting/pumping_station', ['SRS', 'BBB', 'ZZZ'], {'S': '#forge:sheets/bronze', 'R': '#forge:dusts/redstone', 'B': 'tfc:brass_mechanisms', 'Z': '#tfc:axles'}, 'firmalife:pumping_station').with_advancement('tfc:brass_mechanisms')
-    damage_shapeless(rm, 'crafting/chiseled_sealed_bricks', ('firmalife:sealed_bricks', '#tfc:chisels', 'tfc:mortar'), 'firmalife:chiseled_sealed_bricks').with_advancement('firmalife:sealed_bricks')
-    damage_shapeless(rm, 'crafting/polished_sealed_bricks', ('firmalife:sealed_bricks', '#tfc:chisels'), 'firmalife:polished_sealed_bricks').with_advancement('firmalife:sealed_bricks')
+    damage_shapeless(rm, 'crafting/chiseled_sealed_bricks', ('firmalife:polished_sealed_bricks', '#tfc:chisels'), 'firmalife:chiseled_sealed_bricks').with_advancement('firmalife:sealed_bricks')
+    damage_shapeless(rm, 'crafting/polished_sealed_bricks', ('firmalife:sealed_bricks', '#tfc:chisels', 'tfc:mortar'), 'firmalife:polished_sealed_bricks').with_advancement('firmalife:sealed_bricks')
     damage_shapeless(rm, 'crafting/barrel_stave', ('firmalife:treated_lumber', 'firmalife:treated_lumber', '#forge:sheets/wrought_iron', '#tfc:hammers'), 'firmalife:barrel_stave').with_advancement('#forge:sheets/wrought_iron')
     rm.crafting_shaped('crafting/grape_trellis_post', ['X', 'X', 'X'], {'X': 'firmalife:treated_lumber'}, 'firmalife:grape_trellis_post').with_advancement('firmalife:treated_lumber')
     damage_shapeless(rm, 'crafting/bottle_label', ('minecraft:paper', '#tfc:knives', 'firmalife:beeswax'), '16 firmalife:bottle_label').with_advancement('firmalife:bottle_label')
@@ -211,6 +211,8 @@ def generate(rm: ResourceManager):
         })
 
     barrel_instant_recipe(rm, 'clean_any_bowl', '#firmalife:foods/washable', '100 minecraft:water', output_item=item_stack_provider(other_modifier='firmalife:empty_pan'))
+    for glass in ('olivine', 'volcanic', 'hematitic'):
+        barrel_instant_recipe(rm, 'clean_%s_wine_bottle' % glass, 'firmalife:%s_wine_bottle' % glass, '100 minecraft:water', output_item='firmalife:empty_%s_wine_bottle' % glass)
 
     barrel_sealed_recipe(rm, 'yeast_starter', 'Yeast Starter', 24000 * 3, not_rotten(has_trait('#tfc:foods/fruits', 'firmalife:dried')), '100 minecraft:water', output_fluid='100 firmalife:yeast_starter')
     barrel_sealed_recipe(rm, 'feed_yeast', 'Feeding Yeast', 12000, not_rotten('#firmalife:feeds_yeast'), '100 firmalife:yeast_starter', output_fluid='600 firmalife:yeast_starter')
@@ -271,7 +273,7 @@ def generate(rm: ResourceManager):
         drying_recipe(rm, '%s_dirt' % dirt, 'tfc:mud/%s' % dirt, item_stack_provider('tfc:dirt/%s' % dirt))
 
     stomping_recipe(rm, 'red_grapes', not_rotten(lacks_trait('firmalife:food/red_grapes', 'firmalife:dried')), item_stack_provider('firmalife:food/smashed_red_grapes'), 'firmalife:block/red_unsmashed_grapes', 'firmalife:block/red_smashed_grapes')
-    stomping_recipe(rm, 'white_grapes', not_rotten(lacks_trait('firmalife:food/white_grapes', 'firmalife:dried')), item_stack_provider('firmalife:food/smashed_red_grapes'), 'firmalife:block/white_unsmashed_grapes', 'firmalife:block/white_smashed_grapes')
+    stomping_recipe(rm, 'white_grapes', not_rotten(lacks_trait('firmalife:food/white_grapes', 'firmalife:dried')), item_stack_provider('firmalife:food/smashed_white_grapes'), 'firmalife:block/white_unsmashed_grapes', 'firmalife:block/white_smashed_grapes')
     stomping_recipe(rm, 'charcoal', 'minecraft:charcoal', item_stack_provider('4 tfc:powder/charcoal'), 'tfc:block/charcoal_pile', 'tfc:block/powder/charcoal', 'tfc:block.charcoal.fall')
 
     smoking_recipe(rm, 'meat', not_rotten(has_trait(lacks_trait('#tfc:foods/raw_meats', 'firmalife:smoked'), 'tfc:brined')), item_stack_provider(copy_input=True, add_trait='firmalife:smoked'))
@@ -452,6 +454,7 @@ def generate(rm: ResourceManager):
     glass_recipe(rm, 'reinforced_glass_pane', ['flatten', 'soda_ash', 'table_pour'], 'tfc:silica_glass_batch', 'firmalife:reinforced_poured_glass')
     for glass in ('olivine', 'hematitic', 'volcanic'):
         glass_recipe(rm, '%s_wine_bottle' % glass, ['blow', 'blow', 'pinch', 'saw'], 'tfc:%s_glass_batch' % glass, 'firmalife:empty_%s_wine_bottle' % glass)
+    glass_recipe(rm, 'wine_glass', ['blow', 'blow', 'pinch', 'saw'], 'tfc:silica_glass_batch', '2 firmalife:wine_glass')
 
     for recipe in DISABLED_TFC_RECIPES:
         rm.domain = 'tfc' # DOMAIN CHANGE

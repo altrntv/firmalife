@@ -5,13 +5,10 @@
     "type": "minecraft:crafting_shapeless",
     "ingredients": [
       {
-        "item": "firmalife:sealed_bricks"
+        "item": "firmalife:polished_sealed_bricks"
       },
       {
         "tag": "tfc:chisels"
-      },
-      {
-        "item": "tfc:mortar"
       }
     ],
     "result": {

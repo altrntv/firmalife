@@ -10,6 +10,7 @@ import com.eerussianguy.firmalife.common.blocks.plant.GrapeStringBlock;
 import com.eerussianguy.firmalife.common.blocks.plant.GrapeStringWithPlantBlock;
 import com.eerussianguy.firmalife.common.blocks.plant.GrapeTrellisPostBlock;
 import com.eerussianguy.firmalife.common.blocks.plant.GrapeTrellisPostWithPlantBlock;
+import com.eerussianguy.firmalife.common.capabilities.wine.WineType;
 import javax.annotation.Nullable;
 
 import net.minecraft.core.BlockPos;
@@ -195,6 +196,11 @@ public class FLBlocks
     public static final Map<ExtraFluid, RegistryObject<LiquidBlock>> EXTRA_FLUIDS = Helpers.mapOfKeys(ExtraFluid.class, fluid ->
         registerNoItem("fluid/" + fluid.getSerializedName(), () -> new LiquidBlock(FLFluids.EXTRA_FLUIDS.get(fluid).source(), Properties.copy(Blocks.WATER).noLootTable()))
     );
+
+    public static final Map<WineType, RegistryObject<LiquidBlock>> WINE_FLUIDS = Helpers.mapOfKeys(WineType.class, fluid ->
+        registerNoItem("fluid/" + fluid.getSerializedName(), () -> new LiquidBlock(FLFluids.WINE_FLUIDS.get(fluid).source(), Properties.copy(Blocks.WATER).noLootTable()))
+    );
+
 
     public static void registerFlowerPotFlowers()
     {

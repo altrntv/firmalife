@@ -12,7 +12,7 @@
     }
   },
   "result": {
-    "item": "firmalife:food/smashed_red_grapes"
+    "item": "firmalife:food/smashed_white_grapes"
   },
   "input_texture": "firmalife:block/white_unsmashed_grapes",
   "output_texture": "firmalife:block/white_smashed_grapes",

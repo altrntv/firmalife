@@ -13,6 +13,11 @@
     "firmalife:fluid/chocolate",
     "firmalife:fluid/sugar_water",
     "firmalife:fluid/fruity_fluid",
-    "firmalife:fluid/mead"
+    "firmalife:fluid/mead",
+    "firmalife:fluid/red_wine",
+    "firmalife:fluid/white_wine",
+    "firmalife:fluid/rose_wine",
+    "firmalife:fluid/sparkling_wine",
+    "firmalife:fluid/dessert_wine"
   ]
 }

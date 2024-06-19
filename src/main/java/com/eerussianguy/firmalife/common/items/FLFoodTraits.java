@@ -2,9 +2,11 @@ package com.eerussianguy.firmalife.common.items;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.function.Supplier;
 import com.eerussianguy.firmalife.common.FLHelpers;
 import com.eerussianguy.firmalife.config.FLConfig;
+import com.google.common.collect.ImmutableSet;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -12,7 +14,6 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 import net.dries007.tfc.common.capabilities.food.FoodTrait;
-import net.dries007.tfc.util.Helpers;
 
 public class FLFoodTraits
 {
@@ -32,7 +33,7 @@ public class FLFoodTraits
         HUNG_2(0.3f),
         HUNG_3(0.25f),
         FERMENTED(0.25f),
-        BEE_GROWN(0.8f),
+        BEE_POLLINATED(0.8f),
         DIRT_GROWN(0.9f),
         GRAVEL_GROWN(0.8f),
         SLOPE_GROWN(0.8f),
@@ -63,6 +64,7 @@ public class FLFoodTraits
         }
     }
 
+
     public static void init() { }
 
     public static final FoodTrait DRIED = register(Default.DRIED);
@@ -79,10 +81,12 @@ public class FLFoodTraits
     public static final FoodTrait HUNG_2 = register(Default.HUNG_2);
     public static final FoodTrait HUNG_3 = register(Default.HUNG_3);
     public static final FoodTrait FERMENTED = register(Default.FERMENTED);
-    public static final FoodTrait BEE_GROWN = register(Default.BEE_GROWN);
+    public static final FoodTrait BEE_POLLINATED = register(Default.BEE_POLLINATED);
     public static final FoodTrait DIRT_GROWN = register(Default.DIRT_GROWN);
     public static final FoodTrait GRAVEL_GROWN = register(Default.GRAVEL_GROWN);
     public static final FoodTrait SLOPE_GROWN = register(Default.SLOPE_GROWN);
+
+    public static final Set<FoodTrait> WINE_TRAITS = ImmutableSet.of(BEE_POLLINATED, DIRT_GROWN, GRAVEL_GROWN, SLOPE_GROWN);
 
     private static FoodTrait register(FLFoodTraits.Default trait)
     {

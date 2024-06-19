@@ -8,6 +8,7 @@ import java.util.function.Supplier;
 import com.eerussianguy.firmalife.common.FLHelpers;
 import com.eerussianguy.firmalife.common.blocks.FLBlocks;
 import com.eerussianguy.firmalife.common.blocks.OvenType;
+import com.eerussianguy.firmalife.common.capabilities.wine.WineType;
 import com.eerussianguy.firmalife.common.util.FLArmorMaterials;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -42,6 +43,7 @@ public class FLItems
     public static final RegistryObject<Item> CHEESECLOTH = register("cheesecloth");
     public static final RegistryObject<Item> FRUIT_LEAF = register("fruit_leaf");
     public static final RegistryObject<Item> HOLLOW_SHELL = register("hollow_shell",  () -> new HollowShellItem(prop(), FLConfig.SERVER.hollowShellCapacity, FLTags.Fluids.USABLE_IN_HOLLOW_SHELL, false, false));
+    public static final RegistryObject<Item> WINE_GLASS = register("wine_glass",  () -> new WineGlassItem(prop(), FLConfig.SERVER.wineGlassCapacity, FLTags.Fluids.USABLE_IN_WINE_GLASS));
     public static final RegistryObject<Item> ICE_SHAVINGS = register("ice_shavings");
     public static final RegistryObject<Item> OVEN_INSULATION = register("oven_insulation", () -> new PeelItem(prop()));
     public static final RegistryObject<Item> PEEL = register("peel", () -> new PeelItem(prop()));
@@ -109,6 +111,11 @@ public class FLItems
     public static final Map<ExtraFluid, RegistryObject<BucketItem>> EXTRA_FLUID_BUCKETS = Helpers.mapOfKeys(ExtraFluid.class, fluid ->
         register("bucket/" + fluid.getSerializedName(), () -> new BucketItem(FLFluids.EXTRA_FLUIDS.get(fluid).source(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)))
     );
+
+    public static final Map<WineType, RegistryObject<BucketItem>> WINE_FLUID_BUCKETS = Helpers.mapOfKeys(WineType.class, fluid ->
+        register("bucket/" + fluid.getSerializedName(), () -> new BucketItem(FLFluids.WINE_FLUIDS.get(fluid).source(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)))
+    );
+
 
     private static Item.Properties prop()
     {

@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import com.eerussianguy.firmalife.common.capabilities.wine.WineType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
@@ -50,6 +51,17 @@ public class FLFluids
     public static final Map<ExtraFluid, FluidRegistryObject<ForgeFlowingFluid>> EXTRA_FLUIDS = Helpers.mapOfKeys(ExtraFluid.class, fluid -> register(
         fluid.getSerializedName(),
         properties -> properties.block(FLBlocks.EXTRA_FLUIDS.get(fluid)).bucket(FLItems.EXTRA_FLUID_BUCKETS.get(fluid)),
+        waterLike()
+            .descriptionId("fluid.firmalife." + fluid.getSerializedName())
+            .canConvertToSource(false),
+        new FluidTypeClientProperties(fluid.getColor(), WATER_STILL, WATER_FLOW, WATER_OVERLAY, null),
+        MixingFluid.Source::new,
+        MixingFluid.Flowing::new
+    ));
+
+    public static final Map<WineType, FluidRegistryObject<ForgeFlowingFluid>> WINE_FLUIDS = Helpers.mapOfKeys(WineType.class, fluid -> register(
+        fluid.getSerializedName(),
+        properties -> properties.block(FLBlocks.WINE_FLUIDS.get(fluid)).bucket(FLItems.WINE_FLUID_BUCKETS.get(fluid)),
         waterLike()
             .descriptionId("fluid.firmalife." + fluid.getSerializedName())
             .canConvertToSource(false),

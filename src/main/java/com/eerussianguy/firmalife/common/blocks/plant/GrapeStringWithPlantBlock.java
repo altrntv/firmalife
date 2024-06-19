@@ -26,7 +26,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-import net.dries007.tfc.common.TFCTags;
 import net.dries007.tfc.common.blocks.ExtendedProperties;
 import net.dries007.tfc.common.blocks.TFCBlockStateProperties;
 import net.dries007.tfc.common.blocks.plant.fruit.Lifecycle;
@@ -81,6 +80,7 @@ public class GrapeStringWithPlantBlock extends GrapeStringBlock implements IGrap
                     FoodCapability.applyTrait(stack, trait);
                 }
             }
+            FoodCapability.updateFoodDecayOnCreate(stack);
             ItemHandlerHelper.giveItemToPlayer(player, stack);
             level.setBlockAndUpdate(pos, state.setValue(LIFECYCLE, Lifecycle.HEALTHY));
             return InteractionResult.sidedSuccess(level.isClientSide);

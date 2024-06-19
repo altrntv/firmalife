@@ -30,6 +30,7 @@ SIMPLE_BLOCKS: Dict[str, str] = {
 COLORS = ('white', 'orange', 'magenta', 'light_blue', 'yellow', 'lime', 'pink', 'gray', 'light_gray', 'cyan', 'purple', 'blue', 'brown', 'green', 'red', 'black')
 BLOCK_ENTITIES = ('oven_bottom', 'oven_top', 'drying_mat', 'beehive', 'solar_drier', 'mixing_bowl', 'string', 'berry_bush', 'large_planter', 'bonsai_planter', 'trellis_planter', 'hanging_planter', 'quad_planter', 'climate_station', 'hydroponic_planter', 'vat', 'oven_hopper', 'ashtray', 'stovetop_grill', 'stovetop_pot', 'jarbnet', 'plate', 'big_barrel', 'jarring_station', 'barrel_press', 'stomping_barrel')
 EXTRA_FLUIDS = ('yeast_starter', 'coconut_milk', 'yak_milk', 'goat_milk', 'curdled_yak_milk', 'curdled_goat_milk', 'pina_colada', 'cream', 'chocolate', 'sugar_water', 'fruity_fluid', 'mead')
+WINES = ('red', 'white', 'rose', 'sparkling', 'dessert')
 JARS: Sequence[Tuple[str, int, str]] = (
     ('honey', 1, 'firmalife:raw_honey'),
     ('compost', 8, 'tfc:compost'),
@@ -184,7 +185,7 @@ DEFAULT_LANG = {
     'firmalife.tooltip.food_trait.smoked': 'Smoked',
     'firmalife.tooltip.food_trait.rancid_smoked': 'Rancid Smoked',
     'firmalife.tooltip.food_trait.fermented': 'Fermented',
-    'firmalife.tooltip.food_trait.bee_grown': 'Bee Grown',
+    'firmalife.tooltip.food_trait.bee_pollinated': 'Bee Pollinated',
     'firmalife.tooltip.food_trait.slope_grown': 'Slope Grown',
     'firmalife.tooltip.food_trait.dirt_grown': 'Dirt Grown',
     'firmalife.tooltip.food_trait.gravel_grown': 'Gravel Grown',
@@ -265,6 +266,8 @@ DEFAULT_LANG = {
     'firmalife.wine.making': 'Making %s Wine',
     'firmalife.wine.how_to_open': 'Right click with a knife to pop the cork.',
     'firmalife.wine.has_output': '%s servings of %s wine',
+    'firmalife.wine.need_cork': 'You need corks to bottle wine!',
+    'firmalife.wine.empty': 'Empty (may be cleaned in barrel of water)',
     'greenhouse.firmalife.treated_wood': 'Treated Wood',
     'greenhouse.firmalife.copper': 'Copper',
     'greenhouse.firmalife.iron': 'Iron',
@@ -321,6 +324,7 @@ DEFAULT_LANG = {
     'subtitles.item.firmalife.hollow_shell.blow': 'Shell whistles',
 
     'item.firmalife.hollow_shell.filled': '%s Hollow Shell',
+    'item.firmalife.wine_glass.filled': 'Glass of %s',
     'firmalife.screen.pumpkin_knapping': 'Pumpkin Knapping',
     'tfc.jei.pumpkin_knapping': 'Pumpkin Knapping',
     'tfc.jei.drying': 'Drying',

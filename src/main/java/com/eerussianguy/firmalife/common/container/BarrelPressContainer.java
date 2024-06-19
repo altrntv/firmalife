@@ -41,7 +41,7 @@ public class BarrelPressContainer extends BlockEntityContainer<BarrelPressBlockE
     {
         return switch (typeOf(slotIndex))
             {
-                case MAIN_INVENTORY, HOTBAR -> !moveItemStackTo(stack, 0, BarrelPressBlockEntity.SLOT_WINE_OUT, false);
+                case MAIN_INVENTORY, HOTBAR -> !moveItemStackTo(stack, 0, BarrelPressBlockEntity.SLOT_LABEL + 1, false);
                 case CONTAINER -> !moveItemStackTo(stack, containerSlots, slots.size(), false);
             };
     }

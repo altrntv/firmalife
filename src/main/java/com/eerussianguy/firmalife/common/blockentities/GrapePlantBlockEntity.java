@@ -191,7 +191,7 @@ public class GrapePlantBlockEntity extends TickableBlockEntity implements ICalen
         final List<FoodTrait> traits = new ArrayList<>();
         if (anyBees)
         {
-            traits.add(FLFoodTraits.BEE_GROWN);
+            traits.add(FLFoodTraits.BEE_POLLINATED);
         }
         if (dirtCount > gravelCount && dirtCount > grassCount)
         {

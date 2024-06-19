@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 import net.dries007.tfc.client.screen.BlockEntityScreen;
+import net.dries007.tfc.common.capabilities.Capabilities;
 
 public class BarrelPressScreen extends BlockEntityScreen<BarrelPressBlockEntity, BarrelPressContainer>
 {
@@ -26,7 +27,8 @@ public class BarrelPressScreen extends BlockEntityScreen<BarrelPressBlockEntity,
         super.renderLabels(graphics, mouseX, mouseY);
         if (blockEntity.getOutput() != null)
         {
-            graphics.drawWordWrap(font, Component.translatable("firmalife.wine.has_output", blockEntity.getOutput().getServings(), FLHelpers.translateEnum(blockEntity.getOutput().getType())), 17, 40, 110, 0x404040);
+            final boolean hasCork = blockEntity.getCapability(Capabilities.ITEM).map(inv -> !inv.getStackInSlot(BarrelPressBlockEntity.SLOT_CORK).isEmpty()).orElse(false);
+            graphics.drawWordWrap(font, hasCork ? Component.translatable("firmalife.wine.has_output", blockEntity.getOutput().getServings(), FLHelpers.translateEnum(blockEntity.getOutput().getType())) : Component.translatable("firmalife.wine.need_cork"), 17, 40, 110, 0x404040);
             return;
         }
         final WineType type = blockEntity.getWineType();

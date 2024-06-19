@@ -1,12 +1,14 @@
 package com.eerussianguy.firmalife.common.blockentities;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 import com.eerussianguy.firmalife.common.FLHelpers;
 import com.eerussianguy.firmalife.common.FLTags;
+import com.eerussianguy.firmalife.common.blocks.FLFluids;
 import com.eerussianguy.firmalife.common.capabilities.wine.WineCapability;
 import com.eerussianguy.firmalife.common.capabilities.wine.WineType;
 import com.eerussianguy.firmalife.common.container.BarrelPressContainer;
-import com.eerussianguy.firmalife.common.container.BeehiveContainer;
 import com.eerussianguy.firmalife.common.items.FLFood;
 import com.eerussianguy.firmalife.common.items.FLFoodTraits;
 import com.eerussianguy.firmalife.common.items.FLItems;
@@ -25,11 +27,13 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
 import net.dries007.tfc.common.blockentities.TickableInventoryBlockEntity;
 import net.dries007.tfc.common.capabilities.food.FoodCapability;
+import net.dries007.tfc.common.capabilities.food.FoodTrait;
 import net.dries007.tfc.util.Helpers;
 import net.dries007.tfc.util.calendar.Calendars;
 import net.dries007.tfc.util.climate.Climate;
@@ -121,17 +125,17 @@ public class BarrelPressBlockEntity extends TickableInventoryBlockEntity<ItemSta
         final WineType wine = getWineType();
         if (wine == null)
             return;
-        final ItemStack cork = inventory.extractItem(SLOT_CORK, 1, false);
-        if (cork.isEmpty())
-            return;
         final var climate = KoppenClimateClassification.classify(Climate.getAverageTemperature(level, worldPosition), Climate.getRainfall(level, worldPosition));
 
-        String labelText = null;
-        final ItemStack label = inventory.extractItem(SLOT_LABEL, 1, false);
-        if (label.hasCustomHoverName())
-            labelText = label.getHoverName().getString();
-
-        output = new WineOutput(wine, climate, servings, labelText);
+        final List<FoodTrait> traits = new ArrayList<>();
+        grapes.getCapability(FoodCapability.CAPABILITY).ifPresent(cap -> {
+            for (FoodTrait trait : cap.getTraits())
+            {
+                if (FLFoodTraits.WINE_TRAITS.contains(trait))
+                    traits.add(trait);
+            }
+        });
+        output = new WineOutput(wine, climate, servings, traits);
 
         for (int i = SLOT_GRAPES; i < SLOT_WINE_IN; i++)
         {
@@ -174,13 +178,18 @@ public class BarrelPressBlockEntity extends TickableInventoryBlockEntity<ItemSta
         final Item newWine = getFilledWine(current.getItem());
         if (Helpers.isItem(current, FLTags.Items.EMPTY_WINE_BOTTLES) && newWine != null)
         {
+            if (inventory.extractItem(SLOT_CORK, 1, false).isEmpty())
+                return ItemStack.EMPTY;
+            final ItemStack label = inventory.extractItem(SLOT_LABEL, 1, false);
             final ItemStack bottle = newWine.getDefaultInstance();
             bottle.getCapability(WineCapability.CAPABILITY).ifPresent(cap -> {
                 cap.setCreationDate(Calendars.get(level).getTicks());
                 cap.setWineType(output.wine);
                 cap.setClimate(output.koppen);
-                if (output.label != null)
-                    cap.setLabelText(output.label);
+                cap.setTraits(output.traits);
+                cap.setContents(new FluidStack(FLFluids.WINE_FLUIDS.get(output.wine).getSource(), 2000));
+                if (!label.isEmpty() && label.hasCustomHoverName())
+                    cap.setLabelText(label.getHoverName().getString());
             });
 
             current.shrink(1);
@@ -237,7 +246,7 @@ public class BarrelPressBlockEntity extends TickableInventoryBlockEntity<ItemSta
             return Helpers.isItem(stack, FLItems.CORK.get());
         if (slot == SLOT_LABEL)
             return Helpers.isItem(stack, FLItems.BOTTLE_LABEL.get());
-        return true;
+        return !Helpers.isItem(stack, FLItems.CORK.get()) && !Helpers.isItem(stack, FLItems.BOTTLE_LABEL.get()) && !Helpers.isItem(stack, FLTags.Items.EMPTY_WINE_BOTTLES);
     }
 
     public boolean hasOutput()
@@ -297,14 +306,14 @@ public class BarrelPressBlockEntity extends TickableInventoryBlockEntity<ItemSta
         private WineType wine = WineType.RED;
         private KoppenClimateClassification koppen = KoppenClimateClassification.TEMPERATE;
         private int servings = 0;
-        @Nullable private String label;
+        private List<FoodTrait> traits;
 
-        public WineOutput(WineType type, KoppenClimateClassification koppen, int servings, @Nullable String label)
+        public WineOutput(WineType type, KoppenClimateClassification koppen, int servings, List<FoodTrait> traits)
         {
             this.wine = type;
             this.koppen = koppen;
             this.servings = servings;
-            this.label = label;
+            this.traits = traits;
         }
 
         public WineOutput(CompoundTag tag)
@@ -315,26 +324,19 @@ public class BarrelPressBlockEntity extends TickableInventoryBlockEntity<ItemSta
                 wine = WineType.VALUES[outputTag.getInt("wineType")];
                 koppen = WineType.KOPPEN_VALUES[outputTag.getInt("climate")];
                 servings = outputTag.getInt("servings");
-                label = outputTag.contains("label", Tag.TAG_STRING) ? outputTag.getString("label") : null;
+                traits = new ArrayList<>();
+                FLHelpers.readTraitList(traits, outputTag, "traits");
             }
         }
 
-        public CompoundTag save(CompoundTag tag)
+        public void save(CompoundTag tag)
         {
             final CompoundTag outputTag = new CompoundTag();
             outputTag.putInt("wineType", wine.ordinal());
             outputTag.putInt("climate", koppen.ordinal());
             outputTag.putInt("servings", servings);
-            if (label != null)
-                outputTag.putString("label", label);
+            FLHelpers.writeTraitList(traits, outputTag, "traits");
             tag.put("output", outputTag);
-            return tag;
-        }
-
-        @Nullable
-        public String getLabel()
-        {
-            return label;
         }
 
         public int getServings()

@@ -38,6 +38,7 @@ import com.mojang.serialization.JsonOps;
 import net.dries007.tfc.common.blockentities.TickCounterBlockEntity;
 import net.dries007.tfc.common.capabilities.Capabilities;
 import net.dries007.tfc.common.capabilities.food.FoodCapability;
+import net.dries007.tfc.common.capabilities.food.FoodTrait;
 import net.dries007.tfc.util.Helpers;
 import net.dries007.tfc.util.JsonHelpers;
 
@@ -76,6 +77,38 @@ public class FLHelpers
         if (level.getBlockEntity(pos) instanceof TickCounterBlockEntity counter)
         {
             counter.resetCounter();
+        }
+    }
+
+    public static void writeTraitList(List<FoodTrait> list, CompoundTag nbt, String key)
+    {
+        if (!list.isEmpty())
+        {
+            final ListTag listTag = new ListTag();
+            for (FoodTrait trait : list)
+            {
+                final CompoundTag newTag = new CompoundTag();
+                newTag.putString("trait", FoodTrait.getId(trait).toString());
+                listTag.add(newTag);
+            }
+            nbt.put(key, listTag);
+        }
+    }
+
+    public static void readTraitList(List<FoodTrait> list, CompoundTag nbt, String key)
+    {
+        list.clear();
+        if (nbt.contains(key))
+        {
+            final ListTag excessNbt = nbt.getList(key, Tag.TAG_COMPOUND);
+            for (int i = 0; i < excessNbt.size(); i++)
+            {
+                final FoodTrait trait = FoodTrait.getTrait(new ResourceLocation(excessNbt.getCompound(i).getString("trait")));
+                if (trait != null)
+                {
+                    list.add(trait);
+                }
+            }
         }
     }
 

@@ -165,6 +165,8 @@ public class FLClientEvents
                 event.register(new DynamicFluidContainerModel.Colors(), fluid.getBucket());
             }
         }
+        event.register(new DynamicFluidContainerModel.Colors(), FLItems.HOLLOW_SHELL.get());
+        event.register(new DynamicFluidContainerModel.Colors(), FLItems.WINE_GLASS.get());
     }
 
     public static void registerParticleFactories(RegisterParticleProvidersEvent event)

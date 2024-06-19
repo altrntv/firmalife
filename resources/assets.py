@@ -514,6 +514,7 @@ def generate(rm: ResourceManager):
             flower_pot_cross(rm, '%s sapling' % fruit, 'firmalife:plant/potted/%s_sapling' % fruit, 'plant/flowerpot/%s_sapling' % fruit, 'firmalife:block/fruit_tree/%s_sapling' % fruit, 'firmalife:plant/%s_sapling' % fruit)
 
     contained_fluid(rm, 'hollow_shell', 'firmalife:item/hollow_shell', 'firmalife:item/hollow_shell_overlay').with_lang(lang('Hollow Shell')).with_tag('tfc:buckets')
+    contained_fluid(rm, 'wine_glass', 'firmalife:item/wine_glass', 'firmalife:item/wine_glass_overlay').with_lang(lang('wine glass')).with_tag('tfc:buckets')
 
     peel(rm, 'peel', 'firmalife:item/peel')
 
@@ -544,6 +545,8 @@ def generate(rm: ResourceManager):
         rm.lang('firmalife.block_entity.%s' % be, lang(be))
     for fluid in EXTRA_FLUIDS:
         water_based_fluid(rm, fluid)
+    for fluid in WINES:
+        water_based_fluid(rm, fluid + '_wine')
 
     for key, value in DEFAULT_LANG.items():
         rm.lang(key, value)

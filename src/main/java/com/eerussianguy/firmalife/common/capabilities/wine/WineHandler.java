@@ -1,5 +1,8 @@
 package com.eerussianguy.firmalife.common.capabilities.wine;
 
+import java.util.ArrayList;
+import java.util.List;
+import com.eerussianguy.firmalife.common.FLHelpers;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -7,9 +10,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import net.dries007.tfc.common.capabilities.food.FoodTrait;
 import net.dries007.tfc.util.climate.KoppenClimateClassification;
 
 public class WineHandler implements IWine, ICapabilitySerializable<CompoundTag>
@@ -22,6 +27,8 @@ public class WineHandler implements IWine, ICapabilitySerializable<CompoundTag>
     @Nullable private String labelText = null;
     private WineType wineType = WineType.RED;
     @Nullable private KoppenClimateClassification climate = null;
+    private List<FoodTrait> traits = new ArrayList<>();
+    private FluidStack contents = FluidStack.EMPTY;
 
     public WineHandler(ItemStack stack)
     {
@@ -95,6 +102,31 @@ public class WineHandler implements IWine, ICapabilitySerializable<CompoundTag>
     }
 
     @Override
+    public List<FoodTrait> getTraits()
+    {
+        return traits;
+    }
+
+    @Override
+    public void setTraits(List<FoodTrait> traits)
+    {
+        this.traits = traits;
+        save();
+    }
+
+    @Override
+    public FluidStack getContents()
+    {
+        return contents;
+    }
+
+    @Override
+    public void setContents(FluidStack contents)
+    {
+        this.contents = contents;
+    }
+
+    @Override
     public CompoundTag serializeNBT()
     {
         return new CompoundTag();
@@ -116,8 +148,12 @@ public class WineHandler implements IWine, ICapabilitySerializable<CompoundTag>
                 creationDate = wineTag.getLong("creationDate");
                 openDate = wineTag.getLong("openDate");
                 wineType = WineType.VALUES[wineTag.getInt("wineType")];
+                if (wineTag.contains("label", Tag.TAG_STRING))
+                    labelText = wineTag.getString("label");
                 if (wineTag.contains("climate", Tag.TAG_INT))
                     climate = WineType.KOPPEN_VALUES[wineTag.getInt("climate")];
+                FLHelpers.readTraitList(traits, wineTag, "traits");
+                contents = FluidStack.loadFluidStackFromNBT(wineTag.getCompound("contents"));
             }
         }
     }
@@ -129,8 +165,12 @@ public class WineHandler implements IWine, ICapabilitySerializable<CompoundTag>
         wineTag.putLong("creationDate", creationDate);
         wineTag.putLong("openDate", openDate);
         wineTag.putInt("wineType", wineType.ordinal());
+        if (labelText != null)
+            wineTag.putString("label", labelText);
         if (climate != null)
             wineTag.putInt("climate", climate.ordinal());
+        FLHelpers.writeTraitList(traits, wineTag, "traits");
+        wineTag.put("contents", contents.writeToNBT(new CompoundTag()));
         tag.put("wine", wineTag);
     }
 

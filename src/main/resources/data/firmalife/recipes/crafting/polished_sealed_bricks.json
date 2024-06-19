@@ -9,6 +9,9 @@
       },
       {
         "tag": "tfc:chisels"
+      },
+      {
+        "item": "tfc:mortar"
       }
     ],
     "result": {
