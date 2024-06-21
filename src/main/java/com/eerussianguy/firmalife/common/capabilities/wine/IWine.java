@@ -7,6 +7,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.Nullable;
 
 import net.dries007.tfc.common.capabilities.food.FoodTrait;
@@ -49,13 +50,12 @@ public interface IWine extends INBTSerializable<CompoundTag>
 
     void setTraits(List<FoodTrait> traits);
 
-    FluidStack getContents();
-
-    void setContents(FluidStack stack);
+    IFluidHandler getFluidHandler();
 
     default void addTooltipInfo(List<Component> tooltip)
     {
-        if (getContents().isEmpty())
+        final FluidStack contained = getFluidHandler().getFluidInTank(0);
+        if (contained.isEmpty())
         {
             tooltip.add(Component.translatable("firmalife.wine.empty"));
             if (getLabelText() != null)
@@ -73,7 +73,7 @@ public interface IWine extends INBTSerializable<CompoundTag>
             if (getLabelText() != null)
                 tooltip.add(Component.literal(getLabelText()));
             tooltip.add(Component.translatable("firmalife.wine.age_time_opened", Calendars.CLIENT.getTimeDelta(getOpenDate() - getCreationDate())));
-            tooltip.add(Tooltips.fluidUnits(getContents().getAmount()).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GRAY));
+            tooltip.add(Tooltips.fluidUnits(contained.getAmount()).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GRAY));
         }
         if (getClimate() != null)
             tooltip.add(Helpers.translateEnum(getClimate()).withStyle(ChatFormatting.DARK_GREEN).withStyle(ChatFormatting.ITALIC));

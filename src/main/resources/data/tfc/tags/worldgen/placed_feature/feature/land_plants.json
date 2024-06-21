@@ -2,8 +2,7 @@
   "__comment__": "This file was automatically created by mcresources",
   "replace": false,
   "values": [
-    "firmalife:pina_colada",
-    "firmalife:mead",
-    "#firmalife:wine"
+    "firmalife:wild_red_grapes",
+    "firmalife:wild_white_grapes"
   ]
 }

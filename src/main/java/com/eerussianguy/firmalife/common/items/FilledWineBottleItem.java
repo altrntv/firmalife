@@ -10,6 +10,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickAction;
@@ -17,11 +19,14 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.Nullable;
 
 import net.dries007.tfc.common.TFCTags;
+import net.dries007.tfc.common.capabilities.Capabilities;
+import net.dries007.tfc.common.fluids.FluidHelpers;
 import net.dries007.tfc.util.Helpers;
 import net.dries007.tfc.util.calendar.Calendars;
 
@@ -30,6 +35,18 @@ public class FilledWineBottleItem extends WineBottleItem
     public FilledWineBottleItem(Properties properties, ResourceLocation modelLocation)
     {
         super(properties, modelLocation);
+    }
+
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand)
+    {
+        final ItemStack stack = player.getItemInHand(hand);
+        final BlockHitResult hit = Helpers.rayTracePlayer(level, player, net.minecraft.world.level.ClipContext.Fluid.SOURCE_ONLY);
+        if (FluidHelpers.transferBetweenWorldAndItem(stack, level, hit, player, hand, false, false, false))
+        {
+            return InteractionResultHolder.success(player.getItemInHand(hand));
+        }
+        return InteractionResultHolder.pass(stack);
     }
 
     @Override
@@ -68,6 +85,18 @@ public class FilledWineBottleItem extends WineBottleItem
                 tooltip.add(Component.translatable("firmalife.wine.how_to_open").withStyle(ChatFormatting.GRAY));
             }
         });
+    }
+
+    @Override
+    public ItemStack getCraftingRemainingItem(ItemStack stack)
+    {
+        return new ItemStack(this);
+    }
+
+    @Override
+    public boolean hasCraftingRemainingItem(ItemStack stack)
+    {
+        return stack.getCapability(Capabilities.FLUID_ITEM).map((cap) -> !cap.getFluidInTank(0).isEmpty()).orElse(false);
     }
 
     @Override

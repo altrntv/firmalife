@@ -1,0 +1,11 @@
+{
+  "__comment__": "This file was automatically created by mcresources",
+  "variants": {
+    "mature=false": {
+      "model": "firmalife:block/plant/wild_grapes_dead"
+    },
+    "mature=true": {
+      "model": "firmalife:block/plant/wild_red_grapes"
+    }
+  }
+}

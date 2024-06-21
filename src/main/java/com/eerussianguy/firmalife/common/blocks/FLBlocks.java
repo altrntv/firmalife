@@ -43,6 +43,7 @@ import net.dries007.tfc.common.blocks.ExtendedBlock;
 import net.dries007.tfc.common.blocks.ExtendedProperties;
 import net.dries007.tfc.common.blocks.GroundcoverBlock;
 import net.dries007.tfc.common.blocks.PouredGlassBlock;
+import net.dries007.tfc.common.blocks.crop.WildCropBlock;
 import net.dries007.tfc.common.blocks.devices.JackOLanternBlock;
 import net.dries007.tfc.common.blocks.plant.PlantBlock;
 import net.dries007.tfc.common.blocks.rock.Ore;
@@ -131,6 +132,8 @@ public class FLBlocks
 
     public static final RegistryObject<Block> BUTTERFLY_GRASS = register("plant/butterfly_grass", () -> MutatingPlantBlock.create(FLPlant.BUTTERFLY_GRASS, FLPlant.BUTTERFLY_GRASS.nonSolidFire(), FLTags.Blocks.BUTTERFLY_GRASS_MUTANTS));
     public static final RegistryObject<Block> POTTED_BUTTERFLY_GRASS = registerNoItem("plant/potted/butterfly_grass", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, BUTTERFLY_GRASS, Properties.of().instabreak().noOcclusion()));
+    public static final RegistryObject<Block> WILD_WHITE_GRAPES = register("plant/wild_white_grapes", () -> new WildCropBlock(ExtendedProperties.of(MapColor.PLANT).noCollission().randomTicks().strength(0.4F).sound(SoundType.CROP).flammable(60, 30).randomTicks()));
+    public static final RegistryObject<Block> WILD_RED_GRAPES = register("plant/wild_red_grapes", () -> new WildCropBlock(ExtendedProperties.of(MapColor.PLANT).noCollission().randomTicks().strength(0.4F).sound(SoundType.CROP).flammable(60, 30).randomTicks()));
 
     public static final Map<Herb, RegistryObject<Block>> HERBS = Helpers.mapOfKeys(Herb.class, herb -> register("plant/" + herb.name(), () -> PlantBlock.create(FLPlant.HERB, FLPlant.HERB.nonSolidFire())));
     public static final Map<Herb, RegistryObject<Block>> POTTED_HERBS = Helpers.mapOfKeys(Herb.class, herb -> registerNoItem("plant/potted/" + herb.name(), () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, HERBS.get(herb), Properties.of().instabreak().noOcclusion())));

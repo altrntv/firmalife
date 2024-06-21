@@ -182,6 +182,15 @@ def generate(rm: ResourceManager):
         rm.block_model('grape_fluff_fruiting_red_%s' % i, textures={'all': 'firmalife:block/crop/grape_leaves_red'}, parent='tfc:block/groundcover/fallen_leaves_height%s' % str(i * 2))
         rm.block_model('grape_fluff_fruiting_white_%s' % i, textures={'all': 'firmalife:block/crop/grape_leaves_white'}, parent='tfc:block/groundcover/fallen_leaves_height%s' % str(i * 2))
 
+    rm.block_model('plant/wild_grapes_dead', parent='tfc:block/plant/stationary_bush_1', textures={'bush': 'firmalife:block/crop/grape_leaves_dead'})
+    for color in ('red', 'white'):
+        rm.blockstate('plant/wild_%s_grapes' % color, variants={
+            'mature=false': {'model': 'firmalife:block/plant/wild_grapes_dead'},
+            'mature=true': {'model': 'firmalife:block/plant/wild_%s_grapes' % color},
+        }).with_lang(lang('wild %s grapes', color)).with_tag('tfc:mineable_with_sharp_tool').with_block_loot('1-3 firmalife:seeds/%s_grape' % color, {'name': 'firmalife:food/%s_grapes' % color, 'conditions': loot_tables.block_state_property('firmalife:plant/wild_%s_grapes[mature=true]' % color)})
+        rm.item_model('plant/wild_%s_grapes' % color, parent='firmalife:block/plant/wild_%s_grapes' % color, no_textures=True)
+        rm.block_model('plant/wild_%s_grapes' % color, parent='tfc:block/plant/stationary_bush_2', textures={'bush': 'firmalife:block/crop/grape_leaves_%s' % color})
+
     rm.blockstate_multipart('grape_trellis_post',
         ({'axis': 'x'}, {'model': 'firmalife:block/grape_trellis'}),
         ({'axis': 'z'}, {'model': 'firmalife:block/grape_trellis', 'y': 90}),

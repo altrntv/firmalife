@@ -3,6 +3,7 @@ package com.eerussianguy.firmalife.common.capabilities.wine;
 import java.util.ArrayList;
 import java.util.List;
 import com.eerussianguy.firmalife.common.FLHelpers;
+import com.eerussianguy.firmalife.common.FLTags;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -11,9 +12,12 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import net.dries007.tfc.common.capabilities.Capabilities;
+import net.dries007.tfc.common.capabilities.ItemStackFluidHandler;
 import net.dries007.tfc.common.capabilities.food.FoodTrait;
 import net.dries007.tfc.util.climate.KoppenClimateClassification;
 
@@ -28,11 +32,12 @@ public class WineHandler implements IWine, ICapabilitySerializable<CompoundTag>
     private WineType wineType = WineType.RED;
     @Nullable private KoppenClimateClassification climate = null;
     private List<FoodTrait> traits = new ArrayList<>();
-    private FluidStack contents = FluidStack.EMPTY;
+    private final ItemStackFluidHandler fluidHandler;
 
     public WineHandler(ItemStack stack)
     {
         this.stack = stack;
+        this.fluidHandler = new ItemStackFluidHandler(stack, FLTags.Fluids.WINE, () -> 2000);
     }
 
     @Nullable
@@ -115,15 +120,9 @@ public class WineHandler implements IWine, ICapabilitySerializable<CompoundTag>
     }
 
     @Override
-    public FluidStack getContents()
+    public IFluidHandler getFluidHandler()
     {
-        return contents;
-    }
-
-    @Override
-    public void setContents(FluidStack contents)
-    {
-        this.contents = contents;
+        return fluidHandler;
     }
 
     @Override
@@ -153,7 +152,6 @@ public class WineHandler implements IWine, ICapabilitySerializable<CompoundTag>
                 if (wineTag.contains("climate", Tag.TAG_INT))
                     climate = WineType.KOPPEN_VALUES[wineTag.getInt("climate")];
                 FLHelpers.readTraitList(traits, wineTag, "traits");
-                contents = FluidStack.loadFluidStackFromNBT(wineTag.getCompound("contents"));
             }
         }
     }
@@ -170,7 +168,6 @@ public class WineHandler implements IWine, ICapabilitySerializable<CompoundTag>
         if (climate != null)
             wineTag.putInt("climate", climate.ordinal());
         FLHelpers.writeTraitList(traits, wineTag, "traits");
-        wineTag.put("contents", contents.writeToNBT(new CompoundTag()));
         tag.put("wine", wineTag);
     }
 
@@ -178,6 +175,11 @@ public class WineHandler implements IWine, ICapabilitySerializable<CompoundTag>
     @Override
     public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side)
     {
+        if (cap == Capabilities.FLUID_ITEM)
+        {
+            load();
+            return fluidHandler.getCapability(cap, side).cast();
+        }
         if (cap == WineCapability.CAPABILITY)
         {
             load();

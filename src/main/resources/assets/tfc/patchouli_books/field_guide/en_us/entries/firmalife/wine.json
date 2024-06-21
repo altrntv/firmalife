@@ -1,0 +1,14 @@
+{
+  "__comment__": "This file was automatically created by mcresources",
+  "name": "Winemaking",
+  "category": "tfc:firmalife",
+  "icon": "firmalife:textures/item/food/white_grapes",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "This section will be completed in the next version pending more field guide rewrites. In the meantime please use JEI."
+    }
+  ],
+  "read_by_default": true,
+  "sortnum": 23
+}

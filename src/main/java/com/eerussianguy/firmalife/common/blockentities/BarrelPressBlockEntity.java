@@ -28,6 +28,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
@@ -187,7 +188,7 @@ public class BarrelPressBlockEntity extends TickableInventoryBlockEntity<ItemSta
                 cap.setWineType(output.wine);
                 cap.setClimate(output.koppen);
                 cap.setTraits(output.traits);
-                cap.setContents(new FluidStack(FLFluids.WINE_FLUIDS.get(output.wine).getSource(), 2000));
+                cap.getFluidHandler().fill((new FluidStack(FLFluids.WINE_FLUIDS.get(output.wine).getSource(), 2000)), IFluidHandler.FluidAction.EXECUTE);
                 if (!label.isEmpty() && label.hasCustomHoverName())
                     cap.setLabelText(label.getHoverName().getString());
             });

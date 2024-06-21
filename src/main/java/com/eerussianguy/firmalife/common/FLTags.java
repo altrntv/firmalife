@@ -68,6 +68,7 @@ public class FLTags
         public static final TagKey<Fluid> USABLE_IN_HOLLOW_SHELL = create("usable_in_hollow_shell");
         public static final TagKey<Fluid> USABLE_IN_WINE_GLASS = create("usable_in_wine_glass");
         public static final TagKey<Fluid> USABLE_IN_VAT = create("usable_in_vat");
+        public static final TagKey<Fluid> WINE = create("wine");
 
         private static TagKey<Fluid> create(String id)
         {

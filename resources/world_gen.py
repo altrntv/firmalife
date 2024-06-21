@@ -79,8 +79,8 @@ class Vein(NamedTuple):
         return cfg
 
 ORE_VEINS: Dict[str, Vein] = {
-    'normal_chromite': Vein.new('chromite', 24, 20, 40, 130, 0.25, ('igneous_extrusive', 'metamorphic'), grade=POOR, deposits=True, indicator=14),
-    'deep_chromite': Vein.new('chromite', 45, 45, -80, 20, 0.6, ('igneous_intrusive', 'metamorphic'), grade=RICH, indicator=0, deep_indicator=(1, 4)),
+    'normal_chromite': Vein.new('chromite', 40, 20, 40, 130, 0.25, ('igneous_extrusive', 'metamorphic'), grade=POOR, deposits=True, indicator=14),
+    'deep_chromite': Vein.new('chromite', 60, 45, -80, 20, 0.6, ('igneous_intrusive', 'metamorphic'), grade=RICH, indicator=0, deep_indicator=(1, 4)),
 }
 
 def generate(rm: ResourceManager):
@@ -122,6 +122,10 @@ def generate(rm: ResourceManager):
 
     configured_patch_feature(rm, 'hollow_shell', patch_config('firmalife:hollow_shell[fluid=empty]', 1, 15, 5, 'salt'), decorate_chance(20), decorate_square(), decorate_climate(-30, 20, 150, 500))
     placed_feature_tag(rm, 'tfc:feature/shore_decorations', 'firmalife:hollow_shell')
+
+    configured_patch_feature(rm, 'wild_red_grapes', patch_config('firmalife:plant/wild_red_grapes', 1, 15, 5), decorate_chance(100), decorate_square(), decorate_climate(0, 30, 125, 500))
+    configured_patch_feature(rm, 'wild_white_grapes', patch_config('firmalife:plant/wild_white_grapes', 1, 15, 5), decorate_chance(100), decorate_square(), decorate_climate(0, 30, 125, 500))
+    placed_feature_tag(rm, 'tfc:feature/land_plants', 'firmalife:wild_red_grapes', 'firmalife:wild_white_grapes')
 
     for berry, data in STILL_BUSHES.items():
         bush_block = 'firmalife:plant/%s_bush[lifecycle=healthy,stage=0]' % berry
