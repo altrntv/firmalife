@@ -40,7 +40,7 @@ public class GrapeStringBlock extends DeviceBlock
         final Direction.Axis axis = state.getValue(AXIS);
         if (facing.getAxis() == axis)
         {
-            return facingState.getBlock() instanceof GrapeTrellisPostBlock && facingState.getValue(AXIS) != axis ? state : Blocks.AIR.defaultBlockState();
+            return isValidPost(facingState, state) ? state : Blocks.AIR.defaultBlockState();
         }
         return state;
     }
@@ -50,7 +50,12 @@ public class GrapeStringBlock extends DeviceBlock
     public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos)
     {
         final Direction dir = state.getValue(AXIS) == Direction.Axis.X ? Direction.EAST : Direction.SOUTH;
-        return level.getBlockState(pos.relative(dir)).getBlock() instanceof GrapeTrellisPostBlock && level.getBlockState(pos.relative(dir.getOpposite())).getBlock() instanceof GrapeTrellisPostBlock;
+        return isValidPost(level.getBlockState(pos.relative(dir)), state) && isValidPost(level.getBlockState(pos.relative(dir.getOpposite())), state);
+    }
+
+    private boolean isValidPost(BlockState postState, BlockState state)
+    {
+        return postState.getBlock() instanceof GrapeTrellisPostBlock && postState.getValue(AXIS) != state.getValue(AXIS);
     }
 
     @Override

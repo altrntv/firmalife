@@ -48,6 +48,7 @@ public class StompingBarrelBlockEntity extends InventoryBlockEntity<ItemStackHan
             if (recipe == null)
                 return;
             stomps += 1;
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
             Helpers.playSound(level, worldPosition, recipe.getSound());
 
             if (stomps > 16)

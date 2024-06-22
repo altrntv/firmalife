@@ -64,6 +64,11 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
         {
             hive.updateState();
         }
+        //handle interval for spawning the entities
+        if ((level.getGameTime() + pos.asLong()) % ENTITY_HANDLING_INTERVAL == 0)
+        {
+            hive.controlEntitiesTick();
+        }
         if (hive.needsSlotUpdate)
         {
             if (hive.inventory.getStackInSlot(SLOT_JAR_OUT).isEmpty())
@@ -169,12 +174,6 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
             markForSync();
         }
 
-        //handle interval for spawning the entities
-        if (Calendars.SERVER.getTicks() % ENTITY_HANDLING_INTERVAL == 0)
-        {
-            controlEntitiesTick();
-            markForSync();
-        }
     }
 
     @Override
@@ -204,7 +203,6 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
      */
     private void updateTick()
     {
-
         assert level != null;
 
         Direction direction = getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
@@ -284,22 +282,16 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
 
             if (level.getBlockState(posInFront).getCollisionShape(level, posInFront).isEmpty() && !usableBees.isEmpty() && beesInWorld == 0)
             {
-                for (IBee bee : usableBees)
-                {
-                    if (bee.hasQueen())
-                    {
-                        FLBee beeEntity = FLEntities.FLBEE.get().create(level);
-                        assert beeEntity != null;
+                FLBee beeEntity = FLEntities.FLBEE.get().create(level);
+                assert beeEntity != null;
 
-                        beeEntity.moveTo(worldPosition.relative(direction).getCenter());
-                        beeEntity.setYRot(direction.toYRot());
-                        beeEntity.setSpawnPos(posInFront);
-                        level.addFreshEntity(beeEntity);
+                beeEntity.moveTo(worldPosition.relative(direction).getCenter());
+                beeEntity.setYRot(direction.toYRot());
+                beeEntity.setSpawnPos(posInFront);
+                level.addFreshEntity(beeEntity);
 
-                        level.playSound(null, worldPosition, SoundEvents.BEEHIVE_EXIT, SoundSource.BLOCKS, 1.0F, 1.0F);
-                        beesInWorld++;
-                    }
-                }
+                level.playSound(null, worldPosition, SoundEvents.BEEHIVE_EXIT, SoundSource.BLOCKS, 1.0F, 1.0F);
+                beesInWorld++;
             }
         }
     }

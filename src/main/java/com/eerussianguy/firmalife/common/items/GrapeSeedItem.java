@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
+import net.dries007.tfc.common.TFCTags;
 import net.dries007.tfc.util.Helpers;
 
 public class GrapeSeedItem extends Item
@@ -46,10 +47,14 @@ public class GrapeSeedItem extends Item
     {
         if (Helpers.isBlock(stateAt, FLBlocks.GRAPE_STRING.get()))
         {
-            level.setBlockAndUpdate(pos, Helpers.copyProperty(crop.get().defaultBlockState(), stateAt, GrapeStringBlock.AXIS));
-            if (player == null || !player.isCreative())
-                context.getItemInHand().shrink(1);
-            return true;
+            final BlockState placeState = crop.get().defaultBlockState();
+            if (Helpers.isBlock(level.getBlockState(pos.below()), TFCTags.Blocks.BUSH_PLANTABLE_ON))
+            {
+                level.setBlockAndUpdate(pos, Helpers.copyProperty(placeState, stateAt, GrapeStringBlock.AXIS));
+                if (player == null || !player.isCreative())
+                    context.getItemInHand().shrink(1);
+                return true;
+            }
         }
         return false;
     }

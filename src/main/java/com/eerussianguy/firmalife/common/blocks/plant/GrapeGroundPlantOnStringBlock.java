@@ -17,6 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -33,6 +34,7 @@ import net.dries007.tfc.common.blocks.TFCBlockStateProperties;
 import net.dries007.tfc.common.blocks.plant.fruit.Lifecycle;
 import net.dries007.tfc.common.blocks.soil.FarmlandBlock;
 import net.dries007.tfc.common.blocks.soil.HoeOverlayBlock;
+import net.dries007.tfc.config.TFCConfig;
 import net.dries007.tfc.util.Helpers;
 
 public class GrapeGroundPlantOnStringBlock extends GrapeStringBlock implements IGrape, HoeOverlayBlock
@@ -104,7 +106,7 @@ public class GrapeGroundPlantOnStringBlock extends GrapeStringBlock implements I
     public void addHoeOverlayInfo(Level level, BlockPos pos, BlockState state, List<Component> tooltip, boolean debug)
     {
         tooltip.add(FarmlandBlock.getTemperatureTooltip(level, pos, FLClimateRanges.GRAPES.get(), false));
-        if (level.getBlockEntity(pos) instanceof GrapePlantBlockEntity grape)
+        if (level.getBlockEntity(pos) instanceof GrapePlantBlockEntity grape && TFCConfig.CLIENT.enableDebug.get())
         {
             tooltip.add(Component.literal("[Debug] Growth: " + grape.getGrowth()));
             tooltip.add(Component.literal("[Debug] Brain Pos: " + grape.getBrainPos().toShortString()));

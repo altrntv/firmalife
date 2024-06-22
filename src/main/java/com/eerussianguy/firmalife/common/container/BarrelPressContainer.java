@@ -28,7 +28,7 @@ public class BarrelPressContainer extends BlockEntityContainer<BarrelPressBlockE
             addSlot(new CallbackSlot(blockEntity, inventory, BarrelPressBlockEntity.SLOT_GRAPES + 1, 52, 19));
             addSlot(new CallbackSlot(blockEntity, inventory, BarrelPressBlockEntity.SLOT_GRAPES + 2, 70, 19));
             addSlot(new CallbackSlot(blockEntity, inventory, BarrelPressBlockEntity.SLOT_GRAPES + 3, 88, 19));
-            addSlot(new CallbackSlot(blockEntity, inventory, BarrelPressBlockEntity.SLOT_GRAPES + 3, 106, 19));
+            addSlot(new CallbackSlot(blockEntity, inventory, BarrelPressBlockEntity.SLOT_GRAPES + 4, 106, 19));
             addSlot(new CallbackSlot(blockEntity, inventory, BarrelPressBlockEntity.SLOT_WINE_IN, 132, 19));
             addSlot(new CallbackSlot(blockEntity, inventory, BarrelPressBlockEntity.SLOT_WINE_OUT, 132, 55));
             addSlot(new CallbackSlot(blockEntity, inventory, BarrelPressBlockEntity.SLOT_CORK, 154, 19));

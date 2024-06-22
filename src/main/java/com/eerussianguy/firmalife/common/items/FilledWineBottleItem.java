@@ -59,7 +59,6 @@ public class FilledWineBottleItem extends WineBottleItem
                 {
                     player.playSound(SoundEvents.BAMBOO_BREAK);
                     wine.setOpenDate(Calendars.get(player.level()).getTicks());
-                    ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(FLItems.CORK.get()));
                     other.hurtAndBreak(1, player, p -> {});
                     return true;
                 }

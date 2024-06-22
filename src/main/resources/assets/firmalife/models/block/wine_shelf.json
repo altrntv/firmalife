@@ -78,14 +78,5 @@
 				"down": {"uv": [0, 15, 16, 16], "texture": "#0"}
 			}
 		}
-	],
-	"display": {
-		"firstperson_righthand": {
-			"rotation": [0, 45, 0],
-			"scale": [0.4, 0.4, 0.4]
-		},
-		"ground": {
-			"translation": [0, 4, 0]
-		}
-	}
+	]
 }
