@@ -125,7 +125,7 @@ def generate(rm: ResourceManager):
 
     configured_patch_feature(rm, 'wild_red_grapes', patch_config('firmalife:plant/wild_red_grapes', 1, 15, 5), decorate_chance(100), decorate_square(), decorate_climate(0, 30, 125, 500))
     configured_patch_feature(rm, 'wild_white_grapes', patch_config('firmalife:plant/wild_white_grapes', 1, 15, 5), decorate_chance(100), decorate_square(), decorate_climate(0, 30, 125, 500))
-    placed_feature_tag(rm, 'tfc:feature/land_plants', 'firmalife:wild_red_grapes', 'firmalife:wild_white_grapes')
+    placed_feature_tag(rm, 'tfc:feature/land_plants', 'firmalife:wild_red_grapes_patch', 'firmalife:wild_white_grapes_patch')
 
     for berry, data in STILL_BUSHES.items():
         bush_block = 'firmalife:plant/%s_bush[lifecycle=healthy,stage=0]' % berry
