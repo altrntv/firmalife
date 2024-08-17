@@ -1,36 +1,34 @@
 package com.eerussianguy.firmalife.common.entities;
 
-import net.dries007.tfc.common.entities.EntityHelpers;
-import net.dries007.tfc.util.calendar.Calendars;
-
+import java.util.EnumSet;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.util.AirAndWaterRandomPos;
 import net.minecraft.world.entity.ai.util.HoverRandomPos;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
-import javax.annotation.Nullable;
-import java.util.EnumSet;
+import net.dries007.tfc.common.entities.EntityHelpers;
+import net.dries007.tfc.util.calendar.Calendars;
 
 public class FLBee extends Bee
 {
-
     @Nullable
     private BlockPos spawnPos;
+
+    private long daySpawned;
 
     public FLBee(EntityType<? extends Bee> pEntityType, Level pLevel)
     {
         super(pEntityType, pLevel);
-        daySpawned = Calendars.get(pLevel).getTotalCalendarDays();
     }
 
-    private long daySpawned;
-
+    @Override
     protected void registerGoals()
     {
         super.registerGoals();
@@ -40,17 +38,21 @@ public class FLBee extends Bee
         this.goalSelector.addGoal(8, new FLBeeWanderGoal());
     }
 
+    @Override
     public void addAdditionalSaveData(CompoundTag pCompound)
     {
         super.addAdditionalSaveData(pCompound);
         assert this.getSpawnPos() != null;
         pCompound.put("spawnPos", NbtUtils.writeBlockPos(this.getSpawnPos()));
+        pCompound.putLong("daySpawned", this.daySpawned);
     }
 
+    @Override
     public void readAdditionalSaveData(CompoundTag pCompound)
     {
         this.spawnPos = null;
-        this.spawnPos = NbtUtils.readBlockPos(pCompound.getCompound("spawnPos"));
+        setSpawnPos(NbtUtils.readBlockPos(pCompound.getCompound("spawnPos")));
+        this.daySpawned = pCompound.getLong("daySpawned");
         super.readAdditionalSaveData(pCompound);
     }
 
@@ -65,9 +67,9 @@ public class FLBee extends Bee
         spawnPos = pos;
     }
 
-    private boolean closerThan(BlockPos pPos, int pDistance)
+    private boolean closerThan(BlockPos pos, int distance)
     {
-        return pPos.closerThan(this.blockPosition(), (double) pDistance);
+        return pos.closerThan(this.blockPosition(), distance);
     }
 
     public class FLBeeWanderGoal extends Goal
@@ -79,16 +81,19 @@ public class FLBee extends Bee
             this.setFlags(EnumSet.of(Goal.Flag.MOVE));
         }
 
+        @Override
         public boolean canUse()
         {
             return FLBee.this.navigation.isDone() && FLBee.this.random.nextInt(10) == 0;
         }
 
+        @Override
         public boolean canContinueToUse()
         {
             return FLBee.this.navigation.isInProgress();
         }
 
+        @Override
         public void start()
         {
             Vec3 vec3 = this.findPos();
@@ -114,18 +119,18 @@ public class FLBee extends Bee
                 vec3 = FLBee.this.getViewVector(0.0F);
             }
 
-            int i = 8;
             Vec3 vec32 = HoverRandomPos.getPos(FLBee.this, 8, 7, vec3.x, vec3.z, ((float) Math.PI / 2F), 3, 1);
-            return vec32 != null ? vec32 : AirAndWaterRandomPos.getPos(FLBee.this, 8, 4, -2, vec3.x, vec3.z, (double) ((float) Math.PI / 2F));
+            return vec32 != null ? vec32 : AirAndWaterRandomPos.getPos(FLBee.this, 8, 4, -2, vec3.x, vec3.z, (float) Math.PI / 2F);
         }
     }
 
     @Override
     public void tick()
     {
-        if (tickCount <= 10 && spawnPos == null)
+        if (tickCount <= 2)
         {
             spawnPos = this.blockPosition();
+            daySpawned = Calendars.get(level()).getTotalCalendarDays();
         }
         super.tick();
         // goodnight bees
