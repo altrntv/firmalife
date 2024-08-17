@@ -271,7 +271,6 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
         }
         else if (level.isDay() && beesInWorld <= 0)
         {
-            assert level != null;
             final float temp = Climate.getTemperature(level, worldPosition);
 
             // collect bees that exist and have queens
