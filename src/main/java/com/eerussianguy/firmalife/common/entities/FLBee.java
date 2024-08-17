@@ -21,7 +21,7 @@ public class FLBee extends Bee
     @Nullable
     private BlockPos spawnPos;
 
-    private long daySpawned;
+    private long daySpawned = -1;
 
     public FLBee(EntityType<? extends Bee> pEntityType, Level pLevel)
     {
@@ -129,8 +129,14 @@ public class FLBee extends Bee
     {
         if (tickCount <= 2)
         {
-            spawnPos = this.blockPosition();
-            daySpawned = Calendars.get(level()).getTotalCalendarDays();
+            if (spawnPos == null)
+            {
+                spawnPos = this.blockPosition();
+            }
+            if (daySpawned == -1)
+            {
+                daySpawned = Calendars.get(level()).getTotalCalendarDays();
+            }
         }
         super.tick();
         // goodnight bees
@@ -140,7 +146,7 @@ public class FLBee extends Bee
         }
         if (tickCount % 400 == 0)
         {
-            if (Calendars.get(this.level()).getTotalCalendarDays() > daySpawned)
+            if (Calendars.get(this.level()).getTotalCalendarDays() > daySpawned && daySpawned >= 0)
             {
                 this.discard();
             }
