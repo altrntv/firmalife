@@ -14,11 +14,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 import net.dries007.tfc.common.entities.EntityHelpers;
+import net.dries007.tfc.util.calendar.Calendars;
 
 public class FLBee extends Bee
 {
     @Nullable
     private BlockPos spawnPos;
+
+    private long daySpawned = -1;
 
     public FLBee(EntityType<? extends Bee> pEntityType, Level pLevel)
     {
@@ -41,13 +44,15 @@ public class FLBee extends Bee
         super.addAdditionalSaveData(pCompound);
         assert this.getSpawnPos() != null;
         pCompound.put("spawnPos", NbtUtils.writeBlockPos(this.getSpawnPos()));
+        pCompound.putLong("daySpawned", this.daySpawned);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag pCompound)
     {
         this.spawnPos = null;
-        this.spawnPos = NbtUtils.readBlockPos(pCompound.getCompound("spawnPos"));
+        setSpawnPos(NbtUtils.readBlockPos(pCompound.getCompound("spawnPos")));
+        this.daySpawned = pCompound.getLong("daySpawned");
         super.readAdditionalSaveData(pCompound);
     }
 
@@ -122,9 +127,16 @@ public class FLBee extends Bee
     @Override
     public void tick()
     {
-        if (tickCount == 10 && spawnPos == null)
+        if (tickCount <= 2)
         {
-            spawnPos = this.blockPosition();
+            if (spawnPos == null)
+            {
+                spawnPos = this.blockPosition();
+            }
+            if (daySpawned == -1)
+            {
+                daySpawned = Calendars.get(level()).getTotalCalendarDays();
+            }
         }
         super.tick();
         // goodnight bees
@@ -132,6 +144,14 @@ public class FLBee extends Bee
         {
             this.discard();
         }
+        if (tickCount % 400 == 0)
+        {
+            if (Calendars.get(this.level()).getTotalCalendarDays() > daySpawned && daySpawned >= 0)
+            {
+                this.discard();
+            }
+        }
+
     }
 
 }
