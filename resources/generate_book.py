@@ -246,7 +246,11 @@ def make_book(rm: ResourceManager, i18n: I18n, local_instance: bool = False, rev
             text('For example, the vat can be used to make $(thing)Olive Oil Water$() using a ratio of 1 Olive Paste to 200 mB Water. To use a vat, $(item)$(k:key.use)$() it with fluids and items to add them to the inventory. With an empty hand and $(item)$(k:key.sneak)$() held, click to seal and unseal the vat. A vat will not boil until it is sealed.'),
             text('Vats should be placed on the block above a $(thing)Bottom Oven$(). If the vat would overflow on completion of the recipe, it will not boil, so be sure not to overfill it -- especially with recipes that produce more fluid than they consume!'),
             two_tall_block_spotlight('', '', 'firmalife:cured_oven_bottom', 'firmalife:vat'),
+            crafting('firmalife:crafting/jarring_station', text_contents='The $(thing)Jarring Station$() is used to fill jars from the vat. The jarring station has a spout on one side that should point to the station.'),
+            text('Using the Vat, Sugar Water can be made by adding sweetener to water. Then, adding fruit causes $(thing)Fruity Fluid$() to be made. Putting a jar in the vat can then fill it. Be careful: trying to pipe or transport fruity fluid through too many transfers could ruin it!'),
+            text('With $(item)$(k:key.use)$(), add empty jars with lids to the jarring station. When it detects fruity fluid, it will automatically fill the jars with $(thing)Jam$() and seal them, requiring 500 mB of fruity fluid per jar.'),
             text('Pots and Grills from TFC can be placed on top of a $(thing)Bottom Oven$(). These devices will get heat automatically from the bottom oven. The pot is only able to be used for making soup. It cannot execute regular pot recipes.'),
+            empty_last_page()
         )),
         entry('bread', 'Bread', 'tfc:textures/item/food/barley_bread.png', pages=(
             text('To make $(thing)Bread$(), one first must get $(thing)Yeast$(). To get your first yeast, seal $(l:firmalife/drying)Dried Fruit$() in a Barrel of $(thing)Water$(). After three days, $(thing)Yeast Starter$() will form.$(br)From now on, your yeast can be fed by sealing Yeast Starter in a Barrel with $(thing)Flour$(). This causes it to multiply. 1 flour per 100mB of Yeast produces 600mB of Yeast. That\'s a good deal!'),
@@ -305,8 +309,8 @@ def make_book(rm: ResourceManager, i18n: I18n, local_instance: bool = False, rev
             crafting('firmalife:crafting/grape_trellis_post', text_contents='Grapes must be grown on trellises constructed from these special posts and jute fiber.'),
             text('To construct a trellis, place two posts on top of each other. Move two blocks to the left or right and repeat the action. Then, $(item)$(k:key.use)$() the side of one of the top and bottom posts with $(thing)Jute Fiber$() to string lines between the posts. Grape trellises can be chained horizontally to create rows of grapes.'),
             multimultiblock('A grape trellis.',
-            multiblock('', '', False, (('X0X'), ('XYX'),), {'X': 'firmalife:grape_trellis_post[axis=x,string_plus=true,string_minus=true]', '0': 'firmalife:grape_string_plant_red[axis=x,lifecycle=healthy,stage=0]', 'Y': 'firmalife:grape_string[axis=x]'}),
-                multiblock('', '', False, (('X0X'), ('ZYZ'),), {'X': 'firmalife:grape_trellis_post[axis=x,string_plus=true,string_minus=true]', '0': 'firmalife:grape_string_plant_red[axis=x,lifecycle=healthy,stage=2]', 'Y': 'firmalife:grape_string_red[axis=x,lifecycle=healthy]', 'Z': 'firmalife:grape_trellis_post_red[axis=x,lifecycle=healthy,string_plus=true,string_minus=true]'}),
+            multiblock('', '', False, (('XYX',), ('X0X',),), {'X': 'firmalife:grape_trellis_post[axis=x,string_plus=true,string_minus=true]', '0': 'firmalife:grape_string_plant_red[axis=z,lifecycle=healthy,stage=0]', 'Y': 'firmalife:grape_string[axis=z]'}),
+                multiblock('', '', False, (('ZYZ',),('X0X',),), {'X': 'firmalife:grape_trellis_post[axis=x,string_plus=true,string_minus=true]', '0': 'firmalife:grape_string_plant_red[axis=z,lifecycle=healthy,stage=2]', 'Y': 'firmalife:grape_string_red[axis=z,lifecycle=healthy]', 'Z': 'firmalife:grape_trellis_post_red[axis=x,lifecycle=healthy,string_plus=true,string_minus=true]'}),
             ),
             text('Provided the climate requirements are satisfied, the grape will grow up and over the trellis over the course of a few months. It will fruit in the month of July, flowering the month prior. Grapes can the be harvested. Grapes can also be grown in greenhouses on trellises.'),
             crafting('firmalife:crafting/wood/acacia_stomping_barrel', text_contents='The stomping barrel is used to smash grapes. A quern may also be used.'),
@@ -322,7 +326,7 @@ def make_book(rm: ResourceManager, i18n: I18n, local_instance: bool = False, rev
             text('Grapes can have three terrain related traits -- \'Gravel Grown\', \'Slope Grown\', and \'Dirt Grown\', based on the environment nearby. Wine also records the Koppen Climate Classification of the area in which it is bottled. Grapes grown near bees have the \'Bee Pollinated\' trait.'),
             text('Wine begins aging as soon as it is bottled, and stops aging when the cork is removed. The cork can be removed by $(item)$(k:key.use)$() on the bottle item with a knife item. Otherwise, wine bottles work a little like buckets, and can be emptied into barrels or other devices.'),
             crafting('firmalife:crafting/wood/pine_keg', text_contents='The $(thing)Keg$() is a 2x2x2 barrel block that can contain loads of items or fluids. Perfect for your vinery!'),
-            crafting('firamlife:crafting/wood/hickory_wine_shelf', text_contents='The $(thing)Wine Shelf$() is the perfect accessory for your vinery, allowing you to display and store your wine bottles in style.'),
+            crafting('firmalife:crafting/wood/hickory_wine_shelf', text_contents='The $(thing)Wine Shelf$() is the perfect accessory for your vinery, allowing you to display and store your wine bottles in style.'),
             empty_last_page(),
         ))
     ))

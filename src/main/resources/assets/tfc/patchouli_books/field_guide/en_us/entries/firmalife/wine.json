@@ -35,24 +35,32 @@
       "multiblocks": [
         {
           "pattern": [
-            "X0X",
-            "XYX"
+            [
+              "XYX"
+            ],
+            [
+              "X0X"
+            ]
           ],
           "mapping": {
             "X": "firmalife:grape_trellis_post[axis=x,string_plus=true,string_minus=true]",
-            "0": "firmalife:grape_string_plant_red[axis=x,lifecycle=healthy,stage=0]",
-            "Y": "firmalife:grape_string[axis=x]"
+            "0": "firmalife:grape_string_plant_red[axis=z,lifecycle=healthy,stage=0]",
+            "Y": "firmalife:grape_string[axis=z]"
           }
         },
         {
           "pattern": [
-            "X0X",
-            "ZYZ"
+            [
+              "ZYZ"
+            ],
+            [
+              "X0X"
+            ]
           ],
           "mapping": {
             "X": "firmalife:grape_trellis_post[axis=x,string_plus=true,string_minus=true]",
-            "0": "firmalife:grape_string_plant_red[axis=x,lifecycle=healthy,stage=2]",
-            "Y": "firmalife:grape_string_red[axis=x,lifecycle=healthy]",
+            "0": "firmalife:grape_string_plant_red[axis=z,lifecycle=healthy,stage=2]",
+            "Y": "firmalife:grape_string_red[axis=z,lifecycle=healthy]",
             "Z": "firmalife:grape_trellis_post_red[axis=x,lifecycle=healthy,string_plus=true,string_minus=true]"
           }
         }

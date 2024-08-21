@@ -3,7 +3,6 @@ package com.eerussianguy.firmalife.common.blocks;
 import com.eerussianguy.firmalife.common.blockentities.CompostTumblerBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.SimpleParticleType;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -68,16 +67,6 @@ public class CompostTumblerBlock extends FourWayDeviceBlock
             return composter.use(player.getItemInHand(hand), player, level.isClientSide);
         }
         return InteractionResult.PASS;
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random)
-    {
-        if (level.getBlockEntity(pos) instanceof CompostTumblerBlockEntity composter)
-        {
-            composter.randomTick();
-        }
     }
 
     @Override

@@ -12,6 +12,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 import com.eerussianguy.firmalife.config.FLConfig;
@@ -19,7 +20,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 
 import net.dries007.tfc.common.TFCTags;
-import net.dries007.tfc.common.blockentities.InventoryBlockEntity;
+import net.dries007.tfc.common.blockentities.TickableInventoryBlockEntity;
 import net.dries007.tfc.common.blockentities.rotation.RotationSinkBlockEntity;
 import net.dries007.tfc.common.items.TFCItems;
 import net.dries007.tfc.util.Helpers;
@@ -29,8 +30,17 @@ import net.dries007.tfc.util.rotation.NetworkAction;
 import net.dries007.tfc.util.rotation.Node;
 import net.dries007.tfc.util.rotation.SinkNode;
 
-public class CompostTumblerBlockEntity extends InventoryBlockEntity<ItemStackHandler> implements RotationSinkBlockEntity
+public class CompostTumblerBlockEntity extends TickableInventoryBlockEntity<ItemStackHandler> implements RotationSinkBlockEntity
 {
+    public static void serverTick(Level level, BlockPos pos, BlockState state, CompostTumblerBlockEntity tumbler)
+    {
+        tumbler.checkForLastTickSync();
+        if (level.getGameTime() % 20 == 0)
+        {
+            tumbler.checkReady();
+        }
+    }
+
     public static final int MAX_COMPOST = 32;
     public static final int MIN_COMPOST = 16;
     public static final int SLOT_COMPOST = 0;
@@ -93,7 +103,7 @@ public class CompostTumblerBlockEntity extends InventoryBlockEntity<ItemStackHan
         return InteractionResult.sidedSuccess(client);
     }
 
-    public void randomTick()
+    public void checkReady()
     {
         if (!canWork())
             return;

@@ -71,7 +71,7 @@ public class CompostTumblerBlockEntityRenderer implements BlockEntityRenderer<Co
         final BakedModel baked = Minecraft.getInstance().getModelManager().getModel(!isRotating ? OPEN_MODEL : CLOSED_MODEL);
         final VertexConsumer buffer = buffers.getBuffer(RenderType.cutout());
 
-        if (isRotating)
+        if (!isRotating)
         {
             modelRenderer.tesselateWithAO(level, baked, state, pos, poseStack, buffer, true, level.getRandom(), combinedLight, combinedOverlay, ModelData.EMPTY, RenderType.cutout());
 
