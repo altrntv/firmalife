@@ -23,9 +23,9 @@ public class FLBee extends Bee
 
     private long daySpawned = -1;
 
-    public FLBee(EntityType<? extends Bee> pEntityType, Level pLevel)
+    public FLBee(EntityType<? extends Bee> type, Level level)
     {
-        super(pEntityType, pLevel);
+        super(type, level);
     }
 
     @Override
@@ -39,21 +39,21 @@ public class FLBee extends Bee
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag pCompound)
+    public void addAdditionalSaveData(CompoundTag tag)
     {
-        super.addAdditionalSaveData(pCompound);
+        super.addAdditionalSaveData(tag);
         assert this.getSpawnPos() != null;
-        pCompound.put("spawnPos", NbtUtils.writeBlockPos(this.getSpawnPos()));
-        pCompound.putLong("daySpawned", this.daySpawned);
+        tag.put("spawnPos", NbtUtils.writeBlockPos(this.getSpawnPos()));
+        tag.putLong("daySpawned", this.daySpawned);
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag pCompound)
+    public void readAdditionalSaveData(CompoundTag tag)
     {
         this.spawnPos = null;
-        setSpawnPos(NbtUtils.readBlockPos(pCompound.getCompound("spawnPos")));
-        this.daySpawned = pCompound.getLong("daySpawned");
-        super.readAdditionalSaveData(pCompound);
+        setSpawnPos(NbtUtils.readBlockPos(tag.getCompound("spawnPos")));
+        this.daySpawned = tag.contains("daySpawned", CompoundTag.TAG_LONG) ? tag.getLong("daySpawned") : -1L;
+        super.readAdditionalSaveData(tag);
     }
 
     @Nullable
@@ -70,6 +70,35 @@ public class FLBee extends Bee
     private boolean closerThan(BlockPos pos, int distance)
     {
         return pos.closerThan(this.blockPosition(), distance);
+    }
+
+    @Override
+    public void aiStep()
+    {
+        if (tickCount <= 2)
+        {
+            if (spawnPos == null)
+            {
+                spawnPos = this.blockPosition();
+            }
+            if (daySpawned == -1)
+            {
+                daySpawned = Calendars.get(level()).getTotalCalendarDays();
+            }
+        }
+        super.aiStep();
+        // goodnight bees
+        if (level().isNight() || level().isRaining())
+        {
+            this.discard();
+        }
+        else if (tickCount % 400 == 0)
+        {
+            if (Calendars.get(this.level()).getTotalCalendarDays() > daySpawned && daySpawned >= 0)
+            {
+                this.discard();
+            }
+        }
     }
 
     public class FLBeeWanderGoal extends Goal
@@ -124,34 +153,5 @@ public class FLBee extends Bee
         }
     }
 
-    @Override
-    public void tick()
-    {
-        if (tickCount <= 2)
-        {
-            if (spawnPos == null)
-            {
-                spawnPos = this.blockPosition();
-            }
-            if (daySpawned == -1)
-            {
-                daySpawned = Calendars.get(level()).getTotalCalendarDays();
-            }
-        }
-        super.tick();
-        // goodnight bees
-        if (level().isNight() || level().isRaining())
-        {
-            this.discard();
-        }
-        if (tickCount % 400 == 0)
-        {
-            if (Calendars.get(this.level()).getTotalCalendarDays() > daySpawned && daySpawned >= 0)
-            {
-                this.discard();
-            }
-        }
-
-    }
 
 }

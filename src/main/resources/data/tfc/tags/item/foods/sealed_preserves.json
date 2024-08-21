@@ -1,0 +1,10 @@
+{
+  "__comment__": "This file was automatically created by mcresources",
+  "replace": false,
+  "values": [
+    "firmalife:jar/fig",
+    "firmalife:jar/pineapple",
+    "firmalife:jar/red_grapes",
+    "firmalife:jar/white_grapes"
+  ]
+}
