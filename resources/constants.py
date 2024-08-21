@@ -42,7 +42,6 @@ FL_FRUITS = ('fig', 'pineapple', 'red_grapes', 'white_grapes')
 DEFAULT_FORGE_ORE_TAGS: Tuple[str, ...] = ('coal', 'diamond', 'emerald', 'gold', 'iron', 'lapis', 'netherite_scrap', 'quartz', 'redstone')
 STILL_BUSHES = {
     'nightshade': (200, 400, 7, 24),
-
     'pineapple': (250, 500, 20, 32),
 }
 ARMOR_SECTIONS = ('helmet', 'chestplate', 'leggings', 'boots')

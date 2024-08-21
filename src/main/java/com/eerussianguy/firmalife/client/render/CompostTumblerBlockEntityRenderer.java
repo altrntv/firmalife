@@ -16,6 +16,7 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -25,6 +26,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.dries007.tfc.client.RenderHelpers;
 import net.dries007.tfc.common.capabilities.Capabilities;
 import net.dries007.tfc.util.Helpers;
+import net.dries007.tfc.util.rotation.Rotation;
 
 public class CompostTumblerBlockEntityRenderer implements BlockEntityRenderer<CompostTumblerBlockEntity>
 {
@@ -49,15 +51,16 @@ public class CompostTumblerBlockEntityRenderer implements BlockEntityRenderer<Co
 
         final Direction facing = state.getValue(CompostTumblerBlock.FACING);
 
-        final boolean isStill = composter.getRotationNode().rotation() == null;
-        final float angle = !isStill ? composter.getRotationNode().rotation().angle(partialTicks) : 0f;
+        final boolean isRotating = composter.isRotating();
+        final Rotation rotation = composter.getRotationNode().rotation();
+        final float angle = isRotating ? rotation != null ? rotation.angle(partialTicks) : (level.getGameTime() + partialTicks) * 0.1f % Mth.TWO_PI : 0f;
 
         poseStack.pushPose();
         poseStack.translate(0.5f, 0.5f, 0.5f);
         poseStack.mulPose(Axis.YP.rotationDegrees(180f - 90f * facing.get2DDataValue()));
         poseStack.translate(-0.5f, -0.5f, -0.5f);
 
-        if (!isStill)
+        if (isRotating)
         {
             poseStack.translate(0.5f, 0.5f, 0.5f);
             poseStack.mulPose(Axis.ZP.rotation(-angle));
@@ -65,10 +68,10 @@ public class CompostTumblerBlockEntityRenderer implements BlockEntityRenderer<Co
         }
 
         final ModelBlockRenderer modelRenderer = Minecraft.getInstance().getBlockRenderer().getModelRenderer();
-        final BakedModel baked = Minecraft.getInstance().getModelManager().getModel(isStill ? OPEN_MODEL : CLOSED_MODEL);
+        final BakedModel baked = Minecraft.getInstance().getModelManager().getModel(!isRotating ? OPEN_MODEL : CLOSED_MODEL);
         final VertexConsumer buffer = buffers.getBuffer(RenderType.cutout());
 
-        if (isStill)
+        if (isRotating)
         {
             modelRenderer.tesselateWithAO(level, baked, state, pos, poseStack, buffer, true, level.getRandom(), combinedLight, combinedOverlay, ModelData.EMPTY, RenderType.cutout());
 

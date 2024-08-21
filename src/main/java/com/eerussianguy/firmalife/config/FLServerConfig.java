@@ -35,6 +35,7 @@ public class FLServerConfig
     public final Map<FLFoodTraits.Default, DoubleValue> foodTraits;
     public final IntValue greenhouseRadius;
     public final IntValue cellarRadius;
+    public final BooleanValue mechanicalPowerCheatMode;
 
 
     FLServerConfig(Builder innerBuilder)
@@ -65,6 +66,7 @@ public class FLServerConfig
         greenhouseNutrientDays = builder.apply("greenhouseNutrientDays").comment("The average amount of days for a crop to consume all of a nutrient. You should probably not configure this value unless you know what it does in the code. For regular crops this value is 12.").defineInRange("greenhouseNutrientDays", 8d, 0, Double.MAX_VALUE);
         greenhouseRadius = builder.apply("greenhouseRadius").comment("The max bounded distance from the climate station a greenhouse wall can be. Higher numbers = more lag.").defineInRange("greenhouseRadius", 15, 1, 128);
         cellarRadius = builder.apply("cellarRadius").comment("The max bounded distance from the climate station a cellar wall can be. Higher numbers = more lag.").defineInRange("cellarRadius", 15, 1, 128);
+        mechanicalPowerCheatMode = builder.apply("mechanicalPowerCheatMode").comment("If true, the tumbler and the pumping station work magically with a redstone signal and no power required.").define("mechanicalPowerCheatMode", false);
 
         innerBuilder.pop().push("foodTraits");
 

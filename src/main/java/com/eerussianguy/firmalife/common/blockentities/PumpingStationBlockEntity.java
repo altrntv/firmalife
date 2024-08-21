@@ -1,6 +1,7 @@
 package com.eerussianguy.firmalife.common.blockentities;
 
 import com.eerussianguy.firmalife.common.blocks.greenhouse.PumpingStationBlock;
+import com.eerussianguy.firmalife.config.FLConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -42,7 +43,7 @@ public class PumpingStationBlockEntity extends TFCBlockEntity implements Rotatio
     public boolean isPumping()
     {
         assert level != null;
-        if (node.rotation() != null && node.rotation().speed() > 0f)
+        if ((node.rotation() != null && node.rotation().speed() > 0f) || (FLConfig.SERVER.mechanicalPowerCheatMode.get() && level.getDirectSignalTo(worldPosition) > 0))
         {
             final BlockState state = level.getBlockState(worldPosition.below());
             return state.getFluidState().getType() == Fluids.WATER || state.getBlock() instanceof RiverWaterBlock;

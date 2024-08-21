@@ -285,7 +285,7 @@ def make_book(rm: ResourceManager, i18n: I18n, local_instance: bool = False, rev
             *detail_fruit_tree('fig'),
         )),
         entry('berry_bushes', 'Berry Bushes', 'firmalife:plant/pineapple_bush', pages=(
-            text('Firmalife adds some berry bushes with interesting uses.'),
+            text('Firmalife adds some berry bushes. For information on wild grape bushes, see $(l:firmalife/wine)winemaking$().'),
             item_spotlight('firmalife:food/nightshade_berry', text_contents='First is nightshade. Nightshade is a poisonous berry. When put into soup, it makes poisonous $(thing)Stinky Soup$(). It is found between 200-400mm of rain and 7-24 C temperature in forests.'),
             item_spotlight('firmalife:food/pineapple', text_contents='Pineapple bushes are found 250-500mm of rainfall and 20-32 C temperature in forests. Pineapples are like any other fruit, except that they can be made into $(thing)Pineapple Leather$().'),
             crafting('firmalife:crafting/pineapple_fiber', text_contents='Pineapples that have been $(l:firmalife/drying)Dried$() can be crafted into pineapple fiber.'),
@@ -298,8 +298,31 @@ def make_book(rm: ResourceManager, i18n: I18n, local_instance: bool = False, rev
             text('The $(l:firmalife/mixing_bowl)Mixing Bowl$() is used to mix cocoa powder, butter, and sweetener (sugar or honey) to make $(thing)Chocolate Blends$(). The ratio of cocoa butter to powder determines what comes out:$(br)$(li)1 Powder, 1 Butter, 1 Sweetener: Milk Chocolate$()$(li)2 Powder, 1 Sweetener: Dark Chocolate$()$(li)2 Butter, 1 Sweetener: White Chocolate$()'),
             drying_recipe('firmalife:drying/dark_chocolate', 'Finally, chocolate is dried on a $(l:firmalife/drying)Drying Mat$() to make $(thing)Chocolate$().')
         )),
-        entry('wine', 'Winemaking', 'firmalife:textures/item/food/white_grapes', pages=(
-            text('This section will be completed in the next version pending more field guide rewrites. In the meantime please use JEI.'),
+        entry('wine', 'Winemaking', 'firmalife:textures/item/food/white_grapes.png', pages=(
+            text('$(thing)Winemaking$() is the science of turning grapes into alcohol. There is time spent gathering resources, and spending time crafting those resources together, as well as time spent $(thing)enjoying$() the product. Please note that wine in Firmalife (on its own) has no special use beyond regular TFC alcohol. You should make it only if you want to have $(thing)fun$().'),
+            item_spotlight('firmalife:plant/wild_red_grapes', text_contents='Red grapes spawn from 0-30 C, and 125-500 rainfall, or almost the entire habitable area.'),
+            item_spotlight('firmalife:plant/wild_white_grapes', text_contents='White grapes spawn from 0-30 C, and 125-500 rainfall, or almost the entire habitable area.'),
+            crafting('firmalife:crafting/grape_trellis_post', text_contents='Grapes must be grown on trellises constructed from these special posts and jute fiber.'),
+            text('To construct a trellis, place two posts on top of each other. Move two blocks to the left or right and repeat the action. Then, $(item)$(k:key.use)$() the side of one of the top and bottom posts with $(thing)Jute Fiber$() to string lines between the posts. Grape trellises can be chained horizontally to create rows of grapes.'),
+            multimultiblock('A grape trellis.',
+            multiblock('', '', False, (('X0X'), ('XYX'),), {'X': 'firmalife:grape_trellis_post[axis=x,string_plus=true,string_minus=true]', '0': 'firmalife:grape_string_plant_red[axis=x,lifecycle=healthy,stage=0]', 'Y': 'firmalife:grape_string[axis=x]'}),
+                multiblock('', '', False, (('X0X'), ('ZYZ'),), {'X': 'firmalife:grape_trellis_post[axis=x,string_plus=true,string_minus=true]', '0': 'firmalife:grape_string_plant_red[axis=x,lifecycle=healthy,stage=2]', 'Y': 'firmalife:grape_string_red[axis=x,lifecycle=healthy]', 'Z': 'firmalife:grape_trellis_post_red[axis=x,lifecycle=healthy,string_plus=true,string_minus=true]'}),
+            ),
+            text('Provided the climate requirements are satisfied, the grape will grow up and over the trellis over the course of a few months. It will fruit in the month of July, flowering the month prior. Grapes can the be harvested. Grapes can also be grown in greenhouses on trellises.'),
+            crafting('firmalife:crafting/wood/acacia_stomping_barrel', text_contents='The stomping barrel is used to smash grapes. A quern may also be used.'),
+            text('To use a stomping barrel, $(item)$(k:key.use)$() with fresh grapes. Then, jump up and down on the barrel 16 times. $(item)$(k:key.use)$() with an empty hand to retrieve the items.$(br2)Then, seal the grapes in a barrel for 5 days to $(thing)ferment$() them.'),
+            crafting('firmalife:crafting/wood/acacia_barrel_press', text_contents='The barrel press is the last step in grape processing.'),
+            text('The leftmost slot can contain up to 16 grapes. Four grape items are needed for a bottle of wine. The four central slots are for mixing the grapes with other ingredients, but this is optional. Using only red or white grapes yields red or white wine. Adding at least one red grape to white wine makes Rose. Adding sugar to white wine makes dessert wine.'),
+            glassworking_recipe('firmalife:glassworking/olivine_wine_bottle', 'Wine must be bottled in a proper wine bottle, made of non-silica glass.'),
+            crafting('firmalife:crafting/bottle_label', text_contents='$(thing)Bottle labels$() can be renamed in a scribing station, and will add their name to the wine\'s tooltip.'),
+            text('Wine must be provided with a $(thing)Cork$(), made by soaking $(thing)Treated Lumber$() in $(thing)Limewater$() for a day. When all is complete, use the bottle slot to fill the wine, or by pressing $(item)$(k:key.use)$() with a bottle in hand.'),
+        )),
+        entry('wine_consumption', 'Wine Consumption', 'firmalife:textures/item/olivine_wine_bottle.png', pages=(
+            text('The discerning sommelier will be able to detect subtleties in the wine that is produced under different conditions. Indeed, this is possible in the world of Firmalife as well. It starts in the fields in which those grapes were grown -- a row of grapes is deeply affected by the ambient environment and soil.'),
+            text('Grapes can have three terrain related traits -- \'Gravel Grown\', \'Slope Grown\', and \'Dirt Grown\', based on the environment nearby. Wine also records the Koppen Climate Classification of the area in which it is bottled. Grapes grown near bees have the \'Bee Pollinated\' trait.'),
+            text('Wine begins aging as soon as it is bottled, and stops aging when the cork is removed. The cork can be removed by $(item)$(k:key.use)$() on the bottle item with a knife item. Otherwise, wine bottles work a little like buckets, and can be emptied into barrels or other devices.'),
+            crafting('firmalife:crafting/wood/pine_keg', text_contents='The $(thing)Keg$() is a 2x2x2 barrel block that can contain loads of items or fluids. Perfect for your vinery!'),
+            crafting('firamlife:crafting/wood/hickory_wine_shelf', text_contents='The $(thing)Wine Shelf$() is the perfect accessory for your vinery, allowing you to display and store your wine bottles in style.'),
             empty_last_page(),
         ))
     ))

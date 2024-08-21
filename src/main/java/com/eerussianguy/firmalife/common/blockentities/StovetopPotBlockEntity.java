@@ -15,6 +15,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.Nullable;
 
@@ -76,7 +77,7 @@ public class StovetopPotBlockEntity extends BoilingBlockEntity<StovetopPotBlockE
         if (inventory.getFluidInTank(0).getAmount() >= 100 && temperature > MIN_TEMP)
         {
             int found = 0;
-            for (ItemStack stack : Helpers.iterate(inventory))
+            for (ItemStack stack : Helpers.iterate((IItemHandler) inventory))
             {
                 if (!stack.isEmpty())
                 {

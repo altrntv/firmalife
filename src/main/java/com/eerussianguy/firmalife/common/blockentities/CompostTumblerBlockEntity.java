@@ -59,7 +59,7 @@ public class CompostTumblerBlockEntity extends InventoryBlockEntity<ItemStackHan
     public InteractionResult use(ItemStack stack, Player player, boolean client)
     {
         assert level != null;
-        if (isReady() && node.rotation() == null)
+        if (isReady() && !isRotating())
         {
             ItemHandlerHelper.giveItemToPlayer(player, inventory.extractItem(SLOT_COMPOST, 64, false));
             reset();
@@ -120,7 +120,7 @@ public class CompostTumblerBlockEntity extends InventoryBlockEntity<ItemStackHan
 
     public boolean canWork()
     {
-        if (node.rotation() == null || !inventory.getStackInSlot(SLOT_COMPOST).isEmpty())
+        if (!isRotating() || !inventory.getStackInSlot(SLOT_COMPOST).isEmpty())
         {
             resetCounter();
             return false;
@@ -132,6 +132,12 @@ public class CompostTumblerBlockEntity extends InventoryBlockEntity<ItemStackHan
             return false;
         }
         return true;
+    }
+
+    public boolean isRotating()
+    {
+        assert level != null;
+        return node.rotation() != null || (FLConfig.SERVER.mechanicalPowerCheatMode.get() && level.getDirectSignalTo(worldPosition) > 0);
     }
 
     @Override
