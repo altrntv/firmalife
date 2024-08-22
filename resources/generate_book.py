@@ -1,10 +1,8 @@
 import format_lang
-from constants import FRUITS, STILL_BUSHES
+from constants import FRUITS
 from patchouli import *
 from argparse import ArgumentParser
 from typing import Optional
-from data import hydration_from_rainfall
-
 
 BOOK_LANGUAGES = ('en_us', 'zh_cn', 'zh_tw', 'ja_jp')
 MOD_LANGUAGES = ('en_us', 'de_de', 'ko_kr', 'ru_ru', 'uk_ua', 'zh_cn', 'zh_tw', 'ja_jp')
