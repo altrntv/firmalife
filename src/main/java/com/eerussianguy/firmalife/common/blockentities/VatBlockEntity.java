@@ -15,6 +15,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import net.dries007.tfc.common.TFCTags;
@@ -49,6 +50,7 @@ public class VatBlockEntity extends BoilingBlockEntity<VatBlockEntity.VatInvento
     public static final int CAPACITY = 10_000;
 
     @Nullable private VatRecipe cachedRecipe = null;
+    private ItemStack jarOutput = ItemStack.EMPTY;
 
     public VatBlockEntity(BlockPos pos, BlockState state)
     {
@@ -56,6 +58,41 @@ public class VatBlockEntity extends BoilingBlockEntity<VatBlockEntity.VatInvento
 
         sidedInventory
             .on(new PartialItemHandler(inventory).insert(), Direction.Plane.HORIZONTAL);
+    }
+
+    @Override
+    public void loadAdditional(CompoundTag nbt)
+    {
+        super.loadAdditional(nbt);
+        jarOutput = ItemStack.of(nbt.getCompound("jarOutput"));
+    }
+
+    @Override
+    public void saveAdditional(CompoundTag nbt)
+    {
+        super.saveAdditional(nbt);
+        nbt.put("jarOutput", jarOutput.serializeNBT());
+    }
+
+    public boolean hasOutput()
+    {
+        return !jarOutput.isEmpty();
+    }
+
+    public ItemStack getOutput()
+    {
+        return jarOutput;
+    }
+
+    public ItemStack takeOutput()
+    {
+        markForSync();
+        return jarOutput.isEmpty() ? ItemStack.EMPTY : jarOutput.split(1);
+    }
+
+    public void setOutput(ItemStack stack)
+    {
+        this.jarOutput = stack;
     }
 
     public void handleJarring()
@@ -106,7 +143,7 @@ public class VatBlockEntity extends BoilingBlockEntity<VatBlockEntity.VatInvento
             {
                 final VatRecipe recipe = cachedRecipe;
                 cachedRecipe = null;
-                recipe.assembleOutputs(inventory);
+                recipe.assembleOutputs(this, inventory);
                 boilingTicks = 0;
                 updateCachedRecipe();
                 markForSync();
@@ -127,6 +164,8 @@ public class VatBlockEntity extends BoilingBlockEntity<VatBlockEntity.VatInvento
     public boolean isBoiling()
     {
         assert level != null;
+        if (hasOutput())
+            return false;
         if (getBlockState().hasProperty(VatBlock.SEALED) && !getBlockState().getValue(VatBlock.SEALED))
         {
             return false;
@@ -141,11 +180,13 @@ public class VatBlockEntity extends BoilingBlockEntity<VatBlockEntity.VatInvento
     public static class VatInventory extends BoilingInventory
     {
         private final List<ItemStack> excess;
+        private final VatBlockEntity vat;
 
         public VatInventory(InventoryBlockEntity<?> entity)
         {
             super(entity, 1, new InventoryFluidTank(CAPACITY, fluid -> Helpers.isFluid(fluid.getFluid(), TFCTags.Fluids.USABLE_IN_POT), (VatBlockEntity) entity));
             this.excess = new ArrayList<>();
+            this.vat = (VatBlockEntity) entity;
         }
 
         public void insertItemWithOverflow(ItemStack stack)
@@ -155,6 +196,12 @@ public class VatBlockEntity extends BoilingBlockEntity<VatBlockEntity.VatInvento
             {
                 excess.add(remainder);
             }
+        }
+
+        @Override
+        public @NotNull ItemStack extractItem(int slot, int amount, boolean simulate)
+        {
+            return vat.hasOutput() ? ItemStack.EMPTY : super.extractItem(slot, amount, simulate);
         }
 
         @Override

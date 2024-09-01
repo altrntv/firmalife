@@ -24,6 +24,7 @@ import net.dries007.tfc.common.blocks.ExtendedProperties;
 import net.dries007.tfc.common.blocks.devices.SealableDeviceBlock;
 import net.dries007.tfc.common.capabilities.Capabilities;
 import net.dries007.tfc.common.fluids.FluidHelpers;
+import net.dries007.tfc.common.items.TFCItems;
 import net.dries007.tfc.util.Helpers;
 
 public class VatBlock extends SealableDeviceBlock
@@ -89,6 +90,16 @@ public class VatBlock extends SealableDeviceBlock
             final ItemStack stack = player.getItemInHand(hand);
             if (!vat.isBoiling())
             {
+                if (vat.hasOutput())
+                {
+                    if (stack.getItem() == TFCItems.EMPTY_JAR_WITH_LID.get())
+                    {
+                        stack.shrink(1);
+                        ItemHandlerHelper.giveItemToPlayer(player, vat.takeOutput());
+                        return InteractionResult.sidedSuccess(level.isClientSide);
+                    }
+                    return InteractionResult.FAIL;
+                }
                 if (stack.isEmpty() && player.isShiftKeyDown())
                 {
                     toggleSeal(level, pos, state);

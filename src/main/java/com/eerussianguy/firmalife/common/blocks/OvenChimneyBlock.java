@@ -26,11 +26,7 @@ import net.dries007.tfc.util.Helpers;
 
 public class OvenChimneyBlock extends Block implements ICure
 {
-    private static final VoxelShape SHAPE = Shapes.join(
-        Shapes.block(),
-        Block.box(4, 0, 4, 12, 16, 12),
-        BooleanOp.ONLY_FIRST
-    );
+    private static final VoxelShape SHAPE = Shapes.block();
 
     private static final VoxelShape ALT_SHAPE = Shapes.or(
         box(4, 0, 0, 12, 16, 4),
@@ -53,7 +49,7 @@ public class OvenChimneyBlock extends Block implements ICure
 
     @Override
     @SuppressWarnings("deprecation")
-    public boolean isPathfindable(BlockState pState, BlockGetter pLevel, BlockPos pPos, PathComputationType pType)
+    public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type)
     {
         return false;
     }

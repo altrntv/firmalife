@@ -62,7 +62,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Using the Vat, Sugar Water can be made by adding sweetener to water. Then, adding fruit causes $(thing)Fruity Fluid$() to be made. Putting a jar in the vat can then fill it. Be careful: trying to pipe or transport fruity fluid through too many transfers could ruin it!"
+      "text": "Using the Vat, Sugar Water can be made by adding sweetener to water. Then, adding fruit causes $(thing)Fruity Fluid$() to be made. Clicking it with an $(thing)Empty Jar With Lid$() will fill it. Be careful: trying to pipe or transport fruity fluid through too many transfers could ruin it!"
     },
     {
       "type": "patchouli:text",

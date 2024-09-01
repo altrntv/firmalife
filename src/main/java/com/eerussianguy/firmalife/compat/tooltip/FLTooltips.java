@@ -24,6 +24,7 @@ import net.dries007.tfc.common.capabilities.Capabilities;
 import net.dries007.tfc.common.capabilities.food.FoodCapability;
 import net.dries007.tfc.common.capabilities.food.FoodTrait;
 import net.dries007.tfc.common.capabilities.food.IFood;
+import net.dries007.tfc.common.capabilities.heat.HeatCapability;
 import net.dries007.tfc.compat.jade.common.BlockEntityTooltip;
 import net.dries007.tfc.compat.jade.common.BlockEntityTooltips;
 import net.dries007.tfc.compat.jade.common.EntityTooltip;
@@ -66,6 +67,10 @@ public final class FLTooltips
                 if (vat.isBoiling())
                 {
                     tooltip.accept(Component.translatable("firmalife.jade.boiling"));
+                }
+                if (vat.hasOutput())
+                {
+                    tooltip.accept(vat.getOutput().getHoverName());
                 }
                 heat(tooltip, vat.getTemperature());
             }
@@ -213,7 +218,21 @@ public final class FLTooltips
                             final int ticksLeft = top.getTicksLeft(i);
                             if (ticksLeft > 0)
                             {
-                                tooltip.accept(Component.translatable("firmalife.jade.cook_left", delta(level, ticksLeft)));
+                                final ItemStack stack = inv.getStackInSlot(i);
+                                if (!stack.isEmpty())
+                                {
+                                    final float temp = HeatCapability.getTemperature(stack);
+                                    final Component tempComponent = TFCConfig.CLIENT.heatTooltipStyle.get().formatColored(temp);
+                                    if (temp > 0 && tempComponent != null)
+                                    {
+                                        tooltip.accept(Component.translatable("firmalife.jade.cook_left_temp", stack.getHoverName(), delta(level, ticksLeft), tempComponent));
+                                    }
+                                    else
+                                    {
+                                        tooltip.accept(Component.translatable("firmalife.jade.cook_left", stack.getHoverName(), delta(level, ticksLeft)));
+                                    }
+                                }
+
                             }
                         }
                     });

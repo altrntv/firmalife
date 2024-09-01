@@ -14,10 +14,6 @@
     "ingredient": "firmalife:sugar_water",
     "amount": 500
   },
-  "output_fluid": {
-    "fluid": "firmalife:fruity_fluid",
-    "amount": 500
-  },
   "jar": {
     "item": "firmalife:jar/white_grapes"
   }

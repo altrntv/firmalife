@@ -176,7 +176,7 @@ def generate(rm: ResourceManager):
         make_jar(rm, jar, remainder, ing)
     for fruit in FL_FRUITS:
         ing = not_rotten(has_trait('firmalife:food/%s' % fruit, 'firmalife:dried', True))
-        vat_recipe(rm, '%s_jar' % fruit, ing, '500 firmalife:sugar_water', output_fluid='500 firmalife:fruity_fluid', jar='firmalife:jar/%s' % fruit)
+        vat_recipe(rm, '%s_jar' % fruit, ing, '500 firmalife:sugar_water', jar='firmalife:jar/%s' % fruit)
         for count in (2, 3, 4):
             rm.recipe(('pot', 'jam_%s_%s' % (fruit, count)), 'tfc:pot_jam', {
                 'ingredients': [ing] * count + [utils.ingredient('#tfc:sweetener')],
@@ -189,7 +189,7 @@ def generate(rm: ResourceManager):
         rm.crafting_shapeless('crafting/unseal_%s_jar' % fruit, (not_rotten('firmalife:jar/%s' % fruit), ), 'firmalife:jar/%s_unsealed' % fruit).with_advancement('firmalife:jar/%s' % fruit)
     for fruit in TFC_FRUITS:
         ing = not_rotten(has_trait('tfc:food/%s' % fruit, 'firmalife:dried', True))
-        vat_recipe(rm, '%s_jar' % fruit, ing, '500 firmalife:sugar_water', output_fluid='500 firmalife:fruity_fluid', jar='tfc:jar/%s' % fruit)
+        vat_recipe(rm, '%s_jar' % fruit, ing, '500 firmalife:sugar_water', jar='tfc:jar/%s' % fruit)
 
     beet = not_rotten('tfc:food/beet')
     simple_pot_recipe(rm, 'beet_sugar', [beet, beet, beet, beet, beet], '100 tfc:salt_water', output_items=['minecraft:sugar', 'minecraft:sugar', 'minecraft:sugar'])

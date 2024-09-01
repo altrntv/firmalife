@@ -45,7 +45,7 @@ public class VatRecipe implements ISimpleRecipe<VatBlockEntity.VatInventory>
         this.jarOutput = jarOutput;
     }
 
-    public void assembleOutputs(VatBlockEntity.VatInventory inventory)
+    public void assembleOutputs(VatBlockEntity vat, VatBlockEntity.VatInventory inventory)
     {
         final ItemStack stack = Helpers.removeStack(inventory, 0);
         final FluidStack fluid = inventory.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.EXECUTE);
@@ -117,12 +117,11 @@ public class VatRecipe implements ISimpleRecipe<VatBlockEntity.VatInventory>
             outputFluid.setAmount(Math.min(VatBlockEntity.CAPACITY, amount));
             inventory.fill(outputFluid, IFluidHandler.FluidAction.EXECUTE);
         }
-        final FluidStack current = inventory.getFluidInTank(0);
-        if (!current.isEmpty() && !jarOutput.isEmpty())
+        final ItemStack jar = this.jarOutput.copy();
+        if (!jar.isEmpty())
         {
-            final CompoundTag tag = new CompoundTag();
-            tag.put("fruit", jarOutput.save(new CompoundTag()));
-            current.setTag(tag);
+            jar.setCount(jar.getCount() * multiplier);
+            vat.setOutput(jar);
         }
     }
 

@@ -82,7 +82,8 @@ public class OvenTopBlockEntity extends ApplianceBlockEntity<ApplianceBlockEntit
                     // Always heat up the item regardless if it is melting or not
                     if (cap.getTemperature() < oven.temperature)
                     {
-                        HeatCapability.addTemp(cap, oven.temperature, 2 + oven.temperature * 0.0025f); // Breaks even at 400 C
+                        final float modifier = FoodCapability.hasTrait(inputStack, FLFoodTraits.OVEN_BAKED) ? 2f : 2 + oven.temperature + 0.0025f; // Breaks even at 400 C
+                        HeatCapability.addTemp(cap, oven.temperature, modifier);
                     }
 
                     final WrappedHeatingRecipe recipe = oven.cachedRecipes[slot];
@@ -97,6 +98,7 @@ public class OvenTopBlockEntity extends ApplianceBlockEntity<ApplianceBlockEntit
                             // Output transformations
                             outputItem.getCapability(HeatCapability.CAPABILITY).ifPresent(outputCap -> outputCap.setTemperature(oven.temperature));
                             FoodCapability.applyTrait(outputItem, FLFoodTraits.OVEN_BAKED);
+                            FoodCapability.setCreationDate(outputItem, FoodCapability.getRoundedCreationDate());
 
                             // Add output to oven
                             oven.inventory.setStackInSlot(slot, outputItem);

@@ -1,12 +1,12 @@
 {
-  "name": "Dairy Products",
+  "name": "Bread",
   "category": "tfc:mechanics",
   "icon": "tfc:textures/item/food/wheat_bread.png",
   "pages": [
     {
       "type": "patchouli:text",
       "text": "$(l:tfc:firmalife/cheese)See the Firmalife entry for the correct information.$()",
-      "title": "Dairy"
+      "title": "Bread"
     }
   ],
   "read_by_default": true

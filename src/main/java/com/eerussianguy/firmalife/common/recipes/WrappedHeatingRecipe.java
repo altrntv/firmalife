@@ -27,7 +27,7 @@ public record WrappedHeatingRecipe(ResourceLocation id, BiFunction<ItemStackInve
 
     public static WrappedHeatingRecipe of(HeatingRecipe recipe)
     {
-        return new WrappedHeatingRecipe(recipe.getId(), recipe::assemble, recipe.getTemperature(), 120, false);
+        return new WrappedHeatingRecipe(recipe.getId(), recipe::assemble, recipe.getTemperature(), 20 * 50, false);
     }
 
     public static WrappedHeatingRecipe of(OvenRecipe recipe)
