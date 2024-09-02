@@ -16,5 +16,6 @@
   },
   "jar": {
     "item": "tfc:jar/melon_slice"
-  }
+  },
+  "output_texture": "tfc:block/jar/melon_slice"
 }

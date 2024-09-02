@@ -101,7 +101,7 @@ public class StompingBarrelBlockEntity extends InventoryBlockEntity<ItemStackHan
         stomps = nbt.getInt("stomps");
         isOutputMode = nbt.getBoolean("isOutput");
         if (nbt.contains("texture", Tag.TAG_STRING))
-            texture = new ResourceLocation(nbt.getString("texture"));
+            texture = FLHelpers.res(nbt.getString("texture"));
         causeTextureUpdate();
     }
 

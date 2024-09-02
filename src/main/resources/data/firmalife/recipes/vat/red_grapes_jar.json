@@ -16,5 +16,6 @@
   },
   "jar": {
     "item": "firmalife:jar/red_grapes"
-  }
+  },
+  "output_texture": "firmalife:block/jar/red_grapes"
 }

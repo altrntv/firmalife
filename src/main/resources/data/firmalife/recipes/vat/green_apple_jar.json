@@ -16,5 +16,6 @@
   },
   "jar": {
     "item": "tfc:jar/green_apple"
-  }
+  },
+  "output_texture": "tfc:block/jar/green_apple"
 }

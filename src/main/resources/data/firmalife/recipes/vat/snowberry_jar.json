@@ -16,5 +16,6 @@
   },
   "jar": {
     "item": "tfc:jar/snowberry"
-  }
+  },
+  "output_texture": "tfc:block/jar/snowberry"
 }

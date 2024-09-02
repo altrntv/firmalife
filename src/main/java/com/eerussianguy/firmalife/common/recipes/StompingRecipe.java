@@ -1,5 +1,6 @@
 package com.eerussianguy.firmalife.common.recipes;
 
+import com.eerussianguy.firmalife.common.FLHelpers;
 import com.google.gson.JsonObject;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -83,8 +84,8 @@ public class StompingRecipe extends SimpleItemRecipe
         {
             final Ingredient ingredient = Ingredient.fromJson(JsonHelpers.get(json, "ingredient"));
             final ItemStackProvider result = ItemStackProvider.fromJson(GsonHelper.getAsJsonObject(json, "result"));
-            final ResourceLocation preTexture = new ResourceLocation(JsonHelpers.getAsString(json, "input_texture"));
-            final ResourceLocation outTexture = new ResourceLocation(JsonHelpers.getAsString(json, "output_texture"));
+            final ResourceLocation preTexture = FLHelpers.res(JsonHelpers.getAsString(json, "input_texture"));
+            final ResourceLocation outTexture = FLHelpers.res(JsonHelpers.getAsString(json, "output_texture"));
             final SoundEvent sound = JsonHelpers.getRegistryEntry(json, "sound", ForgeRegistries.SOUND_EVENTS);
             return new StompingRecipe(id, ingredient, result, preTexture, outTexture, sound);
         }

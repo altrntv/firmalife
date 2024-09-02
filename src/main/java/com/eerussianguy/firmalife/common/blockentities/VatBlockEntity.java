@@ -10,6 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -51,6 +52,7 @@ public class VatBlockEntity extends BoilingBlockEntity<VatBlockEntity.VatInvento
 
     @Nullable private VatRecipe cachedRecipe = null;
     private ItemStack jarOutput = ItemStack.EMPTY;
+    @Nullable private ResourceLocation lastTexture = null;
 
     public VatBlockEntity(BlockPos pos, BlockState state)
     {
@@ -64,14 +66,32 @@ public class VatBlockEntity extends BoilingBlockEntity<VatBlockEntity.VatInvento
     public void loadAdditional(CompoundTag nbt)
     {
         super.loadAdditional(nbt);
-        jarOutput = ItemStack.of(nbt.getCompound("jarOutput"));
+        jarOutput = nbt.contains("jarOutput", Tag.TAG_COMPOUND) ? ItemStack.of(nbt.getCompound("jarOutput")) : ItemStack.EMPTY;
+        lastTexture = nbt.contains("lastTexture", Tag.TAG_STRING) ? FLHelpers.res(nbt.getString("lastTexture")) : null;
     }
 
     @Override
     public void saveAdditional(CompoundTag nbt)
     {
         super.saveAdditional(nbt);
-        nbt.put("jarOutput", jarOutput.serializeNBT());
+        if (!jarOutput.isEmpty())
+        {
+            nbt.put("jarOutput", jarOutput.serializeNBT());
+        }
+        if (lastTexture != null)
+        {
+            nbt.putString("lastTexture", lastTexture.toString());
+        }
+    }
+
+    @Override
+    public void setAndUpdateSlots(int slot)
+    {
+        super.setAndUpdateSlots(slot);
+        if (jarOutput.isEmpty())
+        {
+            lastTexture = null;
+        }
     }
 
     public boolean hasOutput()
@@ -90,9 +110,16 @@ public class VatBlockEntity extends BoilingBlockEntity<VatBlockEntity.VatInvento
         return jarOutput.isEmpty() ? ItemStack.EMPTY : jarOutput.split(1);
     }
 
-    public void setOutput(ItemStack stack)
+    public void setOutput(ItemStack stack, @Nullable ResourceLocation texture)
     {
         this.jarOutput = stack;
+        this.lastTexture = texture;
+    }
+
+    @Nullable
+    public ResourceLocation getJarTexture()
+    {
+        return lastTexture;
     }
 
     public void handleJarring()

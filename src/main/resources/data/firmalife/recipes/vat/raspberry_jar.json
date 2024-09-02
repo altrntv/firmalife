@@ -16,5 +16,6 @@
   },
   "jar": {
     "item": "tfc:jar/raspberry"
-  }
+  },
+  "output_texture": "tfc:block/jar/raspberry"
 }

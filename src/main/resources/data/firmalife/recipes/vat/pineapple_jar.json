@@ -16,5 +16,6 @@
   },
   "jar": {
     "item": "firmalife:jar/pineapple"
-  }
+  },
+  "output_texture": "firmalife:block/jar/pineapple"
 }

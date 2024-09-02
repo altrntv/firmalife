@@ -16,5 +16,6 @@
   },
   "jar": {
     "item": "tfc:jar/cherry"
-  }
+  },
+  "output_texture": "tfc:block/jar/cherry"
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import com.google.gson.JsonArray;
@@ -35,6 +36,8 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import com.eerussianguy.firmalife.FirmaLife;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
+import org.jetbrains.annotations.Nullable;
+
 import net.dries007.tfc.common.blockentities.TickCounterBlockEntity;
 import net.dries007.tfc.common.capabilities.Capabilities;
 import net.dries007.tfc.common.capabilities.food.FoodCapability;
@@ -52,7 +55,7 @@ public class FLHelpers
 
     public static ResourceLocation identifier(String id)
     {
-        return new ResourceLocation(MOD_ID, id);
+        return FLHelpers.res(MOD_ID, id);
     }
 
     public static Vec3 vec3(BlockPos pos)
@@ -103,7 +106,7 @@ public class FLHelpers
             final ListTag excessNbt = nbt.getList(key, Tag.TAG_COMPOUND);
             for (int i = 0; i < excessNbt.size(); i++)
             {
-                final FoodTrait trait = FoodTrait.getTrait(new ResourceLocation(excessNbt.getCompound(i).getString("trait")));
+                final FoodTrait trait = FoodTrait.getTrait(FLHelpers.res(excessNbt.getCompound(i).getString("trait")));
                 if (trait != null)
                 {
                     list.add(trait);
@@ -217,6 +220,27 @@ public class FLHelpers
         return InteractionResult.PASS;
     }
 
+    @Nullable
+    public static <T> T ofJsonNullable(JsonObject json, Function<JsonObject, T> getter, String key)
+    {
+        return json.has(key) ? getter.apply(json) : null;
+    }
+
+    public static <T> T ofJsonDefaulting(JsonObject json, Function<JsonObject, T> getter, String key, T defaultValue)
+    {
+        return json.has(key) ? getter.apply(json) : defaultValue;
+    }
+
+    public static ResourceLocation res(String string)
+    {
+        return new ResourceLocation(string);
+    }
+
+    public static ResourceLocation res(String namespace, String path)
+    {
+        return new ResourceLocation(namespace, path);
+    }
+
     public static Iterable<BlockPos> allPositionsCentered(BlockPos center, int radius, int height)
     {
         return BlockPos.betweenClosed(center.offset(-radius, -height, -radius), center.offset(radius, height, radius));
@@ -255,7 +279,7 @@ public class FLHelpers
         int i = 0;
         for (JsonElement element : array)
         {
-            textures[i] = new ResourceLocation(element.getAsString());
+            textures[i] = FLHelpers.res(element.getAsString());
             i++;
         }
         return textures;
@@ -268,7 +292,7 @@ public class FLHelpers
         final ResourceLocation[] textures = new ResourceLocation[length];
         for (int i = 0; i < length; i++)
         {
-            textures[i] = new ResourceLocation(buffer.readUtf());
+            textures[i] = FLHelpers.res(buffer.readUtf());
         }
         return textures;
     }

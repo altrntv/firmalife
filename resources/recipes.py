@@ -176,7 +176,7 @@ def generate(rm: ResourceManager):
         make_jar(rm, jar, remainder, ing)
     for fruit in FL_FRUITS:
         ing = not_rotten(has_trait('firmalife:food/%s' % fruit, 'firmalife:dried', True))
-        vat_recipe(rm, '%s_jar' % fruit, ing, '500 firmalife:sugar_water', jar='firmalife:jar/%s' % fruit)
+        vat_recipe(rm, '%s_jar' % fruit, ing, '500 firmalife:sugar_water', jar='firmalife:jar/%s' % fruit, output_texture='firmalife:block/jar/%s' % fruit)
         for count in (2, 3, 4):
             rm.recipe(('pot', 'jam_%s_%s' % (fruit, count)), 'tfc:pot_jam', {
                 'ingredients': [ing] * count + [utils.ingredient('#tfc:sweetener')],
@@ -189,7 +189,7 @@ def generate(rm: ResourceManager):
         rm.crafting_shapeless('crafting/unseal_%s_jar' % fruit, (not_rotten('firmalife:jar/%s' % fruit), ), 'firmalife:jar/%s_unsealed' % fruit).with_advancement('firmalife:jar/%s' % fruit)
     for fruit in TFC_FRUITS:
         ing = not_rotten(has_trait('tfc:food/%s' % fruit, 'firmalife:dried', True))
-        vat_recipe(rm, '%s_jar' % fruit, ing, '500 firmalife:sugar_water', jar='tfc:jar/%s' % fruit)
+        vat_recipe(rm, '%s_jar' % fruit, ing, '500 firmalife:sugar_water', jar='tfc:jar/%s' % fruit, output_texture='tfc:block/jar/%s' % fruit)
 
     beet = not_rotten('tfc:food/beet')
     simple_pot_recipe(rm, 'beet_sugar', [beet, beet, beet, beet, beet], '100 tfc:salt_water', output_items=['minecraft:sugar', 'minecraft:sugar', 'minecraft:sugar'])
@@ -727,7 +727,7 @@ def fluid_ingredient(data_in: Json) -> Json:
         else:
             return fluid
 
-def vat_recipe(rm: ResourceManager, name_parts: utils.ResourceIdentifier, input_item: Optional[Json] = None, input_fluid: Optional[Json] = None, output_item: Optional[Json] = None, output_fluid: Optional[Json] = None, length: int = None, temp: float = None, jar: str = None):
+def vat_recipe(rm: ResourceManager, name_parts: utils.ResourceIdentifier, input_item: Optional[Json] = None, input_fluid: Optional[Json] = None, output_item: Optional[Json] = None, output_fluid: Optional[Json] = None, length: int = None, temp: float = None, jar: str = None, output_texture: str = None):
     rm.recipe(('vat', name_parts), 'firmalife:vat', {
         'input_item': item_stack_ingredient(input_item) if input_item is not None else None,
         'input_fluid': fluid_stack_ingredient(input_fluid) if input_fluid is not None else None,
@@ -735,7 +735,8 @@ def vat_recipe(rm: ResourceManager, name_parts: utils.ResourceIdentifier, input_
         'output_fluid': fluid_stack(output_fluid) if output_fluid is not None else None,
         'length': length,
         'temperature': temp,
-        'jar': utils.item_stack(jar) if jar is not None else None
+        'jar': utils.item_stack(jar) if jar is not None else None,
+        'output_texture': output_texture,
     })
 
 def barrel_instant_recipe(rm: ResourceManager, name_parts: utils.ResourceIdentifier, input_item: Optional[Json] = None, input_fluid: Optional[Json] = None, output_item: Optional[Json] = None, output_fluid: Optional[Json] = None, sound: Optional[str] = None):

@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -24,14 +25,24 @@ public class VatBlockEntityRenderer implements BlockEntityRenderer<VatBlockEntit
             return;
         if (vat.getBlockState().getValue(VatBlock.SEALED))
             return;
-        vat.getCapability(Capabilities.FLUID).ifPresent(cap -> {
-            final FluidStack fluid = cap.getFluidInTank(0);
-            if (!fluid.isEmpty())
-            {
-                final float y = Mth.map(fluid.getAmount(), 0f, 10000f, 1f / 16f, 0.5f);
-                RenderHelpers.renderFluidFace(poseStack, fluid, buffers, 1f / 8, 1f / 8, 7f / 8, 7f / 8, y, combinedOverlay, combinedLight);
-            }
-        });
+
+        final ResourceLocation jarTexture = vat.hasOutput() ? vat.getJarTexture() : null;
+        if (jarTexture != null)
+        {
+            final float y = Mth.clampedMap(vat.getOutput().getCount(), 1, 8,  2f / 16, 12f / 16);
+            RenderHelpers.renderTexturedFace(poseStack, buffers, 0xFFFFFF, 1f / 8, 1f / 8, 7f / 8, 7f / 8, y, combinedOverlay, combinedLight, jarTexture, false);
+        }
+        else
+        {
+            vat.getCapability(Capabilities.FLUID).ifPresent(cap -> {
+                final FluidStack fluid = cap.getFluidInTank(0);
+                if (!fluid.isEmpty())
+                {
+                    final float y = Mth.map(fluid.getAmount(), 0f, 10000f, 1f / 16f, 0.5f);
+                    RenderHelpers.renderFluidFace(poseStack, fluid, buffers, 1f / 8, 1f / 8, 7f / 8, 7f / 8, y, combinedOverlay, combinedLight);
+                }
+            });
+        }
 
         vat.getCapability(Capabilities.ITEM).ifPresent(inv -> {
             final ItemStack itemStack = inv.getStackInSlot(0);

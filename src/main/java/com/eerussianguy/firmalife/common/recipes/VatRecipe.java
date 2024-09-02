@@ -1,5 +1,6 @@
 package com.eerussianguy.firmalife.common.recipes;
 
+import com.eerussianguy.firmalife.common.FLHelpers;
 import com.eerussianguy.firmalife.common.blockentities.VatBlockEntity;
 import com.google.gson.JsonObject;
 import net.minecraft.core.RegistryAccess;
@@ -32,8 +33,9 @@ public class VatRecipe implements ISimpleRecipe<VatBlockEntity.VatInventory>
     private final int length;
     private final float temperature;
     private final ItemStack jarOutput;
+    private final @Nullable ResourceLocation outputTexture;
 
-    public VatRecipe(ResourceLocation id, ItemStackIngredient ingredient, FluidStackIngredient fluidInput, ItemStackProvider output, FluidStack outputFluid, int length, float temperature, ItemStack jarOutput)
+    public VatRecipe(ResourceLocation id, ItemStackIngredient ingredient, FluidStackIngredient fluidInput, ItemStackProvider output, FluidStack outputFluid, int length, float temperature, ItemStack jarOutput, @Nullable ResourceLocation outputTexture)
     {
         this.id = id;
         this.inputItem = ingredient;
@@ -43,6 +45,7 @@ public class VatRecipe implements ISimpleRecipe<VatBlockEntity.VatInventory>
         this.length = length;
         this.temperature = temperature;
         this.jarOutput = jarOutput;
+        this.outputTexture = outputTexture;
     }
 
     public void assembleOutputs(VatBlockEntity vat, VatBlockEntity.VatInventory inventory)
@@ -121,7 +124,7 @@ public class VatRecipe implements ISimpleRecipe<VatBlockEntity.VatInventory>
         if (!jar.isEmpty())
         {
             jar.setCount(jar.getCount() * multiplier);
-            vat.setOutput(jar);
+            vat.setOutput(jar, outputTexture);
         }
     }
 
@@ -195,6 +198,12 @@ public class VatRecipe implements ISimpleRecipe<VatBlockEntity.VatInventory>
         return jarOutput;
     }
 
+    @Nullable
+    public ResourceLocation getOutputTexture()
+    {
+        return outputTexture;
+    }
+
     public static class Serializer extends RecipeSerializerImpl<VatRecipe>
     {
         @Override
@@ -208,7 +217,8 @@ public class VatRecipe implements ISimpleRecipe<VatBlockEntity.VatInventory>
                 json.has("output_fluid") ? JsonHelpers.getFluidStack(json, "output_fluid") : FluidStack.EMPTY,
                 JsonHelpers.getAsInt(json, "length", 600),
                 JsonHelpers.getAsFloat(json, "temperature", 300f),
-                json.has("jar") ? JsonHelpers.getItemStack(json, "jar") : ItemStack.EMPTY
+                json.has("jar") ? JsonHelpers.getItemStack(json, "jar") : ItemStack.EMPTY,
+                FLHelpers.ofJsonNullable(json, j -> FLHelpers.res(JsonHelpers.getAsString(json, "output_texture")), "output_texture")
             );
         }
 
@@ -223,7 +233,8 @@ public class VatRecipe implements ISimpleRecipe<VatBlockEntity.VatInventory>
             final int length = buffer.readVarInt();
             final float temp = buffer.readFloat();
             final ItemStack jar = buffer.readItem();
-            return new VatRecipe(id, ingredient, fluidIngredient, output, outputFluid, length, temp, jar);
+            final ResourceLocation outputTexture = Helpers.decodeNullable(buffer, FriendlyByteBuf::readResourceLocation);
+            return new VatRecipe(id, ingredient, fluidIngredient, output, outputFluid, length, temp, jar, outputTexture);
         }
 
         @Override
@@ -236,6 +247,7 @@ public class VatRecipe implements ISimpleRecipe<VatBlockEntity.VatInventory>
             buffer.writeVarInt(recipe.length);
             buffer.writeFloat(recipe.temperature);
             buffer.writeItem(recipe.jarOutput);
+            Helpers.encodeNullable(recipe.outputTexture, buffer, (res, buf) -> buf.writeResourceLocation(res));
         }
     }
 }

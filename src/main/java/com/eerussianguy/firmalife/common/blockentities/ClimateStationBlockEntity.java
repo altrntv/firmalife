@@ -3,6 +3,7 @@ package com.eerussianguy.firmalife.common.blockentities;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.eerussianguy.firmalife.common.FLHelpers;
 import com.eerussianguy.firmalife.common.util.GreenhouseType;
 import com.eerussianguy.firmalife.common.util.Mechanics;
 import net.minecraft.core.BlockPos;
@@ -42,7 +43,7 @@ public class ClimateStationBlockEntity extends TFCBlockEntity
         }
         if (nbt.contains("favoriteType"))
         {
-            favoriteGreenhouseType = new ResourceLocation(nbt.getString("favoriteType"));
+            favoriteGreenhouseType = FLHelpers.res(nbt.getString("favoriteType"));
         }
         favoriteIsCellar = nbt.getBoolean("favoriteIsCellar");
     }
