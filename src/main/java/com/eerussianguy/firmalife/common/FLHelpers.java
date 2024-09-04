@@ -191,7 +191,6 @@ public class FLHelpers
                 return completeInsertion(level, item, inv, player, i);
             }
         }
-        ItemHandlerHelper.giveItemToPlayer(player, item);
         return InteractionResult.PASS;
     }
 

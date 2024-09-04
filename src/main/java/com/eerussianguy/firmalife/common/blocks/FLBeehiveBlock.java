@@ -122,7 +122,7 @@ public class FLBeehiveBlock extends FourWayDeviceBlock implements HoeOverlayBloc
         else if (Helpers.isItem(held, FLItems.BEEHIVE_FRAME.get()))
         {
             final var res = FLHelpers.consumeInventory(level, pos, FLBlockEntities.BEEHIVE, (hive, inv) ->
-                FLHelpers.insertOneAny(level, held.split(1), 0, FLBeehiveBlockEntity.FRAME_SLOTS - 1, inv, player)
+                FLHelpers.insertOneAny(level, held, 0, FLBeehiveBlockEntity.FRAME_SLOTS - 1, inv, player)
             );
             if (res.consumesAction())
                 return res;
