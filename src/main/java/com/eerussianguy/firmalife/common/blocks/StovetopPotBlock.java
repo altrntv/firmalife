@@ -68,6 +68,7 @@ public class StovetopPotBlock extends BottomSupportedDeviceBlock
                     {
                         return interactResult;
                     }
+                    pot.markForSync();
                 }
                 if (player instanceof ServerPlayer serverPlayer)
                 {

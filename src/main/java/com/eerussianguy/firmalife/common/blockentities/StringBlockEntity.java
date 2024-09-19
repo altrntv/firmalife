@@ -12,7 +12,6 @@ import com.eerussianguy.firmalife.common.items.FLFoodTraits;
 import com.eerussianguy.firmalife.common.recipes.SmokingRecipe;
 import com.eerussianguy.firmalife.config.FLConfig;
 import net.dries007.tfc.common.blockentities.FirepitBlockEntity;
-import net.dries007.tfc.common.blocks.devices.FirepitBlock;
 import net.dries007.tfc.common.capabilities.Capabilities;
 import net.dries007.tfc.common.capabilities.food.FoodCapability;
 import net.dries007.tfc.common.recipes.inventory.ItemStackInventory;
@@ -26,7 +25,7 @@ public class StringBlockEntity extends SimpleItemRecipeBlockEntity<SmokingRecipe
         {
             string.updateCache();
         }
-        if (level.getGameTime() % 40 == 0)
+        if (level.getGameTime() % 40 == 0 && !string.readStack().isEmpty())
         {
             if (string.cachedRecipe == null)
             {
@@ -53,11 +52,10 @@ public class StringBlockEntity extends SimpleItemRecipeBlockEntity<SmokingRecipe
                     }
                 });
             }
-        }
-
-        if (string.getTicksLeft() <= 0)
-        {
-            string.finish();
+            if (string.getTicksLeft() <= 0)
+            {
+                string.finish();
+            }
         }
     }
 
@@ -70,7 +68,25 @@ public class StringBlockEntity extends SimpleItemRecipeBlockEntity<SmokingRecipe
     public boolean isItemValid(int slot, ItemStack stack)
     {
         assert level != null;
+        final ItemStack current = inventory.getStackInSlot(slot);
+        if (!current.isEmpty())
+        {
+            return FoodCapability.areStacksStackableExceptCreationDate(stack, current);
+        }
         return SmokingRecipe.getRecipe(level, new ItemStackInventory(stack)) != null;
+    }
+
+    @Override
+    public void setAndUpdateSlots(int slot)
+    {
+        super.setAndUpdateSlots(slot);
+        markForSync();
+    }
+
+    @Override
+    public int getSlotStackLimit(int slot)
+    {
+        return 8;
     }
 
     @Override

@@ -55,7 +55,7 @@ public class GrapeTrellisPostBlock extends ExtendedBlock
         {
             final BlockState string = FLBlocks.GRAPE_STRING.get().defaultBlockState().setValue(AXIS, result.getDirection().getAxis());
             final BlockPos potentialPos = pos.relative(result.getDirection());
-            if (string.canSurvive(level, potentialPos))
+            if (string.canSurvive(level, potentialPos) && level.getBlockState(potentialPos).canBeReplaced())
             {
                 if (!player.isCreative())
                     held.shrink(1);

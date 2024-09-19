@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.items.ItemStackHandler;
 
 import net.dries007.tfc.common.capabilities.PartialItemHandler;
 import net.dries007.tfc.common.recipes.inventory.ItemStackInventory;

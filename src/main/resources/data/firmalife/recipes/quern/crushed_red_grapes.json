@@ -8,7 +8,11 @@
     }
   },
   "result": {
-    "item": "firmalife:food/smashed_red_grapes",
-    "count": 1
+    "stack": {
+      "item": "firmalife:food/smashed_red_grapes"
+    },
+    "modifiers": [
+      "tfc:copy_food"
+    ]
   }
 }

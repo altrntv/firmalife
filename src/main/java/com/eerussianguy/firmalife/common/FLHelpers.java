@@ -194,6 +194,14 @@ public class FLHelpers
         return InteractionResult.PASS;
     }
 
+    public static ItemStack mergeInsertStack(IItemHandler inventory, int slot, ItemStack stack) {
+        ItemStack existing = Helpers.removeStack(inventory, slot);
+        ItemStack remainder = stack.copy();
+        ItemStack merged = FoodCapability.mergeItemStacks(existing, remainder);
+        remainder.grow(inventory.insertItem(slot, merged, false).getCount());
+        return remainder;
+    }
+
     private static InteractionResult completeInsertion(Level level, ItemStack item, IItemHandler inv, Player player, int slot)
     {
         ItemStack stack = inv.insertItem(slot, item.split(1), false);

@@ -34,7 +34,6 @@ import com.eerussianguy.firmalife.common.capabilities.bee.BeeAbility;
 import com.eerussianguy.firmalife.common.capabilities.bee.BeeCapability;
 import com.eerussianguy.firmalife.common.capabilities.bee.IBee;
 import com.eerussianguy.firmalife.common.misc.FLEffects;
-import com.eerussianguy.firmalife.common.misc.SwarmEffect;
 import net.dries007.tfc.common.blocks.ExtendedProperties;
 import net.dries007.tfc.common.blocks.devices.FirepitBlock;
 import net.dries007.tfc.common.blocks.soil.HoeOverlayBlock;

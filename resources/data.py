@@ -188,6 +188,8 @@ def generate(rm: ResourceManager):
     item_size(rm, 'empty_wine', '#firmalife:empty_wine_bottles', Size.normal, Weight.medium)
 
     item_heat(rm, 'heatable_foods', '#firmalife:foods/heatable', 1)
+    item_heat(rm, 'copper_pipe', 'firmalife:copper_pipe', 0.171, melt_temperature=864)
+    item_heat(rm, 'oxidized_copper_pipe', 'firmalife:oxidized_copper_pipe', 0.171, melt_temperature=864)
 
     for fruit, data in FRUITS.items():
         climate_range(rm, 'plant/%s_tree' % fruit, hydration=(hydration_from_rainfall(data.min_rain), 100, 0), temperature=(data.min_temp - 7, data.max_temp + 7, 0))
@@ -202,8 +204,8 @@ def generate(rm: ResourceManager):
 
     ### MISC DATA ###
     global_loot_modifiers(rm, 'firmalife:fruit_leaf', 'firmalife:rennet', 'firmalife:rennet_three', 'firmalife:ice_shavings')
-    global_loot_modifier(rm, 'rennet', 'firmalife:add_item', {'item': item_stack_codec('2 firmalife:rennet')}, match_entity_tag('firmalife:drops_rennet'))
-    global_loot_modifier(rm, 'rennet_three', 'firmalife:add_item', {'item': item_stack_codec('3 firmalife:rennet')}, match_entity_tag('firmalife:drops_three_rennet'))
+    global_loot_modifier(rm, 'rennet', 'firmalife:add_item', {'item': item_stack_codec('4 firmalife:rennet')}, match_entity_tag('firmalife:drops_rennet'))
+    global_loot_modifier(rm, 'rennet_three', 'firmalife:add_item', {'item': item_stack_codec('6 firmalife:rennet')}, match_entity_tag('firmalife:drops_three_rennet'))
     global_loot_modifier(rm, 'fruit_leaf', 'firmalife:add_item', {'item': item_stack_codec('firmalife:fruit_leaf'), 'chance': 0.5}, match_block_ingredient('firmalife:drops_fruit_leaf'))
     global_loot_modifier(rm, 'ice_shavings', 'firmalife:add_item', {'item': item_stack_codec('firmalife:ice_shavings')}, match_block_ingredient('firmalife:drops_ice_shavings'))
 

@@ -146,7 +146,7 @@ def generate(rm: ResourceManager):
         rm.crafting_shaped('crafting/wood/%s_shelf' % wood, ['XXX', 'YYY', 'XXX'], {'X': 'tfc:wood/planks/%s' % wood, 'Y': 'tfc:wood/lumber/%s' % wood}, 'firmalife:wood/food_shelf/%s' % wood).with_advancement('tfc:wood/lumber/%s' % wood)
         rm.crafting_shaped('crafting/wood/%s_jarbnet' % wood, ['X  ', 'ZYY', 'X  '], {'X': 'tfc:wood/log/%s' % wood, 'Y': 'tfc:wood/lumber/%s' % wood, 'Z': '#forge:rods/brass'}, '2 firmalife:wood/jarbnet/%s' % wood).with_advancement('tfc:wood/lumber/%s' % wood)
         rm.crafting_shaped('crafting/wood/%s_wine_shelf' % wood, ['XYX', 'XYX', 'XYX'], {'X': 'tfc:wood/log/%s' % wood, 'Y': 'firmalife:treated_lumber'}, '4 firmalife:wood/wine_shelf/%s' % wood).with_advancement('tfc:wood/log/%s' % wood)
-        damage_shapeless(rm, 'crafting/wood/%s_stomping_barrel' % wood, ('#tfc:saws', 'tfc:wood/barrel/%s' % wood), 'firmalife:wood/stomping_barrel/%s' % wood).with_advancement('tfc:wood/barrel/%s' % wood)
+        rm.crafting_shaped('crafting/wood/%s_stomping_barrel' % wood, ['XGX', 'XXX', 'Z  '], {'X': 'tfc:wood/lumber/%s' % wood, 'G': 'tfc:glue', 'Z': '#tfc:saws'}, 'firmalife:wood/stomping_barrel/%s' % wood).with_advancement('tfc:wood/barrel/%s' % wood)
         rm.crafting_shapeless('crafting/wood/%s_barrel_press' % wood, ('firmalife:wood/stomping_barrel/%s' % wood, '#forge:rods/wrought_iron', '#forge:sheets/wrought_iron', 'tfc:brass_mechanisms'), 'firmalife:wood/barrel_press/%s' % wood).with_advancement('firmalife:wood/stomping_barrel/%s' % wood)
         rm.crafting_shaped('crafting/wood/%s_keg' % wood, ['XYX', 'YZY', 'XYX'], {'X': 'tfc:wood/log/%s' % wood, 'Y': 'firmalife:barrel_stave', 'Z': 'tfc:glue'}, 'firmalife:wood/big_barrel/%s' % wood).with_advancement('tfc:wood/log/%s' % wood)
 
@@ -237,8 +237,8 @@ def generate(rm: ResourceManager):
     barrel_sealed_recipe(rm, 'gouda', 'Gouda Wheel', 16000, '3 firmalife:food/milk_curd', '750 tfc:salt_water', output_item='firmalife:gouda_wheel')
 
     quern_recipe(rm, 'masa', not_rotten('firmalife:food/nixtamal'), 'firmalife:food/masa_flour', count=4)
-    quern_recipe(rm, 'crushed_red_grapes', not_rotten('firmalife:food/red_grapes'), 'firmalife:food/smashed_red_grapes')
-    quern_recipe(rm, 'crushed_white_grapes', not_rotten('firmalife:food/white_grapes'), 'firmalife:food/smashed_white_grapes')
+    quern_recipe(rm, 'crushed_red_grapes', not_rotten('firmalife:food/red_grapes'), item_stack_provider('firmalife:food/smashed_red_grapes', copy_food=True))
+    quern_recipe(rm, 'crushed_white_grapes', not_rotten('firmalife:food/white_grapes'), item_stack_provider('firmalife:food/smashed_white_grapes', copy_food=True))
 
     loom_recipe(rm, 'pineapple_leather', '16 firmalife:pineapple_yarn', 'firmalife:pineapple_leather', 16, 'firmalife:block/pineapple')
 
@@ -435,6 +435,8 @@ def generate(rm: ResourceManager):
 
     heat_recipe(rm, 'corn_tortilla', not_rotten('firmalife:food/masa'), 200, result_item=item_stack_provider('firmalife:food/corn_tortilla', copy_food=True))
     heat_recipe(rm, 'bacon', not_rotten('firmalife:food/bacon'), 200, result_item=item_stack_provider('firmalife:food/cooked_bacon', copy_food=True))
+    heat_recipe(rm, 'copper_pipe', 'firmalife:copper_pipe', 1080, result_item=None, result_fluid='25 tfc:metal/copper')
+    heat_recipe(rm, 'oxidized_copper_pipe', 'firmalife:oxidized_copper_pipe', 1080, result_item=None, result_fluid='25 tfc:metal/copper')
 
     ore = 'chromite'
     for rock, data in TFC_ROCKS.items():

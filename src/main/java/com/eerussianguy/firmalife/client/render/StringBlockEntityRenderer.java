@@ -23,19 +23,29 @@ public class StringBlockEntityRenderer implements BlockEntityRenderer<StringBloc
         if (level == null) return;
         BlockState state = level.getBlockState(string.getBlockPos());
         if (!(state.getBlock() instanceof StringBlock)) return;
+        final ItemStack item = string.readStack();
+        final int total = item.getCount();
+        if (total <= 0) return;
 
         poseStack.pushPose();
-        poseStack.translate(0.5D, 0.38D, 0.5D);
-        poseStack.scale(0.5f, 0.5f, 0.5f);
         if (state.getValue(StringBlock.AXIS) == Direction.Axis.Z)
         {
+            poseStack.translate(0.5f, 0.5f, 0.5f);
             poseStack.mulPose(Axis.YP.rotationDegrees(90f));
+            poseStack.translate(-0.5f, -0.5f, -0.5f);
         }
-        ItemStack item = string.viewStack();
-        if (!item.isEmpty())
+        for (float i = 0; i < total; i++)
         {
+            final float dx = 0.2f + (0.6f / total * i);
+            poseStack.pushPose();
+
+            poseStack.translate(dx, 0.38f, (i % 3 == 0 ? 0.52f : i % 3 == 1 ? 0.5f : 0.48f) + dx / 12 - .02);
+            poseStack.scale(0.4f, 0.4f, 0.4f);
             Minecraft.getInstance().getItemRenderer().renderStatic(item, ItemDisplayContext.FIXED, combinedLight, combinedOverlay, poseStack, buffers, string.getLevel(), 0);
+
+            poseStack.popPose();
         }
+
         poseStack.popPose();
     }
 

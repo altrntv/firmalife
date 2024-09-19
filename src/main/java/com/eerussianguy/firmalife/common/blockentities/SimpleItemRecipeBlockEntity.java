@@ -45,6 +45,13 @@ public abstract class SimpleItemRecipeBlockEntity<T extends SimpleItemRecipe> ex
     }
 
     @Override
+    public void setAndUpdateSlots(int slot)
+    {
+        super.setAndUpdateSlots(slot);
+        needsRecipeUpdate = true;
+    }
+
+    @Override
     public int getSlotStackLimit(int slot)
     {
         return 1;
@@ -89,7 +96,9 @@ public abstract class SimpleItemRecipeBlockEntity<T extends SimpleItemRecipe> ex
         final T recipe = this.cachedRecipe;
         if (recipe != null)
         {
+            final int ct = readStack().getCount();
             final ItemStack out = recipe.assemble(new ItemStackInventory(readStack()), level.registryAccess());
+            out.setCount(out.getCount() * ct);
             inventory.setStackInSlot(0, out);
             updateCache();
             markForSync();

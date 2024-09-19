@@ -1,18 +1,23 @@
 {
   "__comment__": "This file was automatically created by mcresources",
-  "type": "tfc:damage_inputs_shapeless_crafting",
-  "recipe": {
-    "type": "minecraft:crafting_shapeless",
-    "ingredients": [
-      {
-        "tag": "tfc:saws"
-      },
-      {
-        "item": "tfc:wood/barrel/chestnut"
-      }
-    ],
-    "result": {
-      "item": "firmalife:wood/stomping_barrel/chestnut"
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XGX",
+    "XXX",
+    "Z  "
+  ],
+  "key": {
+    "X": {
+      "item": "tfc:wood/lumber/chestnut"
+    },
+    "G": {
+      "item": "tfc:glue"
+    },
+    "Z": {
+      "tag": "tfc:saws"
     }
+  },
+  "result": {
+    "item": "firmalife:wood/stomping_barrel/chestnut"
   }
 }

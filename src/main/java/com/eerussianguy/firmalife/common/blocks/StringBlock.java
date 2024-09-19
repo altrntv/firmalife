@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
 
+import com.eerussianguy.firmalife.common.FLHelpers;
+import com.eerussianguy.firmalife.common.blockentities.JarringStationBlockEntity;
 import com.eerussianguy.firmalife.config.FLConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -37,7 +39,10 @@ import net.dries007.tfc.common.blocks.ExtendedProperties;
 import net.dries007.tfc.common.blocks.devices.DeviceBlock;
 import net.dries007.tfc.common.capabilities.food.FoodCapability;
 import net.dries007.tfc.common.capabilities.food.FoodTrait;
+import net.dries007.tfc.common.items.TFCItems;
 import net.dries007.tfc.util.Helpers;
+
+import net.minecraftforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.Nullable;
 
 public class StringBlock extends DeviceBlock
@@ -150,7 +155,24 @@ public class StringBlock extends DeviceBlock
     @SuppressWarnings("deprecation")
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result)
     {
-        return DryingMatBlock.use(level, pos, player, hand);
+        return FLHelpers.consumeInventory(level, pos, FLBlockEntities.STRING, (string, inv) -> {
+            final ItemStack item = player.getItemInHand(hand);
+            if (item.isEmpty())
+            {
+                ItemStack stack = inv.extractItem(0, player.isShiftKeyDown() ? Integer.MAX_VALUE : 1, false);
+                if (stack.isEmpty()) return InteractionResult.PASS;
+                ItemHandlerHelper.giveItemToPlayer(player, stack);
+                string.resetCounter();
+                return InteractionResult.sidedSuccess(level.isClientSide());
+            }
+            else if (inv.isItemValid(0, item))
+            {
+                string.resetCounter();
+                player.setItemInHand(hand, FLHelpers.mergeInsertStack(inv, 0, item));
+                return InteractionResult.sidedSuccess(level.isClientSide());
+            }
+            return InteractionResult.PASS;
+        });
     }
 
     @Override
