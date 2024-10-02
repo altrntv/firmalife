@@ -9,18 +9,25 @@ import com.eerussianguy.firmalife.common.blocks.greenhouse.GreenhousePortBlock;
 import com.eerussianguy.firmalife.common.blocks.greenhouse.PumpingStationBlock;
 import com.eerussianguy.firmalife.common.blocks.greenhouse.SprinklerBlock;
 import com.eerussianguy.firmalife.common.blocks.greenhouse.SprinklerPipeBlock;
+import com.eerussianguy.firmalife.config.FLConfig;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.Nullable;
 
+import net.dries007.tfc.common.TFCTags;
 import net.dries007.tfc.common.blockentities.TFCBlockEntity;
 import net.dries007.tfc.common.blocks.DirectionPropertyBlock;
+import net.dries007.tfc.common.capabilities.Capabilities;
 import net.dries007.tfc.common.capabilities.FluidTankCallback;
 import net.dries007.tfc.util.Helpers;
 
@@ -31,7 +38,7 @@ public class SprinklerBlockEntity extends TFCBlockEntity implements FluidTankCal
     {
         if (level.getGameTime() % (80 + (pos.getZ() % 4)) == 0 && sprinkler.valid && state.getBlock() instanceof AbstractSprinklerBlock block)
         {
-            final Fluid fluid = searchForFluid(level, pos, block instanceof SprinklerBlock ? Direction.UP : Direction.DOWN);
+            final Fluid fluid = searchForFluid(level, pos, block instanceof SprinklerBlock ? Direction.UP : Direction.DOWN, true);
             final boolean valid = fluid != null;
             if (valid)
             {
@@ -56,8 +63,30 @@ public class SprinklerBlockEntity extends TFCBlockEntity implements FluidTankCal
      * @return A fluid if found, otherwise {@code null}
      */
     @Nullable
-    public static Fluid searchForFluid(Level level, BlockPos start, Direction pipeDirection)
+    public static Fluid searchForFluid(Level level, BlockPos start, Direction pipeDirection, boolean drain)
     {
+        if (!FLConfig.SERVER.usePipesForSprinklers.get())
+        {
+            final BlockPos checkPos = start.relative(pipeDirection);
+            final BlockEntity be = level.getBlockEntity(checkPos);
+            if (be != null)
+            {
+                final IFluidHandler cap = Helpers.getCapability(be, Capabilities.FLUID);
+                if (cap != null)
+                {
+                    final Fluid fluid = cap.getFluidInTank(0).getFluid();
+                    if (fluid != Fluids.EMPTY && Helpers.isFluid(fluid, TFCTags.Fluids.ANY_FRESH_WATER))
+                    {
+                        if (drain)
+                        {
+                            cap.drain(1, IFluidHandler.FluidAction.EXECUTE);
+                        }
+                        return fluid;
+                    }
+                }
+            }
+            return null;
+        }
         final BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
         final Queue<Path> queue = new ArrayDeque<>();
         final Set<BlockPos> seen = new ObjectOpenHashSet<>(64);

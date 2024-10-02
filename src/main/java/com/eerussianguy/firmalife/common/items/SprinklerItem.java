@@ -2,6 +2,7 @@ package com.eerussianguy.firmalife.common.items;
 
 import java.util.Map;
 import com.eerussianguy.firmalife.common.blocks.greenhouse.SprinklerPipeBlock;
+import com.eerussianguy.firmalife.config.FLConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.BlockItem;
@@ -72,6 +73,6 @@ public class SprinklerItem extends BlockItem
 
     private boolean isPipe(Level level, BlockPos pos)
     {
-        return level.getBlockState(pos).getBlock() instanceof SprinklerPipeBlock;
+        return level.getBlockState(pos).getBlock() instanceof SprinklerPipeBlock || !FLConfig.SERVER.usePipesForSprinklers.get();
     }
 }

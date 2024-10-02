@@ -257,7 +257,7 @@ def generate(rm: ResourceManager):
     oven_recipe(rm, 'lasagna', not_rotten('firmalife:food/raw_lasagna'), 400, result_item=item_stack_provider('firmalife:food/cooked_lasagna'))
 
     # Firmalife Recipes
-    knapping_type(rm, 'pumpkin', '1 #firmalife:pumpkin_knapping', None, 'tfc:item.knapping.leather', False, False, False, 'tfc:pumpkin')
+    knapping_type(rm, 'pumpkin', {'ingredient': not_rotten('#firmalife:pumpkin_knapping'), 'count': 1}, None, 'tfc:item.knapping.leather', False, False, False, 'tfc:pumpkin')
 
     for carving, pattern in CARVINGS.items():
         pumpkin_knapping(rm, carving, pattern, 'firmalife:carved_pumpkin/%s' % carving)

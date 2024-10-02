@@ -18,7 +18,7 @@ public class HydroponicPlanterBlockEntity extends QuadPlanterBlockEntity
         planter.checkForLastTickSync();
         if (level.getGameTime() % (80 + (pos.getZ() % 4)) == 0 && planter.isClimateValid())
         {
-            final Fluid fluid = SprinklerBlockEntity.searchForFluid(level, pos, Direction.DOWN);
+            final Fluid fluid = SprinklerBlockEntity.searchForFluid(level, pos, Direction.DOWN, false);
             final boolean valid = fluid != null;
             if (valid != planter.hasPipe)
             {
