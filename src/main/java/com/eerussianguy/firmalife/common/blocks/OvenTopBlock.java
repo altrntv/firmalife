@@ -5,7 +5,6 @@ import java.util.function.Supplier;
 import com.eerussianguy.firmalife.common.items.FinishItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -13,7 +12,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -95,34 +93,11 @@ public class OvenTopBlock extends AbstractOvenBlock
     }
 
     @Override
-    @SuppressWarnings("deprecation")
-    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos)
-    {
-        extinguish(level, currentPos, state);
-        return super.updateShape(state, facing, facingState, level, currentPos, facingPos);
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource rand)
-    {
-        extinguish(level, pos, state);
-    }
-
-    @Override
     public void cure(Level level, BlockState state, BlockPos pos)
     {
         if (getCured() != null)
         {
             OvenTopBlockEntity.cure(level, state, getCured().defaultBlockState(), pos);
-        }
-    }
-
-    private void extinguish(LevelAccessor level, BlockPos pos, BlockState state)
-    {
-        if (!isInsulated(level, pos, state))
-        {
-            level.getBlockEntity(pos, FLBlockEntities.OVEN_TOP.get()).ifPresent(OvenTopBlockEntity::extinguish);
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.eerussianguy.firmalife.common.blockentities;
 
+import com.eerussianguy.firmalife.common.blocks.OvenTopBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -64,6 +65,7 @@ public class OvenTopBlockEntity extends ApplianceBlockEntity<ApplianceBlockEntit
         if (level.getGameTime() % updateInterval == 0)
         {
             OvenLike.regularBlockUpdate(level, pos, state, oven, cured, updateInterval);
+            oven.isInsulated = ((OvenTopBlock) state.getBlock()).isInsulated(level, pos, state);
         }
         oven.tickTemperature();
         if ((level.getGameTime() + 20) % 40 == 0)
@@ -80,10 +82,11 @@ public class OvenTopBlockEntity extends ApplianceBlockEntity<ApplianceBlockEntit
             {
                 inputStack.getCapability(HeatCapability.CAPABILITY).ifPresent(cap -> {
                     // Always heat up the item regardless if it is melting or not
-                    if (cap.getTemperature() < oven.temperature)
+                    final float targetTemp = oven.isInsulated ? oven.temperature : oven.temperature * 0.5f;
+                    if (cap.getTemperature() < targetTemp)
                     {
-                        final float modifier = FoodCapability.hasTrait(inputStack, FLFoodTraits.OVEN_BAKED) ? 2f : 2 + oven.temperature + 0.0025f; // Breaks even at 400 C
-                        HeatCapability.addTemp(cap, oven.temperature, modifier);
+                        final float modifier = FoodCapability.hasTrait(inputStack, FLFoodTraits.OVEN_BAKED) ? 2f : 2 + targetTemp + 0.0025f; // Breaks even at 400 C
+                        HeatCapability.addTemp(cap, targetTemp, modifier);
                     }
 
                     final WrappedHeatingRecipe recipe = oven.cachedRecipes[slot];
@@ -120,6 +123,7 @@ public class OvenTopBlockEntity extends ApplianceBlockEntity<ApplianceBlockEntit
     private final WrappedHeatingRecipe[] cachedRecipes;
     private int[] cookTicks;
     private int cureTicks;
+    private boolean isInsulated = false;
 
     public OvenTopBlockEntity(BlockPos pos, BlockState state)
     {
@@ -138,6 +142,7 @@ public class OvenTopBlockEntity extends ApplianceBlockEntity<ApplianceBlockEntit
     {
         cookTicks = nbt.getIntArray("cookTicks");
         cureTicks = nbt.getInt("cureTicks");
+        isInsulated = nbt.getBoolean("isInsulated");
         needsRecipeUpdate = true;
         super.loadAdditional(nbt);
     }
@@ -147,6 +152,7 @@ public class OvenTopBlockEntity extends ApplianceBlockEntity<ApplianceBlockEntit
     {
         nbt.putIntArray("cookTicks", cookTicks);
         nbt.putInt("cureTicks", cureTicks);
+        nbt.putBoolean("isInsulated", isInsulated);
         super.saveAdditional(nbt);
     }
 
@@ -240,6 +246,11 @@ public class OvenTopBlockEntity extends ApplianceBlockEntity<ApplianceBlockEntit
         temperature = 0;
         targetTemperature = 0;
         targetTemperatureStabilityTicks = 0;
+    }
+
+    public void setInsulated(boolean insulated)
+    {
+        this.isInsulated = insulated;
     }
 
     public int getTicksLeft(int slot)

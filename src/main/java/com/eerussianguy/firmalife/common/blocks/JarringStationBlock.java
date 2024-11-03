@@ -15,8 +15,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import net.dries007.tfc.common.TFCTags;
 import net.dries007.tfc.common.blocks.ExtendedProperties;
-import net.dries007.tfc.common.items.TFCItems;
 import net.dries007.tfc.util.Helpers;
 
 public class JarringStationBlock extends FourWayDeviceBlock
@@ -38,7 +38,7 @@ public class JarringStationBlock extends FourWayDeviceBlock
             {
                 return FLHelpers.takeOneAny(level, 0, JarringStationBlockEntity.SLOTS - 1, inv, player);
             }
-            else if (Helpers.isItem(item, TFCItems.EMPTY_JAR_WITH_LID.get()))
+            else if (Helpers.isItem(item, TFCTags.Items.EMPTY_JAR_WITH_LID))
             {
                 return FLHelpers.insertOneAny(level, item, 0, JarringStationBlockEntity.SLOTS - 1, inv, player);
             }

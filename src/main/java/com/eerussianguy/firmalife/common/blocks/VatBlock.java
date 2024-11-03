@@ -20,11 +20,11 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import net.dries007.tfc.client.particle.TFCParticles;
+import net.dries007.tfc.common.TFCTags;
 import net.dries007.tfc.common.blocks.ExtendedProperties;
 import net.dries007.tfc.common.blocks.devices.SealableDeviceBlock;
 import net.dries007.tfc.common.capabilities.Capabilities;
 import net.dries007.tfc.common.fluids.FluidHelpers;
-import net.dries007.tfc.common.items.TFCItems;
 import net.dries007.tfc.util.Helpers;
 
 public class VatBlock extends SealableDeviceBlock
@@ -92,7 +92,7 @@ public class VatBlock extends SealableDeviceBlock
             {
                 if (vat.hasOutput())
                 {
-                    if (stack.getItem() == TFCItems.EMPTY_JAR_WITH_LID.get())
+                    if (Helpers.isItem(stack, TFCTags.Items.EMPTY_JAR_WITH_LID))
                     {
                         stack.shrink(1);
                         ItemHandlerHelper.giveItemToPlayer(player, vat.takeOutput());

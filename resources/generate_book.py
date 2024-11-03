@@ -106,6 +106,8 @@ def make_book(rm: ResourceManager, i18n: I18n, local_instance: bool = False, rev
             multimultiblock('The climate station in its valid and invalid state.', *[block_spotlight('', '', 'firmalife:climate_station[stasis=%s]' % b) for b in ('true', 'false')]),
             text('$(li)It updates periodically on its own, or when placed/broken.$()$(li)When a climate station updates, it tells all the blocks inside the multiblock that they can operate. For example, it lets $(l:firmalife/cheese)Cheese$() begin aging.$()$(li)Press $(item)$(k:key.use)$() to force update the Climate Station and the blocks inside the multiblock.', 'Climate Station Tips'),
             crafting('firmalife:crafting/climate_station', text_contents='The climate station is crafted like this.'),
+            text('A note about greenhouse construction: The largest greenhouse is 31x31x31, centered on the climate station, or 15 blocks in each direction. Centering the climate station in the greenhouse will allow you to take advantage of the full size range. You can also internally subdivide a greenhouse into multiple by using walls and multiple climate stations to make it larger.'),
+            empty_last_page(),
         )),
         entry('cellar', 'Cellars', 'firmalife:sealed_bricks', pages=(
             text('The $(thing)Cellar$() is a multiblock device controlled by a $(l:firmalife/climate_station)Climate Station$(). The Cellar multiblock\'s only requirement is that it be in an enclosed area surrounded by $(thing)Sealed Bricks$() or $(thing)Sealed Brick Doors$() on all sides. The Climate Station must be placed on the first level of the cellar, touching a wall.'),

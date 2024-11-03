@@ -11,9 +11,9 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.ItemStackHandler;
 
+import net.dries007.tfc.common.TFCTags;
 import net.dries007.tfc.common.blockentities.TickableInventoryBlockEntity;
 import net.dries007.tfc.common.capabilities.PartialItemHandler;
-import net.dries007.tfc.common.items.TFCItems;
 import net.dries007.tfc.util.Helpers;
 
 public class JarringStationBlockEntity extends TickableInventoryBlockEntity<ItemStackHandler>
@@ -30,7 +30,7 @@ public class JarringStationBlockEntity extends TickableInventoryBlockEntity<Item
                 final ItemStack jars = vat.getOutput();
                 for (int i = 0; i < SLOTS; i++)
                 {
-                    if (station.inventory.getStackInSlot(i).getItem() == TFCItems.EMPTY_JAR_WITH_LID.get())
+                    if (Helpers.isItem(station.inventory.getStackInSlot(i).getItem(), TFCTags.Items.EMPTY_JAR_WITH_LID))
                     {
                         Helpers.playSound(level, pos, SoundEvents.BOTTLE_FILL);
                         station.inventory.setStackInSlot(i, jars.split(1));
@@ -70,7 +70,7 @@ public class JarringStationBlockEntity extends TickableInventoryBlockEntity<Item
     @Override
     public boolean isItemValid(int slot, ItemStack stack)
     {
-        return Helpers.isItem(stack, TFCItems.EMPTY_JAR_WITH_LID.get());
+        return Helpers.isItem(stack, TFCTags.Items.EMPTY_JAR_WITH_LID);
     }
 
     @Override

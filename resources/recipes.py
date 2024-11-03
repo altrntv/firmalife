@@ -175,7 +175,7 @@ def generate(rm: ResourceManager):
     for jar, remainder, ing in JARS:
         make_jar(rm, jar, remainder, ing)
     for fruit in FL_FRUITS:
-        ing = not_rotten(has_trait('firmalife:food/%s' % fruit, 'firmalife:dried', True))
+        ing = not_rotten(lacks_trait('firmalife:food/%s' % fruit, 'firmalife:dried'))
         vat_recipe(rm, '%s_jar' % fruit, ing, '500 firmalife:sugar_water', jar='firmalife:jar/%s' % fruit, output_texture='firmalife:block/jar/%s' % fruit)
         for count in (2, 3, 4):
             rm.recipe(('pot', 'jam_%s_%s' % (fruit, count)), 'tfc:pot_jam', {

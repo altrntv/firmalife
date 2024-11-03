@@ -204,7 +204,7 @@ def generate(rm: ResourceManager):
 
     ### MISC DATA ###
     global_loot_modifiers(rm, 'firmalife:fruit_leaf', 'firmalife:rennet', 'firmalife:rennet_three', 'firmalife:ice_shavings')
-    global_loot_modifier(rm, 'rennet', 'firmalife:add_item', {'item': item_stack-_codec('4 firmalife:rennet')}, match_entity_tag('firmalife:drops_rennet'))
+    global_loot_modifier(rm, 'rennet', 'firmalife:add_item', {'item': item_stack_codec('4 firmalife:rennet')}, match_entity_tag('firmalife:drops_rennet'))
     global_loot_modifier(rm, 'rennet_three', 'firmalife:add_item', {'item': item_stack_codec('6 firmalife:rennet')}, match_entity_tag('firmalife:drops_three_rennet'))
     global_loot_modifier(rm, 'fruit_leaf', 'firmalife:add_item', {'item': item_stack_codec('firmalife:fruit_leaf'), 'chance': 0.5}, match_block_ingredient('firmalife:drops_fruit_leaf'))
     global_loot_modifier(rm, 'ice_shavings', 'firmalife:add_item', {'item': item_stack_codec('firmalife:ice_shavings')}, match_block_ingredient('firmalife:drops_ice_shavings'))

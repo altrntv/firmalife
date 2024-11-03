@@ -115,7 +115,7 @@ public abstract class AbstractOvenBlock extends FourWayDeviceBlock implements IC
             pos = pos.offset(Helpers.triangle(random, 3), random.nextInt(3), Helpers.triangle(random, 3));
             if (level.getBlockState(pos).isAir())
             {
-                FLClientHelpers.randomParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, random, pos, level, 0.3f);
+                FLClientHelpers.randomParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, random, pos, level, 0.05f);
             }
         }
     }

@@ -23,7 +23,6 @@ import net.dries007.tfc.common.TFCTags;
 import net.dries007.tfc.common.blockentities.InventoryBlockEntity;
 import net.dries007.tfc.common.capabilities.InventoryFluidTank;
 import net.dries007.tfc.common.capabilities.PartialItemHandler;
-import net.dries007.tfc.common.items.TFCItems;
 import net.dries007.tfc.util.Helpers;
 
 public class VatBlockEntity extends BoilingBlockEntity<VatBlockEntity.VatInventory>
@@ -126,7 +125,7 @@ public class VatBlockEntity extends BoilingBlockEntity<VatBlockEntity.VatInvento
     {
         final FluidStack fluid = inventory.getFluidInTank(0);
         final ItemStack stack = inventory.getStackInSlot(0);
-        if (fluid.hasTag() && fluid.getTag().contains("fruit", Tag.TAG_COMPOUND) && Helpers.isItem(stack, TFCItems.EMPTY_JAR_WITH_LID.get()))
+        if (fluid.hasTag() && fluid.getTag().contains("fruit", Tag.TAG_COMPOUND) && Helpers.isItem(stack, TFCTags.Items.EMPTY_JAR_WITH_LID))
         {
             final int jars = stack.getCount();
             final int maxFill = fluid.getAmount() / 500;
