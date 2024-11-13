@@ -25,7 +25,6 @@ public class FLTags
         public static final TagKey<Block> ALL_COPPER_GREENHOUSE = create("all_copper_greenhouse");
         public static final TagKey<Block> STAINLESS_STEEL_GREENHOUSE = create("stainless_steel_greenhouse");
         public static final TagKey<Block> CELLAR_INSULATION = create("cellar_insulation");
-        public static final TagKey<Block> BEE_PLANTS = create("bee_plants");
         public static final TagKey<Block> BEE_RESTORATION_PLANTS = create("bee_restoration_plants");
         public static final TagKey<Block> BEE_RESTORATION_WATER_PLANTS = create("bee_restoration_water_plants");
         public static final TagKey<Block> BUTTERFLY_GRASS_MUTANTS = create("butterfly_grass_mutants");

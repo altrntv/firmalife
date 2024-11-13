@@ -186,10 +186,12 @@ def generate(rm: ResourceManager):
     item_size(rm, 'big_barrels', '#firmalife:big_barrels', Size.very_large, Weight.very_heavy)
     item_size(rm, 'wine', '#firmalife:filled_wine_bottles', Size.very_large, Weight.very_heavy)
     item_size(rm, 'empty_wine', '#firmalife:empty_wine_bottles', Size.normal, Weight.medium)
+    item_size(rm, 'empty_jar', 'firmalife:empty_jar_with_stainless_steel_lid', Size.tiny, Weight.medium)
 
     item_heat(rm, 'heatable_foods', '#firmalife:foods/heatable', 1)
     item_heat(rm, 'copper_pipe', 'firmalife:copper_pipe', 0.171, melt_temperature=864)
     item_heat(rm, 'oxidized_copper_pipe', 'firmalife:oxidized_copper_pipe', 0.171, melt_temperature=864)
+    item_heat(rm, 'stainless_steel_jar_lid', 'firmalife:stainless_steel_jar_lid', 1.429, melt_temperature=1540)
 
     for fruit, data in FRUITS.items():
         climate_range(rm, 'plant/%s_tree' % fruit, hydration=(hydration_from_rainfall(data.min_rain), 100, 0), temperature=(data.min_temp - 7, data.max_temp + 7, 0))

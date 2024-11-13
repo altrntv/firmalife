@@ -11,7 +11,8 @@ class Wood(NamedTuple):
 
 SIMPLE_ITEMS = ('fruit_leaf', 'cinnamon_bark', 'beeswax', 'pineapple_fiber', 'pineapple_leather', 'pineapple_yarn', 'raw_honey', 'rennet', 'watering_can', 'treated_lumber', 'cheesecloth', 'spoon',
                 'pie_pan', 'seed_ball', 'rustic_finish', 'stone_finish', 'tile_finish', 'oven_insulation', 'ice_shavings', 'beekeeper_helmet', 'beekeeper_chestplate', 'beekeeper_leggings', 'beekeeper_boots', 'reinforced_glass', 'pottery_sherd',
-                'hematitic_wine_bottle', 'olivine_wine_bottle', 'volcanic_wine_bottle', 'empty_hematitic_wine_bottle', 'empty_olivine_wine_bottle', 'empty_volcanic_wine_bottle', 'cork', 'bottle_label', 'barrel_stave')
+                'hematitic_wine_bottle', 'olivine_wine_bottle', 'volcanic_wine_bottle', 'empty_hematitic_wine_bottle', 'empty_olivine_wine_bottle', 'empty_volcanic_wine_bottle', 'cork', 'bottle_label', 'barrel_stave', 'stainless_steel_jar_lid',
+                'empty_jar_with_stainless_steel_lid')
 SIMPLE_FOODS = ('frothy_coconut', 'white_chocolate_blend', 'dark_chocolate_blend', 'milk_chocolate_blend', 'tofu', 'soy_mixture', 'yak_curd', 'goat_curd', 'milk_curd', 'cheddar', 'chevre', 'rajya_metok', 'gouda', 'feta', 'shosha', 'butter',
                 'pie_dough', 'filled_pie', 'cooked_pie', 'pizza_dough', 'raw_pizza', 'cooked_pizza', 'shredded_cheese', 'pickled_egg', 'pumpkin_pie_dough', 'raw_pumpkin_pie', 'cooked_pumpkin_pie', 'cocoa_beans', 'roasted_cocoa_beans',
                 'cocoa_butter', 'cocoa_powder', 'toast', 'dark_chocolate', 'milk_chocolate', 'white_chocolate', 'garlic_bread', 'cured_maize', 'nixtamal', 'masa', 'masa_flour', 'corn_tortilla', 'taco_shell', 'burrito', 'taco', 'salsa',
@@ -49,9 +50,9 @@ ARMOR_SECTIONS = ('helmet', 'chestplate', 'leggings', 'boots')
 TFC_GRAINS = ('wheat', 'rye', 'barley', 'rice', 'maize', 'oat')
 TFC_FRUIT_TREES = ('cherry', 'green_apple', 'lemon', 'olive', 'orange', 'peach', 'plum', 'red_apple')
 TFC_FRUITS = ('banana', 'blackberry', 'blueberry', 'bunchberry', 'cherry', 'cloudberry', 'cranberry', 'elderberry', 'gooseberry', 'green_apple', 'lemon', 'melon_slice', 'olive', 'orange', 'peach', 'plum', 'pumpkin_chunks', 'raspberry', 'red_apple', 'snowberry', 'strawberry', 'wintergreen_berry')
-TFC_FLOWERS = ('canna', 'goldenrod', 'allium', 'anthurium', 'houstonia', 'blood_lily', 'blue_orchid', 'blue_ginger', 'butterfly_milkweed', 'black_orchid',
-               'dandelion', 'desert_flame', 'field_horsetail', 'grape_hyacinth', 'heliconia', 'kangaroo_paw', 'labrador_tea', 'lady_fern', 'calendula',
-               'meads_milkweed', 'nasturtium', 'oxeye_daisy', 'poppy', 'primrose', 'pulsatilla', 'sacred_datura', 'silver_spurflower', 'snapdragon_pink',
+TFC_FLOWERS = ('allium', 'artists_conk', 'anthurium', 'houstonia', 'blood_lily', 'blue_orchid', 'blue_ginger', 'blue_orchid', 'butterfly_milkweed', 'black_orchid', 'canna',
+               'dandelion', 'desert_flame', 'field_horsetail', 'grape_hyacinth', 'goldenrod', 'heliconia', 'kangaroo_paw', 'labrador_tea', 'lady_fern', 'lily_of_the_valley', 'lilac', 'maiden_pink', 'calendula',
+               'meads_milkweed', 'morning_glory', 'nasturtium', 'oxeye_daisy', 'philodendron', 'poppy', 'primrose', 'pulsatilla', 'sacred_datura', 'silver_spurflower', 'snapdragon_pink',
                'snapdragon_red', 'snapdragon_white', 'snapdragon_yellow', 'strelitzia', 'sword_fern', 'trillium', 'tropical_milkweed', 'tulip_orange', 'tulip_pink',
                'tulip_red', 'tulip_white')
 TFC_FISH_ITEMS = ('cod', 'bluegill', 'crappie', 'lake_trout', 'largemouth_bass', 'smallmouth_bass', 'rainbow_trout', 'salmon',)

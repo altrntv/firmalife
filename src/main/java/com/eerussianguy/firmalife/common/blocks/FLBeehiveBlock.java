@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.eerussianguy.firmalife.common.FLHelpers;
-import com.eerussianguy.firmalife.common.FLTags;
 import com.eerussianguy.firmalife.common.items.FLItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;

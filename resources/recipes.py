@@ -118,6 +118,7 @@ def generate(rm: ResourceManager):
     damage_shapeless(rm, 'crafting/barrel_stave', ('firmalife:treated_lumber', 'firmalife:treated_lumber', '#forge:sheets/wrought_iron', '#tfc:hammers'), 'firmalife:barrel_stave').with_advancement('#forge:sheets/wrought_iron')
     rm.crafting_shaped('crafting/grape_trellis_post', ['X', 'X', 'X'], {'X': 'firmalife:treated_lumber'}, 'firmalife:grape_trellis_post').with_advancement('firmalife:treated_lumber')
     damage_shapeless(rm, 'crafting/bottle_label', ('minecraft:paper', '#tfc:knives', 'firmalife:beeswax'), '16 firmalife:bottle_label').with_advancement('firmalife:bottle_label')
+    rm.crafting_shapeless('crafting/ss_jar', ('firmalife:stainless_steel_jar_lid', 'tfc:empty_jar'), 'firmalife:empty_jar_with_stainless_steel_lid').with_advancement('firmalife:stainless_steel_jar_lid')
 
     for section in ARMOR_SECTIONS:
         rm.crafting_shapeless('crafting/beekeeper_%s' % section, ('minecraft:leather_%s' % section, 'tfc:burlap_cloth', 'tfc:burlap_cloth', 'tfc:powder/wood_ash'), 'firmalife:beekeeper_%s' % section).with_advancement('tfc:burlap_cloth')
@@ -146,7 +147,7 @@ def generate(rm: ResourceManager):
         rm.crafting_shaped('crafting/wood/%s_shelf' % wood, ['XXX', 'YYY', 'XXX'], {'X': 'tfc:wood/planks/%s' % wood, 'Y': 'tfc:wood/lumber/%s' % wood}, 'firmalife:wood/food_shelf/%s' % wood).with_advancement('tfc:wood/lumber/%s' % wood)
         rm.crafting_shaped('crafting/wood/%s_jarbnet' % wood, ['X  ', 'ZYY', 'X  '], {'X': 'tfc:wood/log/%s' % wood, 'Y': 'tfc:wood/lumber/%s' % wood, 'Z': '#forge:rods/brass'}, '2 firmalife:wood/jarbnet/%s' % wood).with_advancement('tfc:wood/lumber/%s' % wood)
         rm.crafting_shaped('crafting/wood/%s_wine_shelf' % wood, ['XYX', 'XYX', 'XYX'], {'X': 'tfc:wood/log/%s' % wood, 'Y': 'firmalife:treated_lumber'}, '4 firmalife:wood/wine_shelf/%s' % wood).with_advancement('tfc:wood/log/%s' % wood)
-        rm.crafting_shaped('crafting/wood/%s_stomping_barrel' % wood, ['XGX', 'XXX', 'Z  '], {'X': 'tfc:wood/lumber/%s' % wood, 'G': 'tfc:glue', 'Z': '#tfc:saws'}, 'firmalife:wood/stomping_barrel/%s' % wood).with_advancement('tfc:wood/barrel/%s' % wood)
+        rm.crafting_shaped('crafting/wood/%s_stomping_barrel' % wood, ['XGX', 'XXX', 'GGG'], {'X': 'tfc:wood/lumber/%s' % wood, 'G': 'tfc:glue'}, 'firmalife:wood/stomping_barrel/%s' % wood).with_advancement('tfc:wood/barrel/%s' % wood)
         rm.crafting_shapeless('crafting/wood/%s_barrel_press' % wood, ('firmalife:wood/stomping_barrel/%s' % wood, '#forge:rods/wrought_iron', '#forge:sheets/wrought_iron', 'tfc:brass_mechanisms'), 'firmalife:wood/barrel_press/%s' % wood).with_advancement('firmalife:wood/stomping_barrel/%s' % wood)
         rm.crafting_shaped('crafting/wood/%s_keg' % wood, ['XYX', 'YZY', 'XYX'], {'X': 'tfc:wood/log/%s' % wood, 'Y': 'firmalife:barrel_stave', 'Z': 'tfc:glue'}, 'firmalife:wood/big_barrel/%s' % wood).with_advancement('tfc:wood/log/%s' % wood)
 
@@ -437,6 +438,7 @@ def generate(rm: ResourceManager):
     heat_recipe(rm, 'bacon', not_rotten('firmalife:food/bacon'), 200, result_item=item_stack_provider('firmalife:food/cooked_bacon', copy_food=True))
     heat_recipe(rm, 'copper_pipe', 'firmalife:copper_pipe', 1080, result_item=None, result_fluid='25 tfc:metal/copper')
     heat_recipe(rm, 'oxidized_copper_pipe', 'firmalife:oxidized_copper_pipe', 1080, result_item=None, result_fluid='25 tfc:metal/copper')
+    heat_recipe(rm, 'stainless_steel_jar_lid', 'firmalife:stainless_steel_jar_lid', 1540, result_item=None, result_fluid='6 firmalife:metal/stainless_steel')
 
     ore = 'chromite'
     for rock, data in TFC_ROCKS.items():
@@ -454,6 +456,7 @@ def generate(rm: ResourceManager):
     anvil_recipe(rm, 'pie_pan', '#forge:sheets/cast_iron', '4 firmalife:pie_pan', 1, Rules.hit_last, Rules.hit_second_last, Rules.draw_third_last)
     anvil_recipe(rm, 'sprinkler', '#forge:sheets/copper', 'firmalife:sprinkler', 1, Rules.hit_last, Rules.hit_second_last, Rules.punch_third_last)
     anvil_recipe(rm, 'copper_pipe', '#forge:sheets/copper', '8 firmalife:copper_pipe', 1, Rules.draw_last, Rules.bend_not_last)
+    anvil_recipe(rm, 'stainless_steel_jar_lid', '#forge:ingots/stainless_steel', '16 firmalife:stainless_steel_jar_lid',4, Rules.hit_last, Rules.hit_second_last, Rules.punch_third_last)
 
     glass_recipe(rm, 'reinforced_glass_pane', ['flatten', 'soda_ash', 'table_pour'], 'tfc:silica_glass_batch', 'firmalife:reinforced_poured_glass')
     for glass in ('olivine', 'hematitic', 'volcanic'):

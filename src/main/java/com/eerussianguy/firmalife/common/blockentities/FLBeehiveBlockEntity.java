@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.eerussianguy.firmalife.common.blocks.greenhouse.LargePlanterBlock;
 import com.eerussianguy.firmalife.common.entities.FLBee;
 import com.eerussianguy.firmalife.common.entities.FLEntities;
 import com.eerussianguy.firmalife.common.items.FLItems;
@@ -15,6 +16,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -35,10 +37,14 @@ import com.eerussianguy.firmalife.common.capabilities.bee.BeeAbility;
 import com.eerussianguy.firmalife.common.capabilities.bee.BeeCapability;
 import com.eerussianguy.firmalife.common.capabilities.bee.IBee;
 import com.eerussianguy.firmalife.common.container.BeehiveContainer;
+
+import net.dries007.tfc.common.TFCTags;
 import net.dries007.tfc.common.blockentities.FarmlandBlockEntity;
 import net.dries007.tfc.common.blockentities.IFarmland;
 import net.dries007.tfc.common.blockentities.InventoryBlockEntity;
 import net.dries007.tfc.common.blockentities.TickableInventoryBlockEntity;
+import net.dries007.tfc.common.blocks.plant.PlantBlock;
+import net.dries007.tfc.common.blocks.plant.ShortGrassBlock;
 import net.dries007.tfc.common.blocks.soil.ConnectedGrassBlock;
 import net.dries007.tfc.common.blocks.soil.DirtBlock;
 import net.dries007.tfc.common.capabilities.InventoryItemHandler;
@@ -314,7 +320,7 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
             for (BlockPos pos : BlockPos.betweenClosed(min, max))
             {
                 final BlockState state = level.getBlockState(pos);
-                if (Helpers.isBlock(state, FLTags.Blocks.BEE_PLANTS))
+                if (isFlower(state))
                 {
                     flowers += 1;
                 }
@@ -335,6 +341,11 @@ public class FLBeehiveBlockEntity extends TickableInventoryBlockEntity<ItemStack
             }
         }
         return flowers;
+    }
+
+    private boolean isFlower(BlockState state)
+    {
+        return Helpers.isBlock(state, BlockTags.FLOWERS) || (state.getBlock() instanceof PlantBlock && !(state.getBlock() instanceof ShortGrassBlock)) || (state.getBlock() instanceof LargePlanterBlock && state.getValue(LargePlanterBlock.WATERED));
     }
 
     public int getHoneyTickChanceInverted(List<IBee> bees, int flowers)

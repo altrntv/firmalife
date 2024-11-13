@@ -4,7 +4,7 @@
   "pattern": [
     "XGX",
     "XXX",
-    "Z  "
+    "GGG"
   ],
   "key": {
     "X": {
@@ -12,9 +12,6 @@
     },
     "G": {
       "item": "tfc:glue"
-    },
-    "Z": {
-      "tag": "tfc:saws"
     }
   },
   "result": {

@@ -58,6 +58,8 @@ public final class FLCreativeTabs
         accept(out, FLItems.PINEAPPLE_FIBER);
         accept(out, FLItems.POTTERY_SHERD);
         accept(out, FLItems.BEESWAX);
+        accept(out, FLItems.STAINLESS_STEEL_JAR_LID);
+        accept(out, FLItems.EMPTY_JAR_WITH_STAINLESS_STEEL_LID);
         accept(out, FLItems.RAW_HONEY);
         accept(out, FLItems.RENNET);
         accept(out, FLItems.SEED_BALL);

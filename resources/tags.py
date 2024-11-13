@@ -43,6 +43,8 @@ def generate(rm: ResourceManager):
     rm.item_tag('filled_wine_bottles', 'hematitic_wine_bottle', 'olivine_wine_bottle', 'volcanic_wine_bottle')
     rm.item_tag('wine_bottles', '#firmalife:empty_wine_bottles', '#firmalife:filled_wine_bottles')
     rm.item_tag('can_be_pressed_like_grapes', '#firmalife:foods/smashed_grapes')
+    rm.item_tag('tfc:unsealed_jars', 'firmalife:empty_jar_with_stainless_steel_lid')
+    rm.item_tag('tfc:empty_jar_with_lid', 'firmalife:empty_jar_with_stainless_steel_lid')
 
     block_and_item_tag(rm, 'tfc:wild_fruits', 'firmalife:plant/pineapple_bush', 'firmalife:plant/nightshade_bush', 'firmalife:plant/fig_sapling', 'firmalife:plant/cocoa_sapling')
 
@@ -51,7 +53,6 @@ def generate(rm: ResourceManager):
     rm.block_tag('planters', *['firmalife:%s_planter' % p for p in PLANTERS])
     rm.block_tag('bee_restoration_plants', *['tfc:plant/%s' % p for p in TFC_FLOWERS])
     rm.block_tag('bee_restoration_water_plants', *['tfc:plant/%s' % p for p in TFC_FLOATING_FLOWERS])
-    rm.block_tag('bee_plants', '#firmalife:bee_restoration_plants', '#firmalife:bee_restoration_water_plants', '#firmalife:planters')
     block_and_item_tag(rm, 'all_iron_greenhouse', '#firmalife:iron_greenhouse', '#firmalife:rusted_iron_greenhouse')
     block_and_item_tag(rm, 'all_copper_greenhouse', *['#firmalife:%s_greenhouse' % g for g in ('exposed_copper', 'weathered_copper', 'copper', 'oxidized_copper')])
     block_and_item_tag(rm, 'all_treated_wood_greenhouse', '#firmalife:treated_wood_greenhouse', '#firmalife:weathered_treated_wood_greenhouse')

@@ -58,6 +58,8 @@ public class FLItems
     public static final RegistryObject<Item> SEED_BALL = register("seed_ball", () -> new SeedBallItem(prop()));
     public static final RegistryObject<Item> SPOON = register("spoon");
     public static final RegistryObject<Item> SPRINKLER = register("sprinkler", () -> new SprinklerItem(FLBlocks.SPRINKLER.get(), FLBlocks.FLOOR_SPRINKLER.get(), prop()));
+    public static final RegistryObject<Item> STAINLESS_STEEL_JAR_LID = register("stainless_steel_jar_lid");
+    public static final RegistryObject<Item> EMPTY_JAR_WITH_STAINLESS_STEEL_LID = register("empty_jar_with_stainless_steel_lid");
     public static final RegistryObject<Item> TREATED_LUMBER = register("treated_lumber");
     public static final RegistryObject<Item> WATERING_CAN = register("watering_can", () -> new WateringCanItem(prop().defaultDurability(20)));
     public static final RegistryObject<Item> HEMATITIC_WINE_BOTTLE = register("hematitic_wine_bottle", () -> new FilledWineBottleItem(prop(), FLHelpers.identifier("block/hematitic_wine_bottle")));
