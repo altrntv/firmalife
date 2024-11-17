@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "$(l:tfc:firmalife/bread)See the Firmalife entry for the correct information.$()",
+      "text": "$(l:firmalife/cheese)See the Firmalife entry for the correct information.$()",
       "title": "Dairy"
     }
   ],
