@@ -148,6 +148,8 @@ def generate(rm: ResourceManager):
     decayable(rm, 'nixtamal', 'firmalife:food/nixtamal', Category.other, decay=0.3)
     decayable(rm, 'masa_flour', 'firmalife:food/masa_flour', Category.other, decay=0.8)
     decayable(rm, 'masa', 'firmalife:food/masa', Category.other, decay=2.0)
+    decayable(rm, 'dehydrated_soybeans', 'firmalife:food/dehydrated_soybeans', Category.other, 0.5)
+    decayable(rm, 'soybean_paste', 'firmalife:food/soybean_paste', Category.other, 0.6)
     food_item(rm, 'corn_tortilla', 'firmalife:food/corn_tortilla', Category.grain, 4, 1, 0, 0.8, grain=0.6)
     food_item(rm, 'taco_shell', 'firmalife:food/taco_shell', Category.grain, 4, 1, 0, 0.8, grain=0.6)
     food_item(rm, 'tortilla_chips', 'firmalife:food/tortilla_chips', Category.grain, 4, 1.2, 0, 0.8, grain=0.7)
@@ -193,6 +195,8 @@ def generate(rm: ResourceManager):
     item_heat(rm, 'oxidized_copper_pipe', 'firmalife:oxidized_copper_pipe', 0.171, melt_temperature=864)
     item_heat(rm, 'stainless_steel_jar_lid', 'firmalife:stainless_steel_jar_lid', 1.429, melt_temperature=1540)
 
+    lamp_fuel(rm, 'soybean_oil', 'firmalife:soybean_oil', 7000)
+
     for fruit, data in FRUITS.items():
         climate_range(rm, 'plant/%s_tree' % fruit, hydration=(hydration_from_rainfall(data.min_rain), 100, 0), temperature=(data.min_temp - 7, data.max_temp + 7, 0))
     for berry, data in STILL_BUSHES.items():
@@ -211,6 +215,13 @@ def generate(rm: ResourceManager):
     global_loot_modifier(rm, 'fruit_leaf', 'firmalife:add_item', {'item': item_stack_codec('firmalife:fruit_leaf'), 'chance': 0.5}, match_block_ingredient('firmalife:drops_fruit_leaf'))
     global_loot_modifier(rm, 'ice_shavings', 'firmalife:add_item', {'item': item_stack_codec('firmalife:ice_shavings')}, match_block_ingredient('firmalife:drops_ice_shavings'))
 
+def lamp_fuel(rm: ResourceManager, name: str, fluid: str, burn_rate: int, valid_lamps: str = '#tfc:lamps'):
+    rm.data(('tfc', 'lamp_fuels', name), {
+        'fluid': fluid,
+        'burn_rate': burn_rate,
+        # This is a block ingredient, not an ingredient
+        'valid_lamps': {'type': 'tfc:tag', 'tag': valid_lamps.replace('#', '')} if '#' in valid_lamps else valid_lamps
+    })
 
 def greenhouse(rm: ResourceManager, name: str, block_ingredient: str, tier: int):
     rm.data(('firmalife', 'greenhouse', name), {

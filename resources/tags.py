@@ -83,6 +83,7 @@ def generate(rm: ResourceManager):
     rm.fluid_tag('usable_in_hollow_shell', '#tfc:usable_in_wooden_bucket')
     rm.fluid_tag('usable_in_wine_glass', '#tfc:drinkables')
     rm.fluid_tag('usable_in_vat', '#tfc:usable_in_pot', 'firmalife:fruity_fluid')
+    rm.fluid_tag('oils', 'firmalife:soybean_oil', 'tfc:olive_oil')
 
     # Ore tags
     ore = 'chromite'

@@ -12,13 +12,13 @@ class Wood(NamedTuple):
 SIMPLE_ITEMS = ('fruit_leaf', 'cinnamon_bark', 'beeswax', 'pineapple_fiber', 'pineapple_leather', 'pineapple_yarn', 'raw_honey', 'rennet', 'watering_can', 'treated_lumber', 'cheesecloth', 'spoon',
                 'pie_pan', 'seed_ball', 'rustic_finish', 'stone_finish', 'tile_finish', 'oven_insulation', 'ice_shavings', 'beekeeper_helmet', 'beekeeper_chestplate', 'beekeeper_leggings', 'beekeeper_boots', 'reinforced_glass', 'pottery_sherd',
                 'hematitic_wine_bottle', 'olivine_wine_bottle', 'volcanic_wine_bottle', 'empty_hematitic_wine_bottle', 'empty_olivine_wine_bottle', 'empty_volcanic_wine_bottle', 'cork', 'bottle_label', 'barrel_stave', 'stainless_steel_jar_lid',
-                'empty_jar_with_stainless_steel_lid')
+                'empty_jar_with_stainless_steel_lid',)
 SIMPLE_FOODS = ('frothy_coconut', 'white_chocolate_blend', 'dark_chocolate_blend', 'milk_chocolate_blend', 'tofu', 'soy_mixture', 'yak_curd', 'goat_curd', 'milk_curd', 'cheddar', 'chevre', 'rajya_metok', 'gouda', 'feta', 'shosha', 'butter',
                 'pie_dough', 'filled_pie', 'cooked_pie', 'pizza_dough', 'raw_pizza', 'cooked_pizza', 'shredded_cheese', 'pickled_egg', 'pumpkin_pie_dough', 'raw_pumpkin_pie', 'cooked_pumpkin_pie', 'cocoa_beans', 'roasted_cocoa_beans',
                 'cocoa_butter', 'cocoa_powder', 'toast', 'dark_chocolate', 'milk_chocolate', 'white_chocolate', 'garlic_bread', 'cured_maize', 'nixtamal', 'masa', 'masa_flour', 'corn_tortilla', 'taco_shell', 'burrito', 'taco', 'salsa',
                 'tomato_sauce', 'nightshade_berry', 'stinky_soup', 'toast_with_jam', 'toast_with_butter', 'bacon', 'cooked_bacon', 'tomato_sauce_mix', 'vanilla_ice_cream', 'strawberry_ice_cream', 'chocolate_ice_cream', 'banana_split',
                 'cookie_dough', 'sugar_cookie', 'chocolate_chip_cookie_dough', 'chocolate_chip_cookie', 'cookie_dough_ice_cream', 'maki_roll', 'futo_maki_roll', 'hardtack', 'hardtack_dough', 'cooked_lasagna', 'cooked_pasta',
-                'cooked_rice_noodles', 'nachos', 'pasta_with_tomato_sauce', 'raw_egg_noodles', 'raw_lasagna', 'raw_rice_noodles', 'tortilla_chips', 'smashed_red_grapes', 'smashed_white_grapes')
+                'cooked_rice_noodles', 'nachos', 'pasta_with_tomato_sauce', 'raw_egg_noodles', 'raw_lasagna', 'raw_rice_noodles', 'tortilla_chips', 'smashed_red_grapes', 'smashed_white_grapes', 'dehydrated_soybeans', 'soybean_paste')
 SIMPLE_SPICES = ('ground_cinnamon', 'cinnamon', 'basil_leaves', 'vanilla')
 SIMPLE_BLOCKS: Dict[str, str] = {
     'sealed_bricks': 'minecraft:mineable/pickaxe',
@@ -30,7 +30,7 @@ SIMPLE_BLOCKS: Dict[str, str] = {
 }
 COLORS = ('white', 'orange', 'magenta', 'light_blue', 'yellow', 'lime', 'pink', 'gray', 'light_gray', 'cyan', 'purple', 'blue', 'brown', 'green', 'red', 'black')
 BLOCK_ENTITIES = ('oven_bottom', 'oven_top', 'drying_mat', 'beehive', 'solar_drier', 'mixing_bowl', 'string', 'berry_bush', 'large_planter', 'bonsai_planter', 'trellis_planter', 'hanging_planter', 'quad_planter', 'climate_station', 'hydroponic_planter', 'vat', 'oven_hopper', 'ashtray', 'stovetop_grill', 'stovetop_pot', 'jarbnet', 'plate', 'big_barrel', 'jarring_station', 'barrel_press', 'stomping_barrel')
-EXTRA_FLUIDS = ('yeast_starter', 'coconut_milk', 'yak_milk', 'goat_milk', 'curdled_yak_milk', 'curdled_goat_milk', 'pina_colada', 'cream', 'chocolate', 'sugar_water', 'fruity_fluid', 'mead')
+EXTRA_FLUIDS = ('yeast_starter', 'coconut_milk', 'yak_milk', 'goat_milk', 'curdled_yak_milk', 'curdled_goat_milk', 'pina_colada', 'cream', 'chocolate', 'sugar_water', 'fruity_fluid', 'mead', 'soybean_oil')
 WINES = ('red', 'white', 'rose', 'sparkling', 'dessert')
 JARS: Sequence[Tuple[str, int, str]] = (
     ('honey', 1, 'firmalife:raw_honey'),

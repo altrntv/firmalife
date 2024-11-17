@@ -16,8 +16,10 @@
     }
   ],
   "fluid_ingredient": {
-    "ingredient": "tfc:olive_oil",
-    "amount": 1000
+    "ingredient": {
+      "tag": "firmalife:oils"
+    },
+    "amount": 100
   },
   "output_item": {
     "item": "firmalife:food/pizza_dough",

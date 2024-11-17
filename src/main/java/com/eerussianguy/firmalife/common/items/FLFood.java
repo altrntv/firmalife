@@ -94,6 +94,8 @@ public enum FLFood
     NACHOS,
     SMASHED_RED_GRAPES,
     SMASHED_WHITE_GRAPES,
+    SOYBEAN_PASTE,
+    DEHYDRATED_SOYBEANS,
     ;
 
     private final boolean meat, fast;

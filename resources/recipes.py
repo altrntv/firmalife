@@ -232,6 +232,7 @@ def generate(rm: ResourceManager):
     barrel_sealed_recipe(rm, 'fermented_red_grapes', 'Fermenting Red Grapes', 24000 * 5, not_rotten(lacks_trait('firmalife:food/smashed_red_grapes', 'firmalife:fermented')), output_item=item_stack_provider(copy_input=True, add_trait='firmalife:fermented'))
     barrel_sealed_recipe(rm, 'fermented_white_grapes', 'Fermenting White Grapes', 24000 * 5, not_rotten(lacks_trait('firmalife:food/smashed_white_grapes', 'firmalife:fermented')), output_item=item_stack_provider(copy_input=True, add_trait='firmalife:fermented'))
     barrel_sealed_recipe(rm, 'cork', 'Making Corks', 24000, 'firmalife:treated_lumber', '1000 tfc:limewater', output_item='8 firmalife:cork')
+    barrel_sealed_recipe(rm, 'soybean_oil', 'Soybean Oil', 24000, 'firmalife:food/soybean_paste', '100 minecraft:water', output_fluid='250 firmalife:soybean_oil')
 
     barrel_sealed_recipe(rm, 'shosha', 'Shosha Wheel', 16000, '3 firmalife:food/yak_curd', '750 tfc:salt_water', output_item='firmalife:shosha_wheel')
     barrel_sealed_recipe(rm, 'feta', 'Feta Wheel', 16000, '3 firmalife:food/goat_curd', '750 tfc:salt_water', output_item='firmalife:feta_wheel')
@@ -240,6 +241,7 @@ def generate(rm: ResourceManager):
     quern_recipe(rm, 'masa', not_rotten('firmalife:food/nixtamal'), 'firmalife:food/masa_flour', count=4)
     quern_recipe(rm, 'crushed_red_grapes', not_rotten('firmalife:food/red_grapes'), item_stack_provider('firmalife:food/smashed_red_grapes', copy_food=True))
     quern_recipe(rm, 'crushed_white_grapes', not_rotten('firmalife:food/white_grapes'), item_stack_provider('firmalife:food/smashed_white_grapes', copy_food=True))
+    quern_recipe(rm, 'soybean_paste', not_rotten('firmalife:food/dehydrated_soybeans'), item_stack_provider('firmalife:food/soybean_paste', copy_food=True))
 
     loom_recipe(rm, 'pineapple_leather', '16 firmalife:pineapple_yarn', 'firmalife:pineapple_leather', 16, 'firmalife:block/pineapple')
 
@@ -270,6 +272,7 @@ def generate(rm: ResourceManager):
     drying_recipe(rm, 'dry_grass', 'tfc:thatch', item_stack_provider('tfc:groundcover/dead_grass'))
     drying_recipe(rm, 'tofu', 'firmalife:food/soy_mixture', item_stack_provider('firmalife:food/tofu', copy_food=True))
     drying_recipe(rm, 'vanilla', 'firmalife:plant/vanilla', item_stack_provider('firmalife:spice/vanilla'))
+    drying_recipe(rm, 'dehydrated_soybeans', not_rotten('tfc:food/soybean'), item_stack_provider('firmalife:food/dehydrated_soybeans', copy_food=True))
     for choc in ('milk', 'white', 'dark'):
         drying_recipe(rm, '%s_chocolate' % choc, 'firmalife:food/%s_chocolate_blend' % choc, item_stack_provider('firmalife:food/%s_chocolate' % choc))
     for dirt in ('loam', 'sandy_loam', 'silty_loam', 'silt'):
@@ -278,6 +281,7 @@ def generate(rm: ResourceManager):
     stomping_recipe(rm, 'red_grapes', not_rotten(lacks_trait('firmalife:food/red_grapes', 'firmalife:dried')), item_stack_provider('firmalife:food/smashed_red_grapes'), 'firmalife:block/red_unsmashed_grapes', 'firmalife:block/red_smashed_grapes')
     stomping_recipe(rm, 'white_grapes', not_rotten(lacks_trait('firmalife:food/white_grapes', 'firmalife:dried')), item_stack_provider('firmalife:food/smashed_white_grapes'), 'firmalife:block/white_unsmashed_grapes', 'firmalife:block/white_smashed_grapes')
     stomping_recipe(rm, 'charcoal', 'minecraft:charcoal', item_stack_provider('4 tfc:powder/charcoal'), 'tfc:block/charcoal_pile', 'tfc:block/powder/charcoal', 'tfc:block.charcoal.fall')
+    stomping_recipe(rm, 'soybean_paste', not_rotten('firmalife:food/dehydrated_soybeans'), item_stack_provider('firmalife:food/soybean_paste'), 'firmalife:block/dehydrated_soybeans', 'firmalife:block/soybean_paste')
 
     smoking_recipe(rm, 'meat', not_rotten(has_trait(lacks_trait('#tfc:foods/raw_meats', 'firmalife:smoked'), 'tfc:brined')), item_stack_provider(copy_input=True, add_trait='firmalife:smoked'))
     smoking_recipe(rm, 'cheese', not_rotten(lacks_trait('#firmalife:foods/cheeses', 'firmalife:smoked')), item_stack_provider(copy_input=True, add_trait='firmalife:smoked'))
@@ -285,7 +289,7 @@ def generate(rm: ResourceManager):
     mixing_recipe(rm, 'butter', ingredients=[utils.ingredient('tfc:powder/salt')], fluid='1000 firmalife:cream', output_item='firmalife:food/butter')
     mixing_recipe(rm, 'pie_dough', ingredients=[not_rotten('firmalife:food/butter'), not_rotten('#tfc:foods/flour'), utils.ingredient('#tfc:sweetener')], fluid='1000 minecraft:water', output_item='firmalife:food/pie_dough')
     mixing_recipe(rm, 'pumpkin_pie_dough', ingredients=[utils.ingredient('#firmalife:foods/raw_eggs'), not_rotten('tfc:food/pumpkin_chunks'), not_rotten('tfc:food/pumpkin_chunks'), not_rotten('#tfc:foods/flour'), utils.ingredient('#tfc:sweetener')], fluid='1000 minecraft:water', output_item='firmalife:food/pumpkin_pie_dough')
-    mixing_recipe(rm, 'pizza_dough', ingredients=[not_rotten('#tfc:foods/dough'), utils.ingredient('tfc:powder/salt'), utils.ingredient('firmalife:spice/basil_leaves')], fluid='1000 tfc:olive_oil', output_item='4 firmalife:food/pizza_dough')
+    mixing_recipe(rm, 'pizza_dough', ingredients=[not_rotten('#tfc:foods/dough'), utils.ingredient('tfc:powder/salt'), utils.ingredient('firmalife:spice/basil_leaves')], fluid='100 #firmalife:oils', output_item='4 firmalife:food/pizza_dough')
     mixing_recipe(rm, 'dark_chocolate_blend', ingredients=[utils.ingredient('#tfc:sweetener'), not_rotten('firmalife:food/cocoa_powder'), not_rotten('firmalife:food/cocoa_powder')], fluid='1000 #tfc:milks', output_item='2 firmalife:food/dark_chocolate_blend')
     mixing_recipe(rm, 'white_chocolate_blend', ingredients=[utils.ingredient('#tfc:sweetener'), not_rotten('firmalife:food/cocoa_butter'), not_rotten('firmalife:food/cocoa_butter')], fluid='1000 #tfc:milks', output_item='2 firmalife:food/white_chocolate_blend')
     mixing_recipe(rm, 'milk_chocolate_blend', ingredients=[utils.ingredient('#tfc:sweetener'), not_rotten('firmalife:food/cocoa_butter'), not_rotten('firmalife:food/cocoa_powder')], fluid='1000 #tfc:milks', output_item='2 firmalife:food/milk_chocolate_blend')
