@@ -1,0 +1,32 @@
+{
+  "__comment__": "This file was automatically created by mcresources",
+  "name": "葡萄酒品鉴",
+  "category": "tfc:firmalife",
+  "icon": "firmalife:textures/item/olivine_wine_bottle.png",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "有鉴赏力的品酒师能够察觉到在不同条件下酿造的葡萄酒的微妙之处。事实上，在 Firmalife 的世界里，这也是可能的。一切始于种植葡萄的田地——一排葡萄深受周围环境和土壤的影响。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "根据附近的环境，葡萄可以具有三种与地形相关的特性——“砾石生长”、“斜坡生长”和“泥土生长”。葡萄酒还记录了装瓶地区的柯本气候分类。在蜜蜂附近生长的葡萄具有“蜜蜂授粉”特性。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "葡萄酒装瓶后立即开始陈化，拔掉软木塞后停止陈化。可以用刀类物品对其$(item)$(k:key.use)$()拔掉瓶塞。除此之外，葡萄酒瓶的工作原理有点像水桶，可以倒入桶或其他设备中。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "firmalife:crafting/wood/pine_keg",
+      "text": "$(thing)大型酒桶$() 是一个 2x2x2 的大方块，可以容纳大量物品或液体。非常适合您的葡萄园！"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "firmalife:crafting/wood/hickory_wine_shelf",
+      "text": "$(thing)酒架$()是您葡萄园的完美配件，可让您储存和展示葡萄酒瓶。这可是身份和地位的象征！"
+    }
+  ],
+  "read_by_default": true,
+  "sortnum": 24
+}

@@ -1,12 +1,106 @@
 {
   "__comment__": "This file was automatically created by mcresources",
-  "name": "Winemaking",
+  "name": "葡萄酒酿造",
   "category": "tfc:firmalife",
-  "icon": "firmalife:textures/item/food/white_grapes",
+  "icon": "firmalife:textures/item/food/white_grapes.png",
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "This section will be completed in the next version pending more field guide rewrites. In the meantime please use JEI."
+      "text": "$(thing)酿造$()是将葡萄变成酒精的科学。不仅需要花时间收集资源，还得花时间将这些资源用于制作，最后还得花时间去$(thing)享受$()。请注意，Firmalife 中的葡萄酒本身与原版群峦中的那些酒没有太多区别。酿造葡萄酒，很多时候只是为了$(thing)好玩$()。"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "firmalife:plant/wild_red_grapes",
+      "link_recipes": false,
+      "text": "野生红葡萄在温度0~30℃、平均降雨量125~500mm的地方出现。"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "firmalife:plant/wild_white_grapes",
+      "link_recipes": false,
+      "text": "野生白葡萄在温度0~30℃、平均降雨量125~500mm的地方出现。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "firmalife:crafting/grape_trellis_post",
+      "text": "葡萄必须在用这些特殊的柱子和黄麻纤维搭建的棚架上种植。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "要搭建棚架，需要将两根柱子叠放在一起。将两根柱子向左或向右移动，重复此操作。然后，用$(thing)黄麻纤维$()$(item)$(k:key.use)$()点击顶部和底部柱子之一的侧面以在柱子之间拉线。葡萄棚架可以水平链接起来，形成一排排葡萄。"
+    },
+    {
+      "type": "tfc:multimultiblock",
+      "text": "一个完整的葡萄架。",
+      "multiblocks": [
+        {
+          "pattern": [
+            [
+              "XYX"
+            ],
+            [
+              "X0X"
+            ]
+          ],
+          "mapping": {
+            "X": "firmalife:grape_trellis_post[axis=x,string_plus=true,string_minus=true]",
+            "0": "firmalife:grape_string_plant_red[axis=z,lifecycle=healthy,stage=0]",
+            "Y": "firmalife:grape_string[axis=z]"
+          }
+        },
+        {
+          "pattern": [
+            [
+              "ZYZ"
+            ],
+            [
+              "X0X"
+            ]
+          ],
+          "mapping": {
+            "X": "firmalife:grape_trellis_post[axis=x,string_plus=true,string_minus=true]",
+            "0": "firmalife:grape_string_plant_red[axis=z,lifecycle=healthy,stage=2]",
+            "Y": "firmalife:grape_string_red[axis=z,lifecycle=healthy]",
+            "Z": "firmalife:grape_trellis_post_red[axis=x,lifecycle=healthy,string_plus=true,string_minus=true]"
+          }
+        }
+      ]
+    },
+    {
+      "type": "patchouli:text",
+      "text": "只要满足气候要求，葡萄在几个月内就会长高并越过棚架。它会在 6 月份开花，7 月份结果。葡萄也可以在温室棚架上种植。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "firmalife:crafting/wood/acacia_stomping_barrel",
+      "text": "踩踏桶用于捣碎葡萄。当然也可以使用手推磨。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "要使用踩踏桶，请将新鲜葡萄$(item)$(k:key.use)$()放入其中。然后，在桶上跳上 16 次。空手$(item)$(k:key.use)$()取出物品。$(br2)然后，将葡萄密封在大桶中 5 天以使其$(thing)发酵$() 。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "firmalife:crafting/wood/acacia_barrel_press",
+      "text": "压榨是葡萄加工的最后一步。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "最左边的槽最多可容纳 16 个葡萄。一瓶葡萄酒需要四个葡萄。四个中间的槽用于将葡萄与其他成分混合，但这是可选的。只使用红葡萄或白葡萄可以酿造红葡萄酒或白葡萄酒。在白葡萄酒中加入至少一个红葡萄可以酿造玫瑰红葡萄酒。在白葡萄酒中加入糖可以酿造甜点酒。"
+    },
+    {
+      "type": "tfc:glassworking_recipe",
+      "recipe": "firmalife:glassworking/olivine_wine_bottle",
+      "text": "葡萄酒必须装在由非硅玻璃制成的酒瓶里。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "firmalife:crafting/bottle_label",
+      "text": "$(thing)瓶标$()可以在命名桌中重命名，并将其名称添加到葡萄酒的提示中。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "葡萄酒必须配备$(thing)软木塞$()。软木塞通过$(thing)防腐木材$()浸泡在$(thing)石灰水$()中一天制成。一切完成后，使用瓶槽灌装葡萄酒，或手持酒瓶按下$(item)$(k:key.use)$()。"
     }
   ],
   "read_by_default": true,
