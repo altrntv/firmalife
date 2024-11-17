@@ -5,3 +5,4 @@
 - Reduced the oil requirement for pizzas to 100 mB.
 - Added soybean oil. It burns slightly less efficiently than olive oil in a lamp, and may be substituted for olive oil in pizza.
 - Fix bad links for field guide redirects. (Closes #179)
+- Updated Chinese translation
